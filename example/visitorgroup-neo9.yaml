@@ -1,7 +1,7 @@
 apiVersion: "mutable.neo9.io/v1"
 kind: VisitorGroup
 metadata:
-  name: neo9-ips
+  name: neo9
 spec:
   sources:
     - name: Paris 1

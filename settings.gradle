@@ -4,4 +4,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'kubernetes-mutation-operators'
+rootProject.name = 'gatekeeper-operator'

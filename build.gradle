@@ -24,15 +24,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-	//implementation 'io.kubernetes:client-java-api:12.0.1'
-	//implementation 'io.kubernetes:client-java:12.0.1'
-	//implementation 'io.kubernetes:client-java-extended:12.0.1'
-
 	implementation 'io.javaoperatorsdk:operator-framework-spring-boot-starter:1.8.4'
 	annotationProcessor 'io.javaoperatorsdk:operator-framework:1.8.4'
 
 	implementation 'io.fabric8:kubernetes-client-bom:5.4.1'
-	//compileOnly 'io.fabric8:crd-generator-apt'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -44,9 +39,19 @@ test {
 	useJUnitPlatform()
 }
 
-/*
 bootBuildImage {
-	builder = 'paketobuildpacks/builder:tiny'
-	environment = ['BP_NATIVE_IMAGE': 'true']
+	builder = 'paketobuildpacks/builder:base'
+	/*
+	environment = [
+			'BP_NATIVE_IMAGE': 'true',
+			'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
+	]
+	 */
+}
+
+/*
+tasks.withType(JavaCompile) {
+  options.compilerArgs << "-Xlint:unchecked" << "-Werror"
 }
 */
+

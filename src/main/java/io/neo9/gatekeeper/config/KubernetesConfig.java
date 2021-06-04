@@ -1,16 +1,15 @@
-package io.neo9.kubernetesmutationoperator.config;
+package io.neo9.gatekeeper.config;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
+import io.fabric8.kubernetes.client.KubernetesClient;
 import io.javaoperatorsdk.operator.Operator;
 import io.javaoperatorsdk.operator.api.ResourceController;
 import io.javaoperatorsdk.operator.config.runtime.DefaultConfigurationService;
-import io.neo9.kubernetesmutationoperator.controllers.operators.VisitorGroupController;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class KubernetesConfig {
@@ -18,11 +17,6 @@ public class KubernetesConfig {
 	@Bean
 	public KubernetesClient kubernetesClient() {
 		return new DefaultKubernetesClient();
-	}
-
-	@Bean
-	public VisitorGroupController customServiceController(KubernetesClient client) {
-		return new VisitorGroupController(client);
 	}
 
 	//  Register all controller beans

@@ -1,13 +1,13 @@
-package io.neo9.kubernetesmutationoperator;
+package io.neo9.gatekeeper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KubernetesMutationOperatorApplication {
+public class KubernetesGateKeeperApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KubernetesMutationOperatorApplication.class, args);
+		SpringApplication.run(KubernetesGateKeeperApplication.class, args);
 	}
 
 }

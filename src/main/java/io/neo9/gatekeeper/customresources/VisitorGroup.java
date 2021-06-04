@@ -1,11 +1,10 @@
-package io.neo9.kubernetesmutationoperator.customresource;
+package io.neo9.gatekeeper.customresources;
 
-import io.fabric8.kubernetes.api.model.Namespaced;
 import io.fabric8.kubernetes.client.CustomResource;
 import io.fabric8.kubernetes.model.annotation.Group;
 import io.fabric8.kubernetes.model.annotation.ShortNames;
 import io.fabric8.kubernetes.model.annotation.Version;
-import io.neo9.kubernetesmutationoperator.customresource.generated.V1VisitorGroupSpec;
+import io.neo9.gatekeeper.customresources.spec.V1VisitorGroupSpec;
 
 @Group("mutable.neo9.io")
 @Version("v1")
