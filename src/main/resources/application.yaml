@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+javaoperatorsdk:
+  controllers:
+    visitorgroupcontroller:
+      retry:
+        maxAttempts: 3
+

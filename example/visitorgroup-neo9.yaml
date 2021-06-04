@@ -1,0 +1,15 @@
+apiVersion: "mutable.neo9.io/v1"
+kind: VisitorGroup
+metadata:
+  name: neo9-ips
+spec:
+  sources:
+    - name: Paris 1
+      cidr: 10.1.1.1/32
+    - name: Paris 2
+      cidr: 10.1.1.10/32
+    - name: Lyon
+      cidr: 10.1.1.2/32
+    - name: Horizon
+      cidr: 10.1.1.3/32
+
