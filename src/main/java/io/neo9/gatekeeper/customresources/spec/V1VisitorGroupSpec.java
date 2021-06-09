@@ -2,7 +2,6 @@ package io.neo9.gatekeeper.customresources.spec;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -33,7 +33,7 @@ The name is only here for information purpose.
 
 Then, create an `Ingress` with :
 * label `mutation.neo9.io/mutable: "true"`, to allow the operator to control that resource
-* annotation `mutation.neo9.io/ingress-allowed-visitors: neo9,customer` which contains the list of authorized group of CIDR (comma separated)
+* annotation `mutation.neo9.io/ingress-allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -57,22 +57,23 @@ Test docker image locally
 
 ```
 mkdir /tmp/kube
-kubectl config view --raw --minify | sed 's/cmd-path.*/cmd-path: gcloud/' > /tmp/kube/config
+kubectl --context=neokube get pods # refresh token
+kubectl --context=neokube config view --raw --minify | sed 's/cmd-path.*/cmd-path: gcloud/' > /tmp/kube/config
 
 ./gradlew bootBuildImage
-docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/library/gatekeeper-operator:0.0.1-SNAPSHOT
+docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/gatekeeper-operator:latest
 ```
-
 
 Generation reflect source for spring native image
 -------------------------------------------------
 
-Native image is unused for now.
+You will identify missing classes with error messages similars to :
+```
+cannot construct instance of `io.fabric8.kubernetes.api.model.NamedCluster` (no Creators, like default constructor, exist): cannot deserialize from Object value (no delegate- or property-based Creator)
+```
 
-*Note* : I know this is not an optimized way !
+To generate the reflect config file, use the appropriate script :
 
 ```
-for jar in ~/Téléchargements/kubernetes-model-common-5.4.1.jar ~/Téléchargements/kubernetes-model-core-5.4.1.jar ~/Téléchargements/kubernetes-model-networking-5.4.1.jar; do
-    unzip -l ${jar} | grep '/model' | awk '{print $4}' | sed 's/.class$//' | tr '/' '.' | while read l; do echo "{\"name\": \"$l\", \"allDeclaredFields\": true, \"allDeclaredMethods\": true, \"allPublicConstructors\": true},"; done >> src/main/resources/META-INF/native-image/reflect-config.json
-done
+cd scripts && ./generate-reflect-config.sh && cd ..
 ```

@@ -1,0 +1,11 @@
+apiVersion: "mutable.neo9.io/v1"
+kind: VisitorGroup
+metadata:
+  name: customer
+spec:
+  sources:
+    - name: Fake IP
+      cidr: 10.10.20.80/32
+    - name: Fake IP 2
+      cidr: 10.10.20.90/32
+
