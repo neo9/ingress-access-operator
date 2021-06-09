@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   labels:
-    mutation.neo9.io/mutable: "true"
+    mutation.neo9.io/gatekeeper-enabled: "true"
   annotations:
     external-dns.alpha.kubernetes.io/ttl: "300"
     kubernetes.io/ingress.class: nginx

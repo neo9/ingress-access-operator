@@ -32,14 +32,14 @@ spec:
 The name is only here for information purpose.
 
 Then, create an `Ingress` with :
-* label `mutation.neo9.io/mutable: "true"`, to allow the operator to control that resource
+* label `mutation.neo9.io/gatekeeper-enabled: "true"`, to allow the operator to control that resource
 * annotation `mutation.neo9.io/ingress-allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   labels:
-    mutation.neo9.io/mutable: "true"
+    mutation.neo9.io/gatekeeper-enabled: "true"
   annotations:
     mutation.neo9.io/ingress-allowed-visitors: neo9
     ...

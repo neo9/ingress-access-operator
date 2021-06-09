@@ -42,7 +42,7 @@ public class VisitorGroupIngressReconciler {
 		ingressRepository.listIngressWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).forEach(
 				ingress -> {
 					if (ingressIsLinkedToVisitorGroupName(ingress, visitorGroupName)) {
-						log.info("ingress {} have to be marked for update", ingress.getMetadata().getName());
+						log.info("ingress {} have to be marked for update check", ingress.getMetadata().getName());
 						try {
 							reconcile(ingress);
 						}
@@ -76,6 +76,7 @@ public class VisitorGroupIngressReconciler {
 
 		log.trace("computed cidr list : {}", cidrListAsString);
 		if (!cidrListAsString.equals(getAnnotationValue(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, ingress))) {
+			log.info("updating ingress {} because the targeted value changed", ingress.getMetadata().getName());
 			ingressRepository.patchIngressWithAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
 		}
 

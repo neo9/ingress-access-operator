@@ -9,8 +9,8 @@ management:
 
 logging:
   level:
-    io.neo9.kubernetesmutationoperator: DEBUG
-    io.javaoperatorsdk.operator: WARN
+    io.neo9.gatekeeper: INFO
+    #io.javaoperatorsdk.operator: WARN
 
 javaoperatorsdk:
   controllers:
