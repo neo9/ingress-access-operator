@@ -1,0 +1,56 @@
+#
+# will be to move in helm chart
+#
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: gatekeeper
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gatekeeper
+rules:
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - get
+- apiGroups:
+  - mutable.neo9.io
+  resources:
+  - visitorgroups
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gatekeeper
+  namespace: gatekeeper
+subjects:
+- kind: ServiceAccount
+  name: gatekeeper-sa
+  namespace: gatekeeper
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: gatekeeper
+  apiGroup: ""
+

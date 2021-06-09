@@ -84,7 +84,7 @@ public class VisitorGroupIngressReconciler {
 	}
 
 	private boolean ingressIsLinkedToVisitorGroupName(Ingress ingress, String visitorGroupName) {
-		log.trace("checking if ingress {} is concerned by visitorGroupName {}", ingress.getMetadata().getName(), visitorGroupName);
+		log.debug("checking if ingress {} is concerned by visitorGroupName {}", ingress.getMetadata().getName(), visitorGroupName);
 		return stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY_STRING).split(","))
 				.anyMatch(s -> s.trim().equalsIgnoreCase(visitorGroupName));
 	}

@@ -35,7 +35,7 @@ public class IngressController {
 	@PostConstruct
 	public void startWatchIngressChanges() {
 		log.info("starting watch loop on ingress");
-		ingressWatch = kubernetesClient.network().ingresses().withLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).watch(new Watcher<>() {
+		ingressWatch = kubernetesClient.network().ingresses().inAnyNamespace().withLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).watch(new Watcher<>() {
 			@Override
 			public boolean reconnecting() {
 				return true;

@@ -1,0 +1,15 @@
+image:
+  repository: xaviermichel/gatekeeper-operator
+  pullPolicy: Always
+  tag: latest
+
+serviceAccount:
+  create: true
+  name: "gatekeeper-sa"
+
+healthCheck:
+  path: "/actuator/health"
+
+service:
+  port: 8081
+

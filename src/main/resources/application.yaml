@@ -9,7 +9,7 @@ management:
 
 logging:
   level:
-    io.neo9.gatekeeper: INFO
+    io.neo9.gatekeeper: DEBUG
     #io.javaoperatorsdk.operator: WARN
 
 javaoperatorsdk:

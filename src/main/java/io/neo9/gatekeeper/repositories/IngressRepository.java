@@ -18,7 +18,7 @@ public class IngressRepository {
 	}
 
 	public List<Ingress> listIngressWithLabel(String labelKey, String labelValue) {
-		return kubernetesClient.network().ingresses().withLabel(labelKey, labelValue).list().getItems();
+		return kubernetesClient.network().ingresses().inAnyNamespace().withLabel(labelKey, labelValue).list().getItems();
 	}
 
 	public Ingress patchIngressWithAnnotation(Ingress ingress, String annotationKey, String annotationValue) {
