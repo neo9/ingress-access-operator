@@ -1,6 +1,10 @@
 server:
   port: 8081
 
+spring:
+  main:
+    banner-mode: "off"
+
 management:
   endpoints:
     web:
@@ -17,3 +21,4 @@ javaoperatorsdk:
     visitorgroupcontroller:
       retry:
         maxAttempts: 3
+

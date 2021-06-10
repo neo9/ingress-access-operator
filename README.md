@@ -52,9 +52,15 @@ spec:
 The operator will auto fill nginx whitelist annotation.
 
 
-Test docker image locally
--------------------------
+Local development
+-----------------
 
+*Quick development start*
+```
+./gradlew bootRun --args='--spring.profiles.active=dev'
+```
+
+*Test docker image*
 ```
 mkdir /tmp/kube
 kubectl --context=neokube get pods # refresh token
@@ -73,7 +79,6 @@ cannot construct instance of `io.fabric8.kubernetes.api.model.NamedCluster` (no 
 ```
 
 To generate the reflect config file, use the appropriate script :
-
 ```
 cd scripts && ./generate-reflect-config.sh && cd ..
 ```

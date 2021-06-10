@@ -27,18 +27,24 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorVersion}"
+
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
 	annotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation "io.javaoperatorsdk:operator-framework-spring-boot-starter-test:${javaOperatorVersion}"
-
-	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorVersion}"
-	annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
 }
 
 test {
 	useJUnitPlatform()
+}
+
+springBoot {
+	buildInfo()
 }
 
 bootBuildImage {
