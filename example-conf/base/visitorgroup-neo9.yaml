@@ -4,10 +4,8 @@ metadata:
   name: neo9
 spec:
   sources:
-    - name: Paris 1
+    - name: Paris
       cidr: 10.1.1.1/32
-    - name: Paris 2
-      cidr: 10.1.1.10/32
     - name: Lyon
       cidr: 10.1.1.2/32
     - name: Horizon

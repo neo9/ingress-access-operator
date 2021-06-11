@@ -24,10 +24,10 @@ metadata:
 name: neo9
 spec:
   sources:
-  - name: Paris 1
-    cidr: 10.1.1.1/32
-  - name: Lyon
-    cidr: 10.1.1.2/32
+    - name: Paris
+      cidr: 10.1.1.1/32
+    - name: Lyon
+      cidr: 10.1.1.2/32
 ```
 The name is only here for information purpose.
 

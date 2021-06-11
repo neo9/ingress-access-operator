@@ -1,10 +1,10 @@
 package io.neo9.gatekeeper.exceptions;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
 public class VisitorGroupNotFoundException extends RuntimeException {
 
+	@Getter
 	private String visitorGroupName;
 
 	public VisitorGroupNotFoundException(String visitorGroupName) {
