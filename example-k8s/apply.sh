@@ -1,8 +1,12 @@
 #!/bin/bash
 
-kubectl apply -f base-manifest.yaml
+helm repo add neo9charts https://charts.neo9.pro
+helm repo update
 
-helm --namespace gatekeeper diff upgrade gatekeeper neo9charts/n9-api  --install --values ./values.yaml
+# preview
+helm --namespace gatekeeper diff upgrade gatekeeper neo9charts/n9-api --install --values ./values.yaml
 sleep 10
-helm --namespace gatekeeper      upgrade gatekeeper neo9charts/n9-api --install --values ./values.yaml
 
+# deploy
+kubectl apply -f ../crds/
+helm --namespace gatekeeper      upgrade gatekeeper neo9charts/n9-api --install --values ./values.yaml --create-namespace

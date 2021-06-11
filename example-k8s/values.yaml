@@ -13,3 +13,33 @@ healthCheck:
 service:
   port: 8081
 
+clusterrole:
+  enabled: true
+  autoBindClusteRole: true
+  rules:
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+    - update
+    - patch
+  - apiGroups:
+    - apiextensions.k8s.io
+    resources:
+    - customresourcedefinitions
+    verbs:
+    - get
+  - apiGroups:
+    - mutable.neo9.io
+    resources:
+    - visitorgroups
+    verbs:
+    - get
+    - list
+    - watch
+    - update
+    - patch
