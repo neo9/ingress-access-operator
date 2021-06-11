@@ -15,7 +15,7 @@ public class VisitorGroupRepository {
 		this.kubernetesClient = kubernetesClient;
 	}
 
-	public VisitorGroup getVisitorGroupByName(String visitorGroupName) throws VisitorGroupNotFoundException {
+	public VisitorGroup getVisitorGroupByName(String visitorGroupName) {
 		VisitorGroup visitorGroup = kubernetesClient.customResources(VisitorGroup.class).withName(visitorGroupName).get();
 		if (visitorGroup == null) {
 			throw new VisitorGroupNotFoundException(visitorGroupName);

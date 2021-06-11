@@ -1,5 +1,8 @@
 package io.neo9.gatekeeper.config;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class MutationAnnotations {
 
 	public static final String MUTABLE_INGRESS_VISITOR_GROUP_KEY = "mutation.neo9.io/ingress-allowed-visitors";

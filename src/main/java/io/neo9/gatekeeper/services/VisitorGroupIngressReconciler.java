@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
 import io.neo9.gatekeeper.customresources.VisitorGroup;
+import io.neo9.gatekeeper.customresources.spec.V1VisitorGroupSpecSources;
 import io.neo9.gatekeeper.exceptions.SafeTaskInterruptionOnErrorException;
 import io.neo9.gatekeeper.exceptions.VisitorGroupNotFoundException;
 import io.neo9.gatekeeper.repositories.IngressRepository;
@@ -54,18 +55,28 @@ public class VisitorGroupIngressReconciler {
 		);
 	}
 
-	public void reconcile(Ingress ingress) throws SafeTaskInterruptionOnErrorException {
+	public void reconcile(Ingress ingress) {
 		String ingressName = ingress.getMetadata().getName();
 		log.trace("start patching ingress {}", ingressName);
 
+		String cidrListAsString = getCidrListAsString(ingress);
+		if (!cidrListAsString.equals(getAnnotationValue(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, ingress))) {
+			log.info("updating ingress {} because the targeted value changed", ingress.getMetadata().getName());
+			ingressRepository.patchIngressWithAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
+		}
+
+		log.trace("end of patching ingress {}", ingressName);
+	}
+
+	public String getCidrListAsString(Ingress ingress) {
 		String cidrListAsString = stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY_STRING).split(","))
-				.map(visitorGroupName -> visitorGroupName.trim())
-				.filter(visitorGroupName -> !visitorGroupName.isEmpty())
-				.map(visitorGroupName -> getExistingVisitorGroup(visitorGroupName, ingressName))
-				.filter(visitorGroup -> visitorGroupHasSources(visitorGroup))
-				.map(visitorGroup -> visitorGroup.getSpec().getSources())
+				.map(String::trim)
+				.filter(StringUtils::isNotBlank)
+				.map(this::getExistingVisitorGroup)
+				.filter(this::visitorGroupHasSources)
+				.map(VisitorGroup::extractSpecSources)
 				.flatMap(Collection::stream)
-				.map(visitorGroupSpecSources -> visitorGroupSpecSources.getCidr())
+				.map(V1VisitorGroupSpecSources::getCidr)
 				.distinct()
 				.collect(joining(","));
 
@@ -75,12 +86,7 @@ public class VisitorGroupIngressReconciler {
 		}
 
 		log.trace("computed cidr list : {}", cidrListAsString);
-		if (!cidrListAsString.equals(getAnnotationValue(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, ingress))) {
-			log.info("updating ingress {} because the targeted value changed", ingress.getMetadata().getName());
-			ingressRepository.patchIngressWithAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
-		}
-
-		log.trace("end of patching ingress {}", ingressName);
+		return cidrListAsString;
 	}
 
 	private boolean ingressIsLinkedToVisitorGroupName(Ingress ingress, String visitorGroupName) {
@@ -89,13 +95,13 @@ public class VisitorGroupIngressReconciler {
 				.anyMatch(s -> s.trim().equalsIgnoreCase(visitorGroupName));
 	}
 
-	private VisitorGroup getExistingVisitorGroup(String visitorGroupName, String ingressName) {
+	private VisitorGroup getExistingVisitorGroup(String visitorGroupName) {
 		try {
 			return visitorGroupRepository.getVisitorGroupByName(visitorGroupName);
 		}
 		catch (VisitorGroupNotFoundException e) {
-			log.error("panic: could not resolve visitorGroup {}, wont do anything in ingress {}", visitorGroupName, ingressName);
-			throw new SafeTaskInterruptionOnErrorException(String.format("interrupted patch of ingress %s", ingressName), e);
+			log.error("panic: could not resolve visitorGroup {}", visitorGroupName);
+			throw new SafeTaskInterruptionOnErrorException(String.format("interrupted patch because group not found %s", visitorGroupName), e);
 		}
 	}
 

@@ -66,6 +66,7 @@ public class IngressController {
 
 			@Override
 			public void onClose(WatcherException cause) {
+				log.warn("ingress watch was closed with error", cause);
 			}
 		});
 	}

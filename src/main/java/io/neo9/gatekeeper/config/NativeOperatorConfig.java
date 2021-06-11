@@ -69,11 +69,6 @@ public class NativeOperatorConfig extends AbstractConfigurationService {
 		}
 
 		@Override
-		public String getName() {
-			return super.getName();
-		}
-
-		@Override
 		public String getCRDName() {
 			return properties.map(ControllerProperties::getCRDName).orElse(super.getCRDName());
 		}
@@ -98,11 +93,6 @@ public class NativeOperatorConfig extends AbstractConfigurationService {
 		@Override
 		public Set<String> getNamespaces() {
 			return properties.map(ControllerProperties::getNamespaces).orElse(super.getNamespaces());
-		}
-
-		@Override
-		public boolean watchAllNamespaces() {
-			return super.watchAllNamespaces();
 		}
 
 		@Override
