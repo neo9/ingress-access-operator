@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'io.neo9'
-version = '0.0.1-SNAPSHOT'
+version = scmVersion.version
 sourceCompatibility = '11'
 
 configurations {

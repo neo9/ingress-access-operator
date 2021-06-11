@@ -70,6 +70,14 @@ kubectl --context=neokube config view --raw --minify | sed 's/cmd-path.*/cmd-pat
 docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/gatekeeper-operator:latest
 ```
 
+Tools
+------
+
+*How can I make a release ?*
+```
+./gradlew release -Prelease.versionIncrementer=incrementMinor
+```
+
 Generation reflect source for spring native image
 -------------------------------------------------
 
