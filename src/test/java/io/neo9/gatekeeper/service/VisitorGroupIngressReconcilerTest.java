@@ -5,27 +5,25 @@ import java.util.Map;
 
 import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBuilder;
-import io.javaoperatorsdk.operator.Operator;
 import io.neo9.gatekeeper.config.MutationAnnotations;
 import io.neo9.gatekeeper.customresources.VisitorGroup;
 import io.neo9.gatekeeper.customresources.spec.V1VisitorGroupSpec;
 import io.neo9.gatekeeper.customresources.spec.V1VisitorGroupSpecSources;
-import io.neo9.gatekeeper.exceptions.SafeTaskInterruptionOnErrorException;
 import io.neo9.gatekeeper.exceptions.VisitorGroupNotFoundException;
 import io.neo9.gatekeeper.repositories.IngressRepository;
 import io.neo9.gatekeeper.repositories.VisitorGroupRepository;
 import io.neo9.gatekeeper.services.VisitorGroupIngressReconciler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.lenient;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class VisitorGroupIngressReconcilerTest {
 
 	private final static VisitorGroup visitorGroup1;
@@ -93,17 +91,14 @@ public class VisitorGroupIngressReconcilerTest {
 	@Mock
 	private IngressRepository ingressRepository;
 
-	@Mock
-	private Operator operator;
-
 	private VisitorGroupIngressReconciler visitorGroupIngressReconciler;
 
 	@BeforeEach
 	public void setUp() {
-		when(visitorGroupRepository.getVisitorGroupByName("vg1")).thenReturn(visitorGroup1);
-		when(visitorGroupRepository.getVisitorGroupByName("vg2")).thenReturn(visitorGroup2);
-		when(visitorGroupRepository.getVisitorGroupByName("vg1bis")).thenReturn(visitorGroup1bis);
-		when(visitorGroupRepository.getVisitorGroupByName("vgUndefined")).thenThrow(new VisitorGroupNotFoundException("vgUndefined"));
+		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg1")).thenReturn(visitorGroup1);
+		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg2")).thenReturn(visitorGroup2);
+		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg1bis")).thenReturn(visitorGroup1bis);
+		lenient().when(visitorGroupRepository.getVisitorGroupByName("vgUndefined")).thenThrow(new VisitorGroupNotFoundException("vgUndefined"));
 
 		visitorGroupIngressReconciler = new VisitorGroupIngressReconciler(visitorGroupRepository, ingressRepository);
 	}
@@ -240,6 +235,6 @@ public class VisitorGroupIngressReconcilerTest {
 		// when / then
 		assertThatThrownBy(
 				() -> visitorGroupIngressReconciler.getCidrListAsString(ingress)
-		).isInstanceOf(SafeTaskInterruptionOnErrorException.class);
+		).isInstanceOf(VisitorGroupNotFoundException.class);
 	}
 }

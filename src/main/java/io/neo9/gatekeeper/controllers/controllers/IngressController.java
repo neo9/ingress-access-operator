@@ -8,7 +8,7 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.kubernetes.client.WatcherException;
-import io.neo9.gatekeeper.exceptions.SafeTaskInterruptionOnErrorException;
+import io.neo9.gatekeeper.exceptions.VisitorGroupNotFoundException;
 import io.neo9.gatekeeper.services.VisitorGroupIngressReconciler;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,12 +46,13 @@ public class IngressController {
 				switch (action) {
 					case ADDED:
 					case MODIFIED:
-						log.info("update event detected for ingress : {}", ingress.getMetadata().getName());
+						String ingressName = ingress.getMetadata().getName();
+						log.info("update event detected for ingress : {}", ingressName);
 						try {
 							visitorGroupIngressReconciler.reconcile(ingress);
 						}
-						catch (SafeTaskInterruptionOnErrorException e) {
-							log.error(e.getMessage());
+						catch (VisitorGroupNotFoundException e) {
+							log.error("panic: could not resolve visitorGroup {} for ingress {}", e.getVisitorGroupName(), ingressName, e);
 						}
 						break;
 					default:
