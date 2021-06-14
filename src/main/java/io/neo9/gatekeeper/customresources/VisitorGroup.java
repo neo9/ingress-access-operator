@@ -17,7 +17,7 @@ import static org.apache.commons.lang3.ObjectUtils.anyNull;
 @ShortNames("vg")
 public class VisitorGroup extends CustomResource<V1VisitorGroupSpec, Void> {
 
-	public List<V1VisitorGroupSpecSources> getSpecSources() {
+	public List<V1VisitorGroupSpecSources> extractSpecSources() {
 		if (anyNull(getSpec(), getSpec().getSources())) {
 			return Collections.emptyList();
 		}

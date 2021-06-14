@@ -72,7 +72,7 @@ public class VisitorGroupIngressReconciler {
 				.map(String::trim)
 				.filter(StringUtils::isNotBlank)
 				.map(visitorGroupRepository::getVisitorGroupByName)
-				.map(VisitorGroup::getSpecSources)
+				.map(VisitorGroup::extractSpecSources)
 				.flatMap(Collection::stream)
 				.map(V1VisitorGroupSpecSources::getCidr)
 				.distinct()

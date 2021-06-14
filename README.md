@@ -52,6 +52,12 @@ spec:
 The operator will auto fill nginx whitelist annotation.
 
 
+Installation
+------------
+
+Have a look in `example-k8s` to see how you can deploy gatekeeper with helm.
+
+
 Local development
 -----------------
 
