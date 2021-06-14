@@ -1,5 +1,5 @@
 image:
-  repository: xaviermichel/gatekeeper-operator
+  repository: neo9sas/gatekeeper-operator
   pullPolicy: Always
   tag: latest
 
