@@ -7,9 +7,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -23,14 +21,24 @@ jobs:
       run: ./gradlew build -x test
     - name: Run tests
       run: ./gradlew test
-
     - name: Build container image
       run: ./gradlew bootBuildImage
+    - name: Upload test image
+      uses: ishworkh/docker-image-artifact-upload@v1
+      with:
+        image: "docker.io/neo9sas/gatekeeper-operator:latest"
 
+  publish:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "docker.io/neo9sas/gatekeeper-operator:latest"
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
