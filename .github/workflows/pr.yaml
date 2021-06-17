@@ -6,9 +6,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -22,3 +20,40 @@ jobs:
       run: ./gradlew build -x test
     - name: Run tests
       run: ./gradlew test
+    - name: Build container image
+      run: ./gradlew bootBuildImage
+    - name: Upload test image
+      uses: ishworkh/docker-image-artifact-upload@v1
+      with:
+        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+
+  integration-tests:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # https://github.com/debianmaster/actions-k3s#k3s-version-mapping-with-k8s
+        k8s_version: [v1.17.4-k3s1, v1.18.2-k3s1]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download test image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+    - uses: debianmaster/actions-k3s@master
+      id: k3s
+      with:
+        version: ${{ matrix.k8s_version }}
+    - name: test on k3s
+      run: |
+        kubectl apply -f ./crds/
+        docker run -d --network host --name gatekeeper-operator-test --rm -v /tmp/output:/tmp/output:ro -e KUBECONFIG=${KUBECONFIG} docker.io/neo9sas/gatekeeper-operator:latest
+        sleep 5
+        curl 'http://127.0.0.1:8081/actuator/info'
+        echo
+        testsFailed=0
+        cd example-conf
+        ./quick-test.sh || testsFailed=1
+        cd -
+        docker stop gatekeeper-operator-test
+        exit ${testsFailed}

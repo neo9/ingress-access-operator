@@ -76,6 +76,12 @@ kubectl --context=neokube config view --raw --minify | sed 's/cmd-path.*/cmd-pat
 docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/gatekeeper-operator:latest
 ```
 
+*Basic integration test with k3s*
+```
+cd ./scripts
+make full-local-integration-tests-run
+```
+
 Tools
 ------
 
