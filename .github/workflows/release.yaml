@@ -26,7 +26,7 @@ jobs:
     - name: Upload test image
       uses: ishworkh/docker-image-artifact-upload@v1
       with:
-        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+        image: "docker.io/neo9sas/ingress-access-operator:latest"
 
   publish:
     needs: [build]
@@ -35,7 +35,7 @@ jobs:
     - name: Download image
       uses: ishworkh/docker-image-artifact-download@v1
       with:
-        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+        image: "docker.io/neo9sas/ingress-access-operator:latest"
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
@@ -47,5 +47,5 @@ jobs:
     - name: Tag image
       id: tag_push_docker_image
       run: |
-        docker tag docker.io/neo9sas/gatekeeper-operator:latest ${{ secrets.DOCKER_HUB_IMAGE }}:${{ steps.get_version.outputs.VERSION }}
+        docker tag docker.io/neo9sas/ingress-access-operator:latest ${{ secrets.DOCKER_HUB_IMAGE }}:${{ steps.get_version.outputs.VERSION }}
         docker push ${{ secrets.DOCKER_HUB_IMAGE }}:${{ steps.get_version.outputs.VERSION }}

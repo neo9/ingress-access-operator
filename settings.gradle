@@ -4,4 +4,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'gatekeeper-operator'
+rootProject.name = 'ingress-access-operator'

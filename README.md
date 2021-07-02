@@ -1,5 +1,5 @@
-Gatekeeper operator
--------------------
+Ingress access operator
+-----------------------
 
 Goal
 ----
@@ -18,7 +18,7 @@ You can have a look to example directory.
 
 A list of CIDR attached to the same person/company are forming a `VisitorGroup` :
 ```
-apiVersion: "mutable.neo9.io/v1"
+apiVersion: "ingress.neo9.io/v1"
 kind: VisitorGroup
 metadata:
 name: neo9
@@ -32,16 +32,16 @@ spec:
 The name is only here for information purpose.
 
 Then, create an `Ingress` with :
-* label `mutation.neo9.io/gatekeeper-enabled: "true"`, to allow the operator to control that resource
-* annotation `mutation.neo9.io/ingress-allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
+* label `ingress.neo9.io/access-operator-enabled: "true"`, to allow the operator to control that resource
+* annotation `ingress.neo9.io/allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   labels:
-    mutation.neo9.io/gatekeeper-enabled: "true"
+    ingress.neo9.io/access-operator-enabled: "true"
   annotations:
-    mutation.neo9.io/ingress-allowed-visitors: neo9
+    ingress.neo9.io/allowed-visitors: neo9
     ...
   name: demoingress
   namespace: default
@@ -55,7 +55,7 @@ The operator will auto fill nginx whitelist annotation.
 Installation
 ------------
 
-Have a look in `example-k8s` to see how you can deploy gatekeeper with helm.
+Have a look in `example-k8s` to see how you can deploy ingress access operator with helm.
 
 
 Local development
@@ -73,7 +73,7 @@ kubectl --context=neokube get pods # refresh token
 kubectl --context=neokube config view --raw --minify | sed 's/cmd-path.*/cmd-path: gcloud/' > /tmp/kube/config
 
 ./gradlew bootBuildImage
-docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/gatekeeper-operator:latest
+docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/ingress-access-operator:latest
 ```
 
 *Basic integration test with k3s*
@@ -93,13 +93,7 @@ Tools
 Generation reflect source for spring native image
 -------------------------------------------------
 
-You will identify missing classes with error messages similars to :
-```
-cannot construct instance of `io.fabric8.kubernetes.api.model.NamedCluster` (no Creators, like default constructor, exist): cannot deserialize from Object value (no delegate- or property-based Creator)
-```
-
-To generate the reflect config file, use the appropriate script :
+To generate the reflection config file, use the appropriate script :
 ```
 cd scripts && ./generate-reflect-config.sh && cd ..
 ```
-

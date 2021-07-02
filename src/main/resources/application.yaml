@@ -13,7 +13,7 @@ management:
 
 logging:
   level:
-    io.neo9.gatekeeper: DEBUG
+    io.neo9.ingress.access: DEBUG
     #io.javaoperatorsdk.operator: WARN
 
 javaoperatorsdk:

@@ -25,7 +25,7 @@ jobs:
     - name: Upload image
       uses: ishworkh/docker-image-artifact-upload@v1
       with:
-        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+        image: "docker.io/neo9sas/ingress-access-operator:latest"
 
   publish:
     needs: [build]
@@ -34,7 +34,7 @@ jobs:
     - name: Download image
       uses: ishworkh/docker-image-artifact-download@v1
       with:
-        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+        image: "docker.io/neo9sas/ingress-access-operator:latest"
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -43,5 +43,5 @@ jobs:
     - name: Tag and push image
       id: tag_push_docker_image
       run: |
-        docker tag docker.io/neo9sas/gatekeeper-operator:latest ${{ secrets.DOCKER_HUB_IMAGE }}:latest
+        docker tag docker.io/neo9sas/ingress-access-operator:latest ${{ secrets.DOCKER_HUB_IMAGE }}:latest
         docker push ${{ secrets.DOCKER_HUB_IMAGE }}:latest
