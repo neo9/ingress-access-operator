@@ -1,0 +1,11 @@
+apiVersion: "ingress.neo9.io/v1"
+kind: VisitorGroup
+metadata:
+  name: customer
+spec:
+  sources:
+    - name: Fake IP
+      cidr: 10.1.2.1/32
+    - name: Fake IP 2
+      cidr: 10.1.2.2/32
+

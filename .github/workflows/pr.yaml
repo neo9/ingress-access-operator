@@ -25,7 +25,7 @@ jobs:
     - name: Upload test image
       uses: ishworkh/docker-image-artifact-upload@v1
       with:
-        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+        image: "docker.io/neo9sas/ingress-access-operator:latest"
 
   integration-tests:
     needs: [build]
@@ -33,13 +33,13 @@ jobs:
     strategy:
       matrix:
         # https://github.com/debianmaster/actions-k3s#k3s-version-mapping-with-k8s
-        k8s_version: [v1.17.4-k3s1, v1.18.2-k3s1]
+        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1]
     steps:
     - uses: actions/checkout@v2
     - name: Download test image
       uses: ishworkh/docker-image-artifact-download@v1
       with:
-        image: "docker.io/neo9sas/gatekeeper-operator:latest"
+        image: "docker.io/neo9sas/ingress-access-operator:latest"
     - uses: debianmaster/actions-k3s@master
       id: k3s
       with:
@@ -47,13 +47,13 @@ jobs:
     - name: test on k3s
       run: |
         kubectl apply -f ./crds/
-        docker run -d --network host --name gatekeeper-operator-test --rm -v /tmp/output:/tmp/output:ro -e KUBECONFIG=${KUBECONFIG} docker.io/neo9sas/gatekeeper-operator:latest
+        docker run -d --network host --name ingress-access-operator-test --rm -v /tmp/output:/tmp/output:ro -e KUBECONFIG=${KUBECONFIG} docker.io/neo9sas/ingress-access-operator:latest
         sleep 5
         curl 'http://127.0.0.1:8081/actuator/info'
         echo
         testsFailed=0
-        cd example-conf
-        ./quick-test.sh || testsFailed=1
+        cd scripts
+        ./quick-integration-test.sh || testsFailed=1
         cd -
-        docker stop gatekeeper-operator-test
+        docker stop ingress-access-operator-test
         exit ${testsFailed}

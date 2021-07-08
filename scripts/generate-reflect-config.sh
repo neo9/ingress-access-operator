@@ -57,12 +57,12 @@ done
 
 cat <<EOF >> $targetFile
   {
-    "name": "io.neo9.gatekeeper.customresources.spec.V1VisitorGroupSpec",
+    "name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec",
     "allDeclaredMethods": true,
     "allPublicConstructors": true
   },
   {
-    "name": "io.neo9.gatekeeper.customresources.spec.V1VisitorGroupSpecSources",
+    "name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources",
     "allDeclaredMethods": true,
     "allPublicConstructors": true
   }

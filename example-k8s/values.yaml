@@ -1,11 +1,11 @@
 image:
-  repository: neo9sas/gatekeeper-operator
+  repository: neo9sas/ingress-access-operator
   pullPolicy: Always
   tag: latest
 
 serviceAccount:
   create: true
-  name: "gatekeeper-sa"
+  name: "ingress-access-operator-sa"
 
 healthCheck:
   path: "/actuator/health"
@@ -34,7 +34,7 @@ clusterrole:
     verbs:
     - get
   - apiGroups:
-    - mutable.neo9.io
+    - ingress.neo9.io
     resources:
     - visitorgroups
     verbs:
