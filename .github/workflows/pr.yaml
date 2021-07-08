@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         # https://github.com/debianmaster/actions-k3s#k3s-version-mapping-with-k8s
-        k8s_version: [v1.17.4-k3s1, v1.18.2-k3s1]
+        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1]
     steps:
     - uses: actions/checkout@v2
     - name: Download test image
