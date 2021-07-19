@@ -3,6 +3,12 @@ image:
   pullPolicy: Always
   tag: latest
 
+pod:
+  env:
+    values:
+    - name: EXTENSION_WATCH_INGRESS_ANNOTATIONS
+      value: false
+
 serviceAccount:
   create: true
   name: "ingress-access-operator-sa"

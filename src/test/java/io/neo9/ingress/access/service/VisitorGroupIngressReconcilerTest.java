@@ -5,6 +5,7 @@ import java.util.Map;
 
 import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBuilder;
+import io.neo9.ingress.access.config.AdditionalWatchers;
 import io.neo9.ingress.access.config.MutationAnnotations;
 import io.neo9.ingress.access.customresources.VisitorGroup;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec;
@@ -100,7 +101,7 @@ public class VisitorGroupIngressReconcilerTest {
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg1bis")).thenReturn(visitorGroup1bis);
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vgUndefined")).thenThrow(new VisitorGroupNotFoundException("vgUndefined"));
 
-		visitorGroupIngressReconciler = new VisitorGroupIngressReconciler(visitorGroupRepository, ingressRepository);
+		visitorGroupIngressReconciler = new VisitorGroupIngressReconciler(visitorGroupRepository, ingressRepository, new AdditionalWatchers());
 	}
 
 	@Test

@@ -32,3 +32,8 @@ kubectl ${kubeContextArgs} apply -f test-patch/patch-ingress-2g.yaml
 sleep 3
 checkFilterValue "demoingress2" "10.1.2.1/32,10.1.2.3/32"
 
+checkFilterValue "xposer-demoingress" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
+
+checkFilterValue "xposer-not-watched-ingress" "10.1.9.1/32"
+
+checkFilterValue "not-watched-ingress" "10.1.9.1/32"

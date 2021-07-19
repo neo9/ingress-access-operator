@@ -47,7 +47,7 @@ jobs:
     - name: test on k3s
       run: |
         kubectl apply -f ./crds/
-        docker run -d --network host --name ingress-access-operator-test --rm -v /tmp/output:/tmp/output:ro -e KUBECONFIG=${KUBECONFIG} docker.io/neo9sas/ingress-access-operator:latest
+        docker run -d --network host --name ingress-access-operator-test -e EXTENSION_WATCH_INGRESS_ANNOTATIONS=true --rm -v /tmp/output:/tmp/output:ro -e KUBECONFIG=${KUBECONFIG} docker.io/neo9sas/ingress-access-operator:latest
         sleep 5
         curl 'http://127.0.0.1:8081/actuator/info'
         echo

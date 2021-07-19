@@ -53,8 +53,8 @@ springBoot {
 }
 
 bootBuildImage {
-	builder = 'paketobuildpacks/builder:tiny'
 	imageName = "neo9sas/${project.name}:latest"
+	builder = 'paketobuildpacks/builder:tiny'
 	environment = [
 			'BP_NATIVE_IMAGE': 'true',
 			'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'

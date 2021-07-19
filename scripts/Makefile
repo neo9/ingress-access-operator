@@ -18,7 +18,13 @@ generate-authentication-file:
 	kubectl --context=k3d-$(CLUSTER_NAME) config view --raw --minify > /tmp/kube/config
 
 start-operator-locally:
-	docker run -d --network host --name ingress-access-operator-test --rm -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/ingress-access-operator:latest
+	docker run -d --rm \
+		--network host \
+		--name ingress-access-operator-test \
+		-e EXTENSION_WATCH_INGRESS_ANNOTATIONS=true \
+		-v /tmp/kube/:/conf:ro \
+		-e KUBECONFIG=/conf/config \
+		docker.io/neo9sas/ingress-access-operator:latest
 
 stop-operator-locally:
 	docker stop ingress-access-operator-test
