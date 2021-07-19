@@ -22,3 +22,9 @@ javaoperatorsdk:
       retry:
         maxAttempts: 3
 
+extension:
+  # will also scan ingress annotations to find operator activations label
+  # It's clearly not the best way to detect concerned ingresses (scan all cluster ingresses),
+  # and does not takes advantages of kubernetes API (label filtering) ;
+  # BUT it provide an easier integration with tools that generate ingress
+  watchIngressAnnotations: false

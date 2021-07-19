@@ -21,6 +21,10 @@ public class IngressRepository {
 		return kubernetesClient.network().ingresses().inAnyNamespace().withLabel(labelKey, labelValue).list().getItems();
 	}
 
+	public List<Ingress> listIngressWithoutLabel(String labelKey, String labelValue) {
+		return kubernetesClient.network().ingresses().inAnyNamespace().withoutLabel(labelKey, labelValue).list().getItems();
+	}
+
 	public Ingress patchIngressWithAnnotation(Ingress ingress, String annotationKey, String annotationValue) {
 		return kubernetesClient.network().ingress()
 				.inNamespace(ingress.getMetadata().getNamespace())

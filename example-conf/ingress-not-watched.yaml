@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/whitelist-source-range: 10.1.9.1/32
+    ingress.neo9.io/allowed-visitors: neo9,customer # no label, no resource edition !
+  name: not-watched-ingress
+  namespace: default
+spec:
+  rules:
+  - host: not-watched-ingress.dev-xmichel.neokube.neo9.pro
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-ingress-controller-default-backend
+          servicePort: 80
+        path: /demo

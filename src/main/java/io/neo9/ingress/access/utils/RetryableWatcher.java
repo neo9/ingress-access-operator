@@ -1,13 +1,15 @@
 package io.neo9.ingress.access.utils;
 
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
+import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.kubernetes.client.WatcherException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RetryableWatcher<T> implements Watcher<T> {
+public class RetryableWatcher<T extends HasMetadata> implements Watcher<T> {
 
 	private final String retryKey;
 
@@ -17,17 +19,25 @@ public class RetryableWatcher<T> implements Watcher<T> {
 
 	private final BiFunction<Action, T, Void> onEventReceived;
 
-	public RetryableWatcher(RetryContext retryContext, String retryKey, Runnable reconnect, BiFunction<Action, T, Void> onEventReceived) {
+	private final Predicate<T> eventFilter;
+
+	public RetryableWatcher(RetryContext retryContext, String retryKey, Runnable reconnect, Predicate<T> eventFilter, BiFunction<Action, T, Void> onEventReceived) {
 		this.retryContext = retryContext;
 		this.retryKey = retryKey;
 		this.reconnect = reconnect;
 		this.onEventReceived = onEventReceived;
+		this.eventFilter = eventFilter;
 	}
 
 	@Override
 	public void eventReceived(final Action action, final T resource) {
 		retryContext.reset(retryKey);
-		onEventReceived.apply(action, resource);
+		if (eventFilter.test(resource)) {
+			onEventReceived.apply(action, resource);
+		}
+		else {
+			log.debug("won't apply reconciliation on {} because it does not match with predicate", resource.getMetadata().getName());
+		}
 	}
 
 	@Override
