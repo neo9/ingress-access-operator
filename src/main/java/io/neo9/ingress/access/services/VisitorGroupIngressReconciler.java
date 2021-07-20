@@ -19,6 +19,7 @@ import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WH
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
 import static io.neo9.ingress.access.utils.KubernetesUtils.getAnnotationValue;
+import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
 import static io.netty.util.internal.StringUtil.EMPTY_STRING;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
@@ -45,13 +46,13 @@ public class VisitorGroupIngressReconciler {
 		ingressRepository.listIngressWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).forEach(
 				ingress -> {
 					if (ingressIsLinkedToVisitorGroupName(ingress, visitorGroupName)) {
-						String ingressName = ingress.getMetadata().getName();
-						log.info("ingress {} have to be marked for update check", ingressName);
+						String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
+						log.info("ingress {} have to be marked for update check", ingressNamespaceAndName);
 						try {
 							reconcile(ingress);
 						}
 						catch (VisitorGroupNotFoundException e) {
-							log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName, ingressName);
+							log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName, ingressNamespaceAndName);
 						}
 					}
 				}
@@ -61,13 +62,13 @@ public class VisitorGroupIngressReconciler {
 			ingressRepository.listIngressWithoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).forEach( // exclude because already retrieved by previous watcher
 					ingress -> {
 						if (getAnnotationValue(MUTABLE_LABEL_KEY, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE)) {
-							String ingressName = ingress.getMetadata().getName();
-							log.info("ingress {} have to be marked for update check", ingressName);
+							String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
+							log.info("ingress {} have to be marked for update check", ingressNamespaceAndName);
 							try {
 								reconcile(ingress);
 							}
 							catch (VisitorGroupNotFoundException e) {
-								log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName, ingressName);
+								log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName, ingressNamespaceAndName);
 							}
 						}
 					}
@@ -76,16 +77,16 @@ public class VisitorGroupIngressReconciler {
 	}
 
 	public void reconcile(Ingress ingress) {
-		String ingressName = ingress.getMetadata().getName();
-		log.trace("start patching ingress {}", ingressName);
+		String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
+		log.trace("start patching ingress {}", ingressNamespaceAndName);
 
 		String cidrListAsString = getCidrListAsString(ingress);
 		if (!cidrListAsString.equals(getAnnotationValue(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, ingress))) {
-			log.info("updating ingress {} because the targeted value changed", ingress.getMetadata().getName());
+			log.info("updating ingress {} because the targeted value changed", ingressNamespaceAndName);
 			ingressRepository.patchIngressWithAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
 		}
 
-		log.trace("end of patching ingress {}", ingressName);
+		log.trace("end of patching ingress {}", ingressNamespaceAndName);
 	}
 
 	public String getCidrListAsString(Ingress ingress) {
@@ -109,7 +110,7 @@ public class VisitorGroupIngressReconciler {
 	}
 
 	private boolean ingressIsLinkedToVisitorGroupName(Ingress ingress, String visitorGroupName) {
-		log.debug("checking if ingress {} is concerned by visitorGroupName {}", ingress.getMetadata().getName(), visitorGroupName);
+		log.debug("checking if ingress {} is concerned by visitorGroupName {}", getResourceNamespaceAndName(ingress), visitorGroupName);
 		return stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY_STRING).split(","))
 				.anyMatch(s -> s.trim().equalsIgnoreCase(visitorGroupName));
 	}

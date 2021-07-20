@@ -8,6 +8,8 @@ import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.kubernetes.client.WatcherException;
 import lombok.extern.slf4j.Slf4j;
 
+import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
+
 @Slf4j
 public class RetryableWatcher<T extends HasMetadata> implements Watcher<T> {
 
@@ -36,7 +38,8 @@ public class RetryableWatcher<T extends HasMetadata> implements Watcher<T> {
 			onEventReceived.apply(action, resource);
 		}
 		else {
-			log.debug("won't apply reconciliation on {} because it does not match with predicate", resource.getMetadata().getName());
+			String ingressNamespaceAndName = getResourceNamespaceAndName(resource);
+			log.debug("won't apply reconciliation on {} because it does not match with predicate", ingressNamespaceAndName);
 		}
 	}
 

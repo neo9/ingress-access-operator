@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
+import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -21,6 +22,12 @@ public class KubernetesUtils {
 	@Nullable
 	public static String getAnnotationValue(String key, HasMetadata hasMetadata) {
 		return hasMetadata.getMetadata().getAnnotations().get(key);
+	}
+
+	public static String getResourceNamespaceAndName(HasMetadata hasMetadata) {
+		String namespace = hasMetadata.getMetadata().getNamespace();
+		String name = hasMetadata.getMetadata().getName();
+		return String.format("%s/%s", namespace, name);
 	}
 
 }

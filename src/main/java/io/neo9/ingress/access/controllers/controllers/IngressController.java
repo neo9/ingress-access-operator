@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
 import static io.neo9.ingress.access.utils.KubernetesUtils.getAnnotationValue;
+import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
 import static java.util.Objects.nonNull;
 
 @Component
@@ -43,16 +44,16 @@ public class IngressController {
 		this.kubernetesClient = kubernetesClient;
 		this.additionalWatchers = additionalWatchers;
 		this.onEventReceived = (action, ingress) -> {
+			String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
 			switch (action) {
 				case ADDED:
 				case MODIFIED:
-					String ingressName = ingress.getMetadata().getName();
-					log.info("update event detected for ingress : {}", ingressName);
+					log.info("update event detected for ingress : {}", ingressNamespaceAndName);
 					try {
 						visitorGroupIngressReconciler.reconcile(ingress);
 					}
 					catch (VisitorGroupNotFoundException e) {
-						log.error("panic: could not resolve visitorGroup {} for ingress {}", e.getVisitorGroupName(), ingressName, e);
+						log.error("panic: could not resolve visitorGroup {} for ingress {}", e.getVisitorGroupName(), ingressNamespaceAndName, e);
 					}
 					break;
 				default:
