@@ -69,7 +69,7 @@ public class IngressController {
 		watchIngressesOnLabel();
 		if (additionalWatchers.watchIngressAnnotations()) {
 			log.info("starting watch loop on ingress (by name prefix)");
-			watchIngressesOnNamePrefix();
+			watchIngressesOnAnnotation();
 		}
 	}
 
@@ -98,14 +98,14 @@ public class IngressController {
 				));
 	}
 
-	private void watchIngressesOnNamePrefix() {
+	private void watchIngressesOnAnnotation() {
 		ingressWatchOnAnnotations = kubernetesClient.network().ingresses()
 				.inAnyNamespace()
 				.withoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE) // exclude because already retrieved by previous watcher
 				.watch(new RetryableWatcher<>(
 						retryContext,
 						String.format("%s-onNamePrefix", Ingress.class.getSimpleName()),
-						this::watchIngressesOnNamePrefix,
+						this::watchIngressesOnAnnotation,
 						ingress -> getAnnotationValue(MUTABLE_LABEL_KEY, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE),
 						onEventReceived
 				));
