@@ -7,31 +7,29 @@ targetFile=../src/main/resources/META-INF/native-image/reflect-config.json
 
 filter1='io.fabric8.kubernetes.api.model'
 filter2='io.fabric8.kubernetes.client.*CustomResource'
-filter3='Serializer|Deserializer'
-filter="${filter1}|${filter2}|${filter3}"
+filter3='istio.api.networking.*'
+filter4='Serializer|Deserializer'
+filter="${filter1}|${filter2}|${filter3}|${filter4}"
 
 cat <<EOF > $targetFile
 [
-  {
-    "name": "java.util.LinkedHashMap",
-    "methods": [
-      { "name": "<init>", "parameterTypes": [] }
-    ]
-  },
+  {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
 EOF
 
 for jarGroupArtefactVersion in \
-      io.javaoperatorsdk_operator-framework_1.8.4     \
-      io.fabric8_kubernetes-model-common_5.3.1        \
-      io.fabric8_kubernetes-model-core_5.3.1          \
-      io.fabric8_kubernetes-model-networking_5.3.1    \
-      io.fabric8_kubernetes-model-apiextensions_5.3.1 \
-      io.fabric8_kubernetes-client_5.3.1              \
+      io.javaoperatorsdk:operator-framework:1.7.5     \
+      io.fabric8:kubernetes-model-common:5.1.1        \
+      io.fabric8:kubernetes-model-core:5.1.1          \
+      io.fabric8:kubernetes-model-networking:5.1.1    \
+      io.fabric8:kubernetes-model-apiextensions:5.1.1 \
+      io.fabric8:kubernetes-client:5.1.1              \
+      me.snowdrop:istio-model:1.7.7.1                 \
+      me.snowdrop:istio-client:1.7.7.1                \
     ; do
 
-  jarGroup=$(echo ${jarGroupArtefactVersion} | awk -F'_' '{print $1}')
-  jarName=$(echo ${jarGroupArtefactVersion} | awk -F'_' '{print $2}')
-  jarVersion=$(echo ${jarGroupArtefactVersion} | awk -F'_' '{print $3}')
+  jarGroup=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $1}')
+  jarName=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $2}')
+  jarVersion=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $3}')
   jarFileName=${jarName}-${jarVersion}.jar
 
   if [ ! -f "${workDir}/${jarFileName}" ]; then
@@ -56,16 +54,11 @@ for jarGroupArtefactVersion in \
 done
 
 cat <<EOF >> $targetFile
-  {
-    "name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec",
-    "allDeclaredMethods": true,
-    "allPublicConstructors": true
-  },
-  {
-    "name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources",
-    "allDeclaredMethods": true,
-    "allPublicConstructors": true
-  }
+  {"name": "io.neo9.ingress.access.config.AdditionalWatchersConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.config.WatchIngressAnnotationsConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.config.UpdateIstioSidecarIngressConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true}
 ]
 EOF
 

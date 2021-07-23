@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fabric8.kubernetes.client.CustomResource;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.javaoperatorsdk.operator.ControllerUtils;
@@ -33,13 +32,8 @@ public class NativeOperatorConfig extends AbstractConfigurationService {
 	public Operator operator(
 			KubernetesClient kubernetesClient,
 			List<ResourceController<?>> resourceControllers,
-			Optional<ObjectMapper> objectMapper,
 			OperatorConfigurationProperties configuration) {
-		Operator operator =
-				objectMapper
-						.map(x -> new Operator(kubernetesClient, this, x))
-						.orElse(new Operator(kubernetesClient, this));
-
+		Operator operator = new Operator(kubernetesClient, this);
 		resourceControllers.forEach(r -> {
 			Class<?>[] typeArguments = GenericTypeResolver.resolveTypeArguments(r.getClass(), ResourceController.class);
 			operator.register(processController(r, typeArguments[0], configuration));

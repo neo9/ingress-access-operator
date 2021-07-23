@@ -9,7 +9,7 @@ import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.Watcher.Action;
-import io.neo9.ingress.access.config.AdditionalWatchers;
+import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
 import io.neo9.ingress.access.utils.RetryContext;
@@ -30,7 +30,7 @@ public class IngressController {
 
 	private final KubernetesClient kubernetesClient;
 
-	private final AdditionalWatchers additionalWatchers;
+	private final AdditionalWatchersConfig additionalWatchersConfig;
 
 	private final RetryContext retryContext = new RetryContext();
 
@@ -40,9 +40,9 @@ public class IngressController {
 
 	private Watch ingressWatchOnAnnotations;
 
-	public IngressController(KubernetesClient kubernetesClient, VisitorGroupIngressReconciler visitorGroupIngressReconciler, AdditionalWatchers additionalWatchers) {
+	public IngressController(KubernetesClient kubernetesClient, VisitorGroupIngressReconciler visitorGroupIngressReconciler, AdditionalWatchersConfig additionalWatchersConfig) {
 		this.kubernetesClient = kubernetesClient;
-		this.additionalWatchers = additionalWatchers;
+		this.additionalWatchersConfig = additionalWatchersConfig;
 		this.onEventReceived = (action, ingress) -> {
 			String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
 			switch (action) {
@@ -67,8 +67,8 @@ public class IngressController {
 	public void startWatch() {
 		log.info("starting watch loop on ingress (by label)");
 		watchIngressesOnLabel();
-		if (additionalWatchers.watchIngressAnnotations()) {
-			log.info("starting watch loop on ingress (by name prefix)");
+		if (additionalWatchersConfig.watchIngressAnnotations().isEnabled()) {
+			log.info("starting watch loop on ingress (by annotations)");
 			watchIngressesOnAnnotation();
 		}
 	}
@@ -104,7 +104,7 @@ public class IngressController {
 				.withoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE) // exclude because already retrieved by previous watcher
 				.watch(new RetryableWatcher<>(
 						retryContext,
-						String.format("%s-onNamePrefix", Ingress.class.getSimpleName()),
+						String.format("%s-onAnnotations", Ingress.class.getSimpleName()),
 						this::watchIngressesOnAnnotation,
 						ingress -> getAnnotationValue(MUTABLE_LABEL_KEY, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE),
 						onEventReceived

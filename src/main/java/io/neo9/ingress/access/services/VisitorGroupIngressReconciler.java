@@ -3,7 +3,7 @@ package io.neo9.ingress.access.services;
 import java.util.Collection;
 
 import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
-import io.neo9.ingress.access.config.AdditionalWatchers;
+import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.customresources.VisitorGroup;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
@@ -32,12 +32,12 @@ public class VisitorGroupIngressReconciler {
 
 	private final IngressRepository ingressRepository;
 
-	private final AdditionalWatchers additionalWatchers;
+	private final AdditionalWatchersConfig additionalWatchersConfig;
 
-	public VisitorGroupIngressReconciler(VisitorGroupRepository visitorGroupRepository, IngressRepository ingressRepository, AdditionalWatchers additionalWatchers) {
+	public VisitorGroupIngressReconciler(VisitorGroupRepository visitorGroupRepository, IngressRepository ingressRepository, AdditionalWatchersConfig additionalWatchersConfig) {
 		this.visitorGroupRepository = visitorGroupRepository;
 		this.ingressRepository = ingressRepository;
-		this.additionalWatchers = additionalWatchers;
+		this.additionalWatchersConfig = additionalWatchersConfig;
 	}
 
 	public void reconcile(VisitorGroup visitorGroup) {
@@ -58,7 +58,7 @@ public class VisitorGroupIngressReconciler {
 				}
 		);
 
-		if (additionalWatchers.watchIngressAnnotations()) {
+		if (additionalWatchersConfig.watchIngressAnnotations().isEnabled()) {
 			ingressRepository.listIngressWithoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).forEach( // exclude because already retrieved by previous watcher
 					ingress -> {
 						if (getAnnotationValue(MUTABLE_LABEL_KEY, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE)) {
