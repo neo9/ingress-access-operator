@@ -27,4 +27,11 @@ extension:
   # It's clearly not the best way to detect concerned ingresses (scan all cluster ingresses),
   # and does not takes advantages of kubernetes API (label filtering) ;
   # BUT it provide an easier integration with tools that generate ingress
-  watchIngressAnnotations: false
+  watchIngressAnnotations:
+    enabled: false
+
+  updateIstioIngressSidecar:
+    enabled: false
+    ingressNamespace: nginx-istio-ingress
+    additionalEgressRulesEntries:
+      - "istio-system"

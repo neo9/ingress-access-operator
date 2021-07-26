@@ -23,6 +23,11 @@ public class KubernetesUtils {
 		return hasMetadata.getMetadata().getAnnotations().get(key);
 	}
 
+	@Nullable
+	public static String getLabelValue(String key, HasMetadata hasMetadata) {
+		return hasMetadata.getMetadata().getLabels().get(key);
+	}
+
 	public static String getResourceNamespaceAndName(HasMetadata hasMetadata) {
 		String namespace = hasMetadata.getMetadata().getNamespace();
 		String name = hasMetadata.getMetadata().getName();

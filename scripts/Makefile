@@ -12,6 +12,8 @@ run-integration-tests:
 
 apply-crd:
 	kubectl --context=k3d-$(CLUSTER_NAME) apply -f ../crds/
+	kubectl --context=k3d-$(CLUSTER_NAME) create namespace nginx-istio-ingress
+	kubectl --context=k3d-$(CLUSTER_NAME) apply -f https://raw.githubusercontent.com/istio/istio/1.10.2/manifests/charts/base/crds/crd-all.gen.yaml
 
 generate-authentication-file:
 	mkdir -p /tmp/kube/ || true
@@ -21,7 +23,8 @@ start-operator-locally:
 	docker run -d --rm \
 		--network host \
 		--name ingress-access-operator-test \
-		-e EXTENSION_WATCH_INGRESS_ANNOTATIONS=true \
+		-e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
+		-e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
 		-v /tmp/kube/:/conf:ro \
 		-e KUBECONFIG=/conf/config \
 		docker.io/neo9sas/ingress-access-operator:latest
