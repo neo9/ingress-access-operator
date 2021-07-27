@@ -10,9 +10,9 @@ import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.repositories.NamespaceRepository;
 import io.neo9.ingress.access.repositories.SidecarRepository;
 import lombok.extern.slf4j.Slf4j;
-import me.snowdrop.istio.api.networking.v1beta1.IstioEgressListenerBuilder;
-import me.snowdrop.istio.api.networking.v1beta1.Sidecar;
-import me.snowdrop.istio.api.networking.v1beta1.SidecarBuilder;
+import me.snowdrop.istio.api.networking.v1alpha3.IstioEgressListenerBuilder;
+import me.snowdrop.istio.api.networking.v1alpha3.Sidecar;
+import me.snowdrop.istio.api.networking.v1alpha3.SidecarBuilder;
 
 import org.springframework.stereotype.Service;
 

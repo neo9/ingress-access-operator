@@ -1,8 +1,8 @@
 package io.neo9.ingress.access.repositories;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
-import me.snowdrop.istio.api.networking.v1beta1.Sidecar;
-import me.snowdrop.istio.api.networking.v1beta1.SidecarBuilder;
+import me.snowdrop.istio.api.networking.v1alpha3.Sidecar;
+import me.snowdrop.istio.api.networking.v1alpha3.SidecarBuilder;
 
 import org.springframework.stereotype.Component;
 

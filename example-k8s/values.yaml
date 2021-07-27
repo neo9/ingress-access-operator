@@ -25,29 +25,48 @@ clusterrole:
   enabled: true
   autoBindClusteRole: true
   rules:
-  - apiGroups:
-    - networking.k8s.io
-    resources:
-    - ingresses
-    verbs:
-    - get
-    - list
-    - watch
-    - update
-    - patch
-  - apiGroups:
-    - apiextensions.k8s.io
-    resources:
-    - customresourcedefinitions
-    verbs:
-    - get
-  - apiGroups:
-    - ingress.neo9.io
-    resources:
-    - visitorgroups
-    verbs:
-    - get
-    - list
-    - watch
-    - update
-    - patch
+    - apiGroups:
+        - networking.k8s.io
+      resources:
+        - ingresses
+      verbs:
+        - get
+        - list
+        - watch
+        - update
+        - patch
+    - apiGroups:
+        - apiextensions.k8s.io
+      resources:
+        - customresourcedefinitions
+      verbs:
+        - get
+    - apiGroups:
+        - ingress.neo9.io
+      resources:
+        - visitorgroups
+      verbs:
+        - get
+        - list
+        - watch
+        - update
+        - patch
+    - apiGroups:
+        - ""
+      resources:
+        - namespaces
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - "networking.istio.io"
+      resources:
+        - sidecars
+      verbs:
+        - get
+        - list
+        - watch
+        - update
+        - patch
+        - create
