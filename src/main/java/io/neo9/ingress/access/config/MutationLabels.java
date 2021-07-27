@@ -15,5 +15,5 @@ public class MutationLabels {
 
 	public static final String ISTIO_WATCH_NAMESPACE_LABEL_KEY = "istio-injection";
 
-	public static final String ISTIO_WATCH_NAMESPACE_LABEL_VALUE = "true";
+	public static final String ISTIO_WATCH_NAMESPACE_LABEL_VALUE = "enabled";
 }
