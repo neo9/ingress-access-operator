@@ -25,7 +25,11 @@ public class KubernetesUtils {
 
 	@Nullable
 	public static String getLabelValue(String key, HasMetadata hasMetadata) {
-		return hasMetadata.getMetadata().getLabels().get(key);
+		Map<String, String> labels = hasMetadata.getMetadata().getLabels();
+		 if (labels == null) {
+			return null;
+		}
+		 return labels.get(key);
 	}
 
 	public static String getResourceNamespaceAndName(HasMetadata hasMetadata) {
