@@ -44,7 +44,7 @@ public class IstioSidecarReconciler {
 
 	public void reconcile(Namespace updatedOrDeletedNamespace) {
 		Sidecar oldSidecar = sidecarRepository.getSidecar(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace(), SIDECAR_NAME);
-		if (nonNull(oldSidecar) && !getLabelValue(MANAGED_BY_OPERATOR_KEY, oldSidecar).equals(MANAGED_BY_OPERATOR_VALUE)) {
+		if (nonNull(oldSidecar) && !MANAGED_BY_OPERATOR_VALUE.equals(getLabelValue(MANAGED_BY_OPERATOR_KEY, oldSidecar))) {
 			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(oldSidecar));
 		}
 
