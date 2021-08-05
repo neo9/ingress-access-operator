@@ -87,6 +87,11 @@ Have a look in `example-k8s` to see how you can deploy ingress access operator w
 Local development
 -----------------
 
+*Deactivate native image*
+
+You may want to deactivate native image during development.
+That can easily be done by defining an environment variable `OPERATOR_NATIVE_IMAGE` with value `false`.
+
 *Quick development start*
 ```
 ./gradlew bootRun --args='--spring.profiles.active=dev'

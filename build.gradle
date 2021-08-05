@@ -52,12 +52,14 @@ test {
 }
 
 bootBuildImage {
-	imageName = "neo9sas/${project.name}:latest"
-	builder = 'paketobuildpacks/builder:tiny'
-	environment = [
-			'BP_NATIVE_IMAGE': 'true',
-			'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
-	]
+	imageName   = "neo9sas/${project.name}:latest"
+	builder     = "false".equalsIgnoreCase(System.getenv('OPERATOR_NATIVE_IMAGE')) ? 'paketobuildpacks/builder:base' : 'paketobuildpacks/builder:tiny'
+	environment = "false".equalsIgnoreCase(System.getenv('OPERATOR_NATIVE_IMAGE')) ? [:] :
+					[
+						'BP_NATIVE_IMAGE': 'true',
+						'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
+					]
+
 }
 
 subprojects {
