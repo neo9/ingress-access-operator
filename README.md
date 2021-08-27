@@ -81,7 +81,7 @@ Have a look to `application.yaml` to see possible configurations.
 Installation
 ------------
 
-Have a look in `example-k8s` to see how you can deploy ingress access operator with helm.
+Have a look in `values` to see how you can deploy ingress access operator with helm.
 
 
 Local development
