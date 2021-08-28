@@ -4,7 +4,15 @@ image:
 
 pod:
   extraEnvMap:
+    JAVA_TOOL_OPTIONS: "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8082,suspend=n -Dspring.devtools.restart.enabled=true"
     SPRING_PROFILES_ACTIVE: dev
+
+service:
+  additionalPorts:
+    - name: tcp-debug
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
 
 # An ingress is not required
 # It's here for remote development purpose only.
@@ -21,4 +29,3 @@ resources:
   limits:
     cpu: 1000m
     memory: 800M
-
