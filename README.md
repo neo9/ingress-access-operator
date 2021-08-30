@@ -81,7 +81,7 @@ Have a look to `application.yaml` to see possible configurations.
 Installation
 ------------
 
-Have a look in `example-k8s` to see how you can deploy ingress access operator with helm.
+Have a look in `values` to see how you can deploy ingress access operator with helm.
 
 
 Local development
@@ -90,7 +90,7 @@ Local development
 *Deactivate native image*
 
 You may want to deactivate native image during development.
-That can easily be done by defining an environment variable `OPERATOR_NATIVE_IMAGE` with value `false`.
+That can easily be done by defining an environment variable `NATIVE_IMAGE` with value `false`.
 
 *Quick development start*
 ```
@@ -107,19 +107,38 @@ kubectl --context=neokube config view --raw --minify | sed 's/cmd-path.*/cmd-pat
 docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/ingress-access-operator:latest
 ```
 
+Remote development
+------------------
+
+A deployment made with garden is configured to not use native image, and to
+includes devtools.
+
+*Devtools*
+
+You may want to use devtools to update remote application : https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.devtools.remote-applications.client
+
+*Remote debug*
+
+You can connect remote debugger on port 8082.
+```
+kubectl -n dev-$user port-forward svc/dev-$user-ingress-access-operator 9082:8082
+```
+And then connect your debugger localhost 9082.
+
+Tools
+------
+
 *Basic integration test with k3s*
 ```
 cd ./scripts
 make full-local-integration-tests-run
 ```
 
-Tools
-------
-
 *How can I make a release ?*
 ```
 ./gradlew release -Prelease.versionIncrementer=incrementMinor
 ```
+Or simply add git tag, it will generate a release with the tag version.
 
 Generation reflect source for spring native image
 -------------------------------------------------
@@ -128,4 +147,3 @@ To generate the reflection config file, use the appropriate script :
 ```
 cd scripts && ./generate-reflect-config.sh && cd ..
 ```
-

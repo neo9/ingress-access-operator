@@ -1,0 +1,31 @@
+image:
+  repository: eu.gcr.io/neokube/ingress-access-operator
+  tag: latest
+
+pod:
+  extraEnvMap:
+    JAVA_TOOL_OPTIONS: "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8082,suspend=n -Dspring.devtools.restart.enabled=true"
+    SPRING_PROFILES_ACTIVE: dev
+
+service:
+  additionalPorts:
+    - name: tcp-debug
+      port: 8082
+      protocol: TCP
+      targetPort: 8082
+
+# An ingress is not required
+# It's here for remote development purpose only.
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    external-dns.alpha.kubernetes.io/ttl: "5"
+    nginx.ingress.kubernetes.io/whitelist-source-range: 52.47.163.232/32
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 400M
+  limits:
+    cpu: 1000m
+    memory: 800M
