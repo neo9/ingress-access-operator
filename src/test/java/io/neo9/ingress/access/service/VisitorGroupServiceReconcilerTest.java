@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class VisitorGroupIngressReconcilerTest {
+public class VisitorGroupServiceReconcilerTest {
 
 	private final static VisitorGroup visitorGroup1;
 
@@ -55,8 +55,8 @@ public class VisitorGroupIngressReconcilerTest {
 		V1VisitorGroupSpec visitorGroup1Spec = V1VisitorGroupSpec
 				.builder()
 				.sources(List.of(
-						V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1Ip1).build(),
-						V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1Ip2).build()
+								V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1Ip1).build(),
+								V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1Ip2).build()
 						)
 				)
 				.build();
@@ -66,8 +66,8 @@ public class VisitorGroupIngressReconcilerTest {
 		V1VisitorGroupSpec visitorGroup2Spec = V1VisitorGroupSpec
 				.builder()
 				.sources(List.of(
-						V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup2Ip1).build(),
-						V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup2Ip2).build()
+								V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup2Ip1).build(),
+								V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup2Ip2).build()
 						)
 				)
 				.build();
@@ -77,8 +77,8 @@ public class VisitorGroupIngressReconcilerTest {
 		V1VisitorGroupSpec visitorGroup1bisSpec = V1VisitorGroupSpec
 				.builder()
 				.sources(List.of(
-						V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1bisIp1).build(),
-						V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1bisIp2).build()
+								V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1bisIp1).build(),
+								V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1bisIp2).build()
 						)
 				)
 				.build();

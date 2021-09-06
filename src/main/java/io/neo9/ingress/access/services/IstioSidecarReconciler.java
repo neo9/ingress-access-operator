@@ -20,15 +20,15 @@ import static io.neo9.ingress.access.config.MutationLabels.ISTIO_WATCH_NAMESPACE
 import static io.neo9.ingress.access.config.MutationLabels.ISTIO_WATCH_NAMESPACE_LABEL_VALUE;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
-import static io.neo9.ingress.access.utils.KubernetesUtils.getLabelValue;
 import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.KubernetesUtils.isManagedByOperator;
 import static java.util.Objects.nonNull;
 
 @Service
 @Slf4j
 public class IstioSidecarReconciler {
 
-	private final String SIDECAR_NAME = "ingress";
+	private static final String SIDECAR_NAME = "ingress";
 
 	private final AdditionalWatchersConfig additionalWatchersConfig;
 
@@ -42,17 +42,17 @@ public class IstioSidecarReconciler {
 		this.sidecarRepository = sidecarRepository;
 	}
 
-	public void reconcile(Namespace updatedOrDeletedNamespace) {
+	public void reconcile() {
 		Sidecar oldSidecar = sidecarRepository.getSidecar(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace(), SIDECAR_NAME);
-		if (nonNull(oldSidecar) && !MANAGED_BY_OPERATOR_VALUE.equals(getLabelValue(MANAGED_BY_OPERATOR_KEY, oldSidecar))) {
+		if (nonNull(oldSidecar) && !isManagedByOperator(oldSidecar)) {
 			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(oldSidecar));
 		}
 
 		List<Namespace> namespacesWatchedByIstio = namespaceRepository.listNamespacesWithLabel(ISTIO_WATCH_NAMESPACE_LABEL_KEY, ISTIO_WATCH_NAMESPACE_LABEL_VALUE);
 		List<String> namespaceForSidecar = Stream.concat(
-				additionalWatchersConfig.updateIstioIngressSidecar().getAdditionalEgressRulesEntries().stream(),
-				namespacesWatchedByIstio.stream().map(namespace -> namespace.getMetadata().getName())
-		)
+						additionalWatchersConfig.updateIstioIngressSidecar().getAdditionalEgressRulesEntries().stream(),
+						namespacesWatchedByIstio.stream().map(namespace -> namespace.getMetadata().getName())
+				)
 				.map(s -> String.format("%s/*", s))
 				.distinct()
 				.collect(Collectors.toList());

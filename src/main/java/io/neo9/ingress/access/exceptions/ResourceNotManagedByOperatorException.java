@@ -8,7 +8,7 @@ import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_V
 public class ResourceNotManagedByOperatorException extends RuntimeException {
 
 	@Getter
-	private String resourceNamespaceName;
+	private final String resourceNamespaceName;
 
 	public ResourceNotManagedByOperatorException(String resourceNamespaceName) {
 		super(String.format("should not manipulate resource %s . It sounds not managed by operator (labels not detected %s=%s)", resourceNamespaceName, MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));

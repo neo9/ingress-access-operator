@@ -15,12 +15,19 @@ public class AdditionalWatchersConfig {
 	@Setter
 	private UpdateIstioIngressSidecarConfig updateIstioIngressSidecar;
 
+	@Setter
+	private ExposerConfig exposer;
+
 	public WatchIngressAnnotationsConfig watchIngressAnnotations() {
 		return watchIngressAnnotations;
 	}
 
 	public UpdateIstioIngressSidecarConfig updateIstioIngressSidecar() {
 		return updateIstioIngressSidecar;
+	}
+
+	public ExposerConfig exposer() {
+		return exposer;
 	}
 
 }

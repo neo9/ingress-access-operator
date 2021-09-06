@@ -25,7 +25,7 @@ public class IngressRepository {
 		return kubernetesClient.network().ingresses().inAnyNamespace().withoutLabel(labelKey, labelValue).list().getItems();
 	}
 
-	public Ingress patchIngressWithAnnotation(Ingress ingress, String annotationKey, String annotationValue) {
+	public Ingress patchWithAnnotation(Ingress ingress, String annotationKey, String annotationValue) {
 		return kubernetesClient.network().ingress()
 				.inNamespace(ingress.getMetadata().getNamespace())
 				.withName(ingress.getMetadata().getName())
@@ -36,6 +36,29 @@ public class IngressRepository {
 								.and()
 								.build()
 				);
+	}
+
+	public Ingress createOrReplace(Ingress ingress) {
+		return kubernetesClient
+				.resource(ingress)
+				.createOrReplace();
+	}
+
+	public Ingress get(String namespace, String name) {
+		return kubernetesClient
+				.network().ingresses()
+				.inNamespace(namespace)
+				.withName(name)
+				.fromServer()
+				.get();
+	}
+
+	public Boolean delete(String namespace, String name) {
+		return kubernetesClient
+				.network().ingresses()
+				.inNamespace(namespace)
+				.withName(name)
+				.delete();
 	}
 
 }
