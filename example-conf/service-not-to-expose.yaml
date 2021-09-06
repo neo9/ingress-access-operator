@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-not-to-expose
+  namespace: default
+  annotations:
+    ingress.neo9.io/expose-labels: |-
+      some-label: abc0
+    ingress.neo9.io/expose-annotations: |-
+      firstAnnotation : abc1
+      secondAnnotation: abc2
+      thirdAnnotation:
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

@@ -35,3 +35,11 @@ extension:
     ingressNamespace: nginx-istio-ingress
     additionalEgressRulesEntries:
       - "istio-system"
+
+  exposer:
+    enabled: false
+    domain: neokube.pro
+    hostnameTemplate: "{{name}}.{{namespace}}.{{domain}}"
+    tlsEnabledDetectionAnnotation:
+      - cert-manager.io/issuer
+      - cert-manager.io/cluster-issuer

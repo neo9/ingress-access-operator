@@ -6,6 +6,8 @@ pod:
   extraEnvMap:
     JAVA_TOOL_OPTIONS: "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8082,suspend=n -Dspring.devtools.restart.enabled=true"
     SPRING_PROFILES_ACTIVE: dev
+    EXTENSION_EXPOSER_ENABLED: true
+    EXTENSION_EXPOSER_DOMAIN: neokube.neo9.pro
 
 service:
   additionalPorts:

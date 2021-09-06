@@ -14,13 +14,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.stereotype.Service;
 
-import static ch.qos.logback.core.CoreConstants.EMPTY_STRING;
 import static io.neo9.ingress.access.config.MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY;
 import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
 import static io.neo9.ingress.access.utils.KubernetesUtils.getAnnotationValue;
 import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.StringUtils.COMMA;
+import static io.neo9.ingress.access.utils.StringUtils.EMPTY;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 
@@ -83,14 +84,14 @@ public class VisitorGroupIngressReconciler {
 		String cidrListAsString = getCidrListAsString(ingress);
 		if (!cidrListAsString.equals(getAnnotationValue(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, ingress))) {
 			log.info("updating ingress {} because the targeted value changed", ingressNamespaceAndName);
-			ingressRepository.patchIngressWithAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
+			ingressRepository.patchWithAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
 		}
 
 		log.trace("end of patching ingress {}", ingressNamespaceAndName);
 	}
 
 	public String getCidrListAsString(Ingress ingress) {
-		String cidrListAsString = stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY_STRING).split(","))
+		String cidrListAsString = stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY).split(","))
 				.map(String::trim)
 				.filter(StringUtils::isNotBlank)
 				.map(visitorGroupRepository::getVisitorGroupByName)
@@ -111,7 +112,7 @@ public class VisitorGroupIngressReconciler {
 
 	private boolean ingressIsLinkedToVisitorGroupName(Ingress ingress, String visitorGroupName) {
 		log.debug("checking if ingress {} is concerned by visitorGroupName {}", getResourceNamespaceAndName(ingress), visitorGroupName);
-		return stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY_STRING).split(","))
+		return stream(getAnnotationValue(MUTABLE_INGRESS_VISITOR_GROUP_KEY, ingress, EMPTY).split(COMMA))
 				.anyMatch(s -> s.trim().equalsIgnoreCase(visitorGroupName));
 	}
 }

@@ -1,591 +1,2956 @@
 [
-  {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
-  {"name": "io.fabric8.kubernetes.api.model.APIGroup", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.APIGroupList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.APIService", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.APIServiceCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.APIServiceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.APIServiceSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.APIServiceStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AWSElasticBlockStoreVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Affinity", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AttachedVolume", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AuthInfo", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AuthProviderConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AzureDiskVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AzureFilePersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.AzureFileVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.BaseKubernetesList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Binding", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CSIPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CSIVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Capabilities", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CephFSPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CephFSVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CinderPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CinderVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ClientIPConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Cluster", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ComponentCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ComponentStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ComponentStatusList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Condition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Config", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMap", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMapEnvSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMapKeySelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMapList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMapNodeConfigSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMapProjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ConfigMapVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Container", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerImage", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerPort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerState", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerStateRunning", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerStateTerminated", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerStateWaiting", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ContainerStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Context", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.CreateOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.DaemonEndpoint", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.DeleteOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.DeletionPropagation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.DownwardAPIProjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.DownwardAPIVolumeFile", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.DownwardAPIVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Duration$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Duration$SevenDayWeek", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Duration$TimeUnits", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Duration", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EmptyDirVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EndpointAddress", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EndpointPort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EndpointSubset", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Endpoints", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EndpointsList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EnvFromSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EnvVar", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EnvVarSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EphemeralContainer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EphemeralVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Event", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EventList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EventSeries", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.EventSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ExecAction", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ExecConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ExecEnvVar", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.FCVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.FieldsV1", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.FlexPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.FlexVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.FlockerVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GCEPersistentDiskVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GetOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GitRepoVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GlusterfsPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GlusterfsVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GroupVersionForDiscovery", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GroupVersionKind", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.GroupVersionResource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.HTTPGetAction", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.HTTPHeader", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Handler", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.HasMetadata", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.HasMetadataComparator", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.HostAlias", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.HostPathVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ISCSIPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ISCSIVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.IntOrString$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.IntOrString$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.IntOrString", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.KeyToPath", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.KubeSchema", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.KubernetesList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.KubernetesResource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.KubernetesResourceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LabelSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LabelSelectorRequirement", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Lifecycle", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LimitRange", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LimitRangeItem", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LimitRangeList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LimitRangeSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ListMeta", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ListOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LoadBalancerIngress", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LoadBalancerStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LocalObjectReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.LocalVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ManagedFieldsEntry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.MicroTime", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NFSVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamedAuthInfo", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamedCluster", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamedContext", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamedExtension", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Namespace", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamespaceCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamespaceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamespaceSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NamespaceStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Namespaced", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Node", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeAddress", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeAffinity", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeConfigSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeConfigStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeDaemonEndpoints", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeSelectorRequirement", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeSelectorTerm", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.NodeSystemInfo", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ObjectFieldSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ObjectMeta", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ObjectReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.OwnerReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Patch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PatchOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolume", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaim", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimTemplate", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PersistentVolumeStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PhotonPersistentDiskVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Pod", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodAffinity", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodAffinityTerm", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodAntiAffinity", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodDNSConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodDNSConfigOption", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodExecOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodIP", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodReadinessGate", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodSecurityContext", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodTemplate", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodTemplateList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PodTemplateSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PortStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PortworxVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Preconditions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Preferences", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.PreferredSchedulingTerm", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Probe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ProjectedVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Quantity$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Quantity$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Quantity", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.QuobyteVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.RBDPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.RBDVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ReplicationController", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ReplicationControllerCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ReplicationControllerList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ReplicationControllerSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ReplicationControllerStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ResourceFieldSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ResourceQuota", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ResourceQuotaList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ResourceQuotaSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ResourceQuotaStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ResourceRequirements", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.RootPaths", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SELinuxOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ScaleIOPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ScaleIOVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ScopeSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ScopedResourceSelectorRequirement", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SeccompProfile", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Secret", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecretEnvSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecretKeySelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecretList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecretProjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecretReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecretVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SecurityContext", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServerAddressByClientCIDR", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Service", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceAccount", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceAccountList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceAccountTokenProjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServicePort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.ServiceStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.SessionAffinityConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Status", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.StatusCause", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.StatusDetails", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.StorageOSPersistentVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.StorageOSVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Sysctl", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.TCPSocketAction", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Taint", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Toleration", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.TopologySelectorLabelRequirement", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.TopologySelectorTerm", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.TopologySpreadConstraint", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.TypeMeta", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.TypedLocalObjectReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.UpdateOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.Volume", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.VolumeDevice", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.VolumeMount", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.VolumeNodeAffinity", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.VolumeProjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.VsphereVirtualDiskVolumeSource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.WatchEvent", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.WeightedPodAffinityTerm", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.WindowsSecurityContextOptions", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.version.Info", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.internal.KubernetesDeserializer$Mapping", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.internal.KubernetesDeserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressPath", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressRuleValue", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IPBlock", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.Ingress", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressBackend", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressClass", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressClassList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressClassSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressRule", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressServiceBackend", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressTLS", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyEgressRule", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyIngressRule", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyPeer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyPort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1.ServiceBackendPort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.HTTPIngressPath", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.HTTPIngressRuleValue", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBackend", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressClass", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressClassList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressClassSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressRule", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressTLS", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceColumnDefinition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceConversion", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionNames", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionVersion", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceSubresourceScale", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceSubresourceStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceSubresources", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceValidation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.ExternalDocumentation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaProps", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArray", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe$Deserializer$1", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBool", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBoolSerDe$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBoolSerDe$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBoolSerDe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArray", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe$Deserializer$1", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.ServiceReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.WebhookClientConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.WebhookConversion", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceColumnDefinition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceConversion", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionCondition", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionNames", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionVersion", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceSubresourceScale", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceSubresourceStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceSubresources", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceValidation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.ExternalDocumentation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaProps", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArray", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe$Deserializer$1", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBool", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBoolSerDe$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBoolSerDe$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBoolSerDe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArray", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe$Deserializer$1", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.ServiceReference", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.WebhookClientConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.CustomResource$Instantiator", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.CustomResource", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.CustomResourceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.base.CustomResourceDefinitionContext", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.CustomResourceOperationContext", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.CustomResourceOperationsImpl", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.RawCustomResourceOperationsImpl$1", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.RawCustomResourceOperationsImpl$HttpCallMethod", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.RawCustomResourceOperationsImpl", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.apiextensions.v1.CustomResourceDefinitionOperationsImpl", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.dsl.internal.apiextensions.v1beta1.CustomResourceDefinitionOperationsImpl", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.handlers.apiextensions.v1.CustomResourceDefinitionHandler", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.handlers.apiextensions.v1beta1.CustomResourceDefinitionHandler", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.cexl.TypedValue$TypedValueDeserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.cexl.TypedValue$TypedValueSerializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Abort$ErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyConfigObjectPatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.DestinationRuleList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.PatchContext", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.StringMatch$MatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualHostMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HttpStatusErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.LoadBalancerSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.PortSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.DestinationRuleSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.SubFilterMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServerTLSSettingsProtocol", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.FixedDelayHttpDelayType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyFilter", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.IstioEgressListener", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Index", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ClusterObjectTypes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.GatewayList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntryResolution", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Delay$HttpDelayType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HttpCookieHashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.GatewaySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.FilterMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Port", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.TLSMatchAttributes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Gateway", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRouteDestination", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Delay", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.CorsPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualService", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerProtocol", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRoute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Distribute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntryList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.OutboundTrafficPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServerTLSSettingsMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.IstioIngressListener", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRetry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.PrefixMatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.RouteConfigurationMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.SimpleLbPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.RegexMatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntrySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.SidecarList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Delegate", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.TcpKeepalive", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.FilterType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPFaultInjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPMatchRequest", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.RouteDestination", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Server", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.PortTrafficPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ConsistentHashLbPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Headers", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Failover", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.RouteConfigurationObjectTypes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ClientTLSSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ConnectionPoolSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.TLSRoute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ClusterMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.TrafficPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerObjectTypes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ExponentialDelayHttpDelayType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadEntrySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntryLocation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Abort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ExactMatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.StringMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Patch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ApplyTo", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ConsistentHashLB$HashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadEntryList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ConsistentHashLB", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.RouteMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPCookie", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Subset", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HttpHeaderNameHashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualServiceSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.CaptureMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.LocalityLoadBalancerSetting", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.UseSourceIpHashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.OutlierDetection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadEntry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualServiceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.GrpcStatusErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyConfigObjectMatch$ObjectTypes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.FilterChainMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.LoadBalancerSettings$LbPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRewrite", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.L4MatchAttributes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ProxyMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.OutboundTrafficPolicyMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyFilterSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.TCPRoute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Destination", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyFilterList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Percent", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HeaderOperations", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.TCPSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Operation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRedirect", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ClientTLSSettingsMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.ServerTLSSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Action", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.DestinationRule", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.Http2ErrorErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.SimpleLB", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.H2UpgradePolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyConfigObjectMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Abort$ErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.DestinationRuleList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.StringMatch$MatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HttpStatusErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.LoadBalancerSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.PortSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.DestinationRuleSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServerTLSSettingsProtocol", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.FixedDelayHttpDelayType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.IstioEgressListener", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.GatewayList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntryResolution", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Delay$HttpDelayType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HttpCookieHashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.GatewaySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Port", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.TLSMatchAttributes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Gateway", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRouteDestination", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Delay", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.CorsPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.VirtualService", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRoute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Distribute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntryList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadSelector", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.OutboundTrafficPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServerTLSSettingsMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.IstioIngressListener", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRetry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.PrefixMatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.SimpleLbPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.RegexMatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntrySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.SidecarList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Delegate", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.TcpKeepalive", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPFaultInjection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPMatchRequest", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.RouteDestination", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Server", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.PortTrafficPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ConsistentHashLbPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Headers", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Failover", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ClientTLSSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ConnectionPoolSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.TLSRoute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.TrafficPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ExponentialDelayHttpDelayType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadEntrySpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntryLocation", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Abort", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ExactMatchType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.StringMatch", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ConsistentHashLB$HashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadEntryList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ConsistentHashLB", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPCookie", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Subset", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HttpHeaderNameHashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.VirtualServiceSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.CaptureMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.LocalityLoadBalancerSetting", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.UseSourceIpHashKey", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.OutlierDetection", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadEntry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.VirtualServiceList", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.GrpcStatusErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.LoadBalancerSettings$LbPolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRewrite", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.L4MatchAttributes", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.OutboundTrafficPolicyMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.TCPRoute", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntry", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Destination", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Percent", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HeaderOperations", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.TCPSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRedirect", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ClientTLSSettingsMode", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.ServerTLSSettings", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.DestinationRule", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.Http2ErrorErrorType", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.SimpleLB", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.networking.v1beta1.H2UpgradePolicy", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.TimeStamp$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.internal.TypedValueMapDeserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.internal.TypedValueMapSerializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.Duration$Serializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.TimeStamp$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.Duration$Deserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.policy.v1beta1.InstanceSpecDeserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "me.snowdrop.istio.api.policy.v1beta1.HandlerSpecDeserializer", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.config.AdditionalWatchersConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.config.WatchIngressAnnotationsConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.config.UpdateIstioIngressSidecarConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true}
+  {
+    "name": "java.util.LinkedHashMap",
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      }
+    ]
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIGroup",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIGroupList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIService",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIServiceCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIServiceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIServiceSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.APIServiceStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AWSElasticBlockStoreVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Affinity",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AttachedVolume",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AuthInfo",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AuthProviderConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AzureDiskVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AzureFilePersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.AzureFileVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.BaseKubernetesList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Binding",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CSIPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CSIVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Capabilities",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CephFSPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CephFSVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CinderPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CinderVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ClientIPConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Cluster",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ComponentCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ComponentStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ComponentStatusList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Condition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Config",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMap",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMapEnvSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMapKeySelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMapList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMapNodeConfigSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMapProjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ConfigMapVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Container",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerImage",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerPort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerState",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerStateRunning",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerStateTerminated",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerStateWaiting",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ContainerStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Context",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.CreateOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.DaemonEndpoint",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.DeleteOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.DeletionPropagation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.DownwardAPIProjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.DownwardAPIVolumeFile",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.DownwardAPIVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Duration$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Duration$SevenDayWeek",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Duration$TimeUnits",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Duration",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EmptyDirVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EndpointAddress",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EndpointPort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EndpointSubset",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Endpoints",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EndpointsList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EnvFromSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EnvVar",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EnvVarSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EphemeralContainer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EphemeralVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Event",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EventList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EventSeries",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.EventSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ExecAction",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ExecConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ExecEnvVar",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.FCVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.FieldsV1",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.FlexPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.FlexVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.FlockerVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GCEPersistentDiskVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GetOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GitRepoVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GlusterfsPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GlusterfsVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GroupVersionForDiscovery",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GroupVersionKind",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.GroupVersionResource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.HTTPGetAction",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.HTTPHeader",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Handler",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.HasMetadata",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.HasMetadataComparator",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.HostAlias",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.HostPathVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ISCSIPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ISCSIVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.IntOrString$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.IntOrString$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.IntOrString",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.KeyToPath",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.KubeSchema",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.KubernetesList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.KubernetesResource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.KubernetesResourceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LabelSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LabelSelectorRequirement",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Lifecycle",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LimitRange",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LimitRangeItem",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LimitRangeList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LimitRangeSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ListMeta",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ListOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LoadBalancerIngress",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LoadBalancerStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LocalObjectReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.LocalVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ManagedFieldsEntry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.MicroTime",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NFSVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedAuthInfo",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedCluster",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedContext",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamedExtension",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Namespace",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamespaceCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamespaceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamespaceSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NamespaceStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Namespaced",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Node",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeAddress",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeAffinity",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeConfigSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeConfigStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeDaemonEndpoints",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeSelectorRequirement",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeSelectorTerm",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.NodeSystemInfo",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ObjectFieldSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ObjectMeta",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ObjectReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.OwnerReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Patch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PatchOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolume",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaim",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimTemplate",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeClaimVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PersistentVolumeStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PhotonPersistentDiskVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Pod",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodAffinity",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodAffinityTerm",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodAntiAffinity",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodDNSConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodDNSConfigOption",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodExecOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodIP",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodReadinessGate",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodSecurityContext",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodTemplate",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodTemplateList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PodTemplateSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PortStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PortworxVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Preconditions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Preferences",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.PreferredSchedulingTerm",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Probe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ProjectedVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Quantity$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Quantity$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Quantity",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.QuobyteVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.RBDPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.RBDVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationController",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationControllerCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationControllerList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationControllerSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ReplicationControllerStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ResourceFieldSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ResourceQuota",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ResourceQuotaList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ResourceQuotaSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ResourceQuotaStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ResourceRequirements",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.RootPaths",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SELinuxOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ScaleIOPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ScaleIOVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ScopeSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ScopedResourceSelectorRequirement",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SeccompProfile",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Secret",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecretEnvSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecretKeySelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecretList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecretProjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecretReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecretVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SecurityContext",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServerAddressByClientCIDR",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Service",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceAccount",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceAccountList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceAccountTokenProjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServicePort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.ServiceStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.SessionAffinityConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Status",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.StatusCause",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.StatusDetails",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.StorageOSPersistentVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.StorageOSVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Sysctl",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.TCPSocketAction",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Taint",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Toleration",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.TopologySelectorLabelRequirement",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.TopologySelectorTerm",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.TopologySpreadConstraint",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.TypeMeta",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.TypedLocalObjectReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.UpdateOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.Volume",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.VolumeDevice",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.VolumeMount",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.VolumeNodeAffinity",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.VolumeProjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.VsphereVirtualDiskVolumeSource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.WatchEvent",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.WeightedPodAffinityTerm",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.WindowsSecurityContextOptions",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.version.Info",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.internal.KubernetesDeserializer$Mapping",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.internal.KubernetesDeserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressPath",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressRuleValue",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IPBlock",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.Ingress",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressBackend",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressClass",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressClassList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressClassSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressRule",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressServiceBackend",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.IngressTLS",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyEgressRule",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyIngressRule",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyPeer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicyPort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.NetworkPolicySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1.ServiceBackendPort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.HTTPIngressPath",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.HTTPIngressRuleValue",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBackend",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressClass",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressClassList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressClassSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressRule",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.networking.v1beta1.IngressTLS",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceColumnDefinition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceConversion",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionNames",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceDefinitionVersion",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceSubresourceScale",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceSubresourceStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceSubresources",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.CustomResourceValidation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.ExternalDocumentation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaProps",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArray",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe$Deserializer$1",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrArraySerDe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBool",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBoolSerDe$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBoolSerDe$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrBoolSerDe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArray",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe$Deserializer$1",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.JSONSchemaPropsOrStringArraySerDe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.ServiceReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.WebhookClientConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1.WebhookConversion",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceColumnDefinition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceConversion",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionCondition",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionNames",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceDefinitionVersion",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceSubresourceScale",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceSubresourceStatus",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceSubresources",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.CustomResourceValidation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.ExternalDocumentation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaProps",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArray",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe$Deserializer$1",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrArraySerDe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBool",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBoolSerDe$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBoolSerDe$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrBoolSerDe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArray",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe$Deserializer$1",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.JSONSchemaPropsOrStringArraySerDe",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.ServiceReference",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.api.model.apiextensions.v1beta1.WebhookClientConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.CustomResource$Instantiator",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.CustomResource",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.CustomResourceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.base.CustomResourceDefinitionContext",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.CustomResourceOperationContext",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.CustomResourceOperationsImpl",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.RawCustomResourceOperationsImpl$1",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.RawCustomResourceOperationsImpl$HttpCallMethod",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.RawCustomResourceOperationsImpl",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.apiextensions.v1.CustomResourceDefinitionOperationsImpl",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.dsl.internal.apiextensions.v1beta1.CustomResourceDefinitionOperationsImpl",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.handlers.apiextensions.v1.CustomResourceDefinitionHandler",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.fabric8.kubernetes.client.handlers.apiextensions.v1beta1.CustomResourceDefinitionHandler",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.cexl.TypedValue$TypedValueDeserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.cexl.TypedValue$TypedValueSerializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Abort$ErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyConfigObjectPatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.DestinationRuleList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.PatchContext",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.StringMatch$MatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualHostMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HttpStatusErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.LoadBalancerSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.PortSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.DestinationRuleSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.SubFilterMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServerTLSSettingsProtocol",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.FixedDelayHttpDelayType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyFilter",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.IstioEgressListener",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Index",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ClusterObjectTypes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.GatewayList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntryResolution",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Delay$HttpDelayType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HttpCookieHashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.GatewaySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.FilterMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Port",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.TLSMatchAttributes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Gateway",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRouteDestination",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Delay",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.CorsPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualService",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerProtocol",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRoute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Distribute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntryList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.OutboundTrafficPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServerTLSSettingsMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.IstioIngressListener",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.SidecarSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRetry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.PrefixMatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.RouteConfigurationMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.SimpleLbPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.RegexMatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntrySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.SidecarList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Delegate",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.TcpKeepalive",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.FilterType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPFaultInjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPMatchRequest",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.RouteDestination",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Server",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.PortTrafficPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ConsistentHashLbPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Headers",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Failover",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.RouteConfigurationObjectTypes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ClientTLSSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ConnectionPoolSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.TLSRoute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ClusterMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.TrafficPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerObjectTypes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ExponentialDelayHttpDelayType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadEntrySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntryLocation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Abort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ExactMatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Sidecar",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.StringMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Patch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ApplyTo",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ConsistentHashLB$HashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadEntryList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ConsistentHashLB",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.RouteMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPCookie",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Subset",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HttpHeaderNameHashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualServiceSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.CaptureMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.LocalityLoadBalancerSetting",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.UseSourceIpHashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ListenerType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.OutlierDetection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.WorkloadEntry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.VirtualServiceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.GrpcStatusErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyConfigObjectMatch$ObjectTypes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.FilterChainMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.LoadBalancerSettings$LbPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRewrite",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.L4MatchAttributes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ProxyMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.OutboundTrafficPolicyMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyFilterSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.TCPRoute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServiceEntry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Destination",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyFilterList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Percent",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HeaderOperations",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.TCPSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Operation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.HTTPRedirect",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ClientTLSSettingsMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.ServerTLSSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Action",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.DestinationRule",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.Http2ErrorErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.SimpleLB",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.H2UpgradePolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1alpha3.EnvoyConfigObjectMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Abort$ErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.DestinationRuleList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.StringMatch$MatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HttpStatusErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.LoadBalancerSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.PortSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.DestinationRuleSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServerTLSSettingsProtocol",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.FixedDelayHttpDelayType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.IstioEgressListener",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.GatewayList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntryResolution",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Delay$HttpDelayType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HttpCookieHashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.GatewaySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Port",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.TLSMatchAttributes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Gateway",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRouteDestination",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Delay",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.CorsPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.VirtualService",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRoute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Distribute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntryList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadSelector",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.OutboundTrafficPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServerTLSSettingsMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.IstioIngressListener",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.SidecarSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRetry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.PrefixMatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.SimpleLbPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.RegexMatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntrySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.SidecarList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Delegate",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.TcpKeepalive",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPFaultInjection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPMatchRequest",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.RouteDestination",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Server",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.PortTrafficPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ConsistentHashLbPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Headers",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Failover",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ClientTLSSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ConnectionPoolSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.TLSRoute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.TrafficPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ExponentialDelayHttpDelayType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadEntrySpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntryLocation",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Abort",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ExactMatchType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Sidecar",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.StringMatch",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ConsistentHashLB$HashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadEntryList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ConsistentHashLB",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPCookie",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Subset",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HttpHeaderNameHashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.VirtualServiceSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.CaptureMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.LocalityLoadBalancerSetting",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.UseSourceIpHashKey",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.OutlierDetection",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.WorkloadEntry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.VirtualServiceList",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.GrpcStatusErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.LoadBalancerSettings$LbPolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRewrite",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.L4MatchAttributes",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.OutboundTrafficPolicyMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.TCPRoute",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServiceEntry",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Destination",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Percent",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HeaderOperations",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.TCPSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.HTTPRedirect",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ClientTLSSettingsMode",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.ServerTLSSettings",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.DestinationRule",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.Http2ErrorErrorType",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.SimpleLB",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.networking.v1beta1.H2UpgradePolicy",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.TimeStamp$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.internal.TypedValueMapDeserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.internal.TypedValueMapSerializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.Duration$Serializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.TimeStamp$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.Duration$Deserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.policy.v1beta1.InstanceSpecDeserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "me.snowdrop.istio.api.policy.v1beta1.HandlerSpecDeserializer",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.neo9.ingress.access.config.AdditionalWatchersConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.neo9.ingress.access.config.WatchIngressAnnotationsConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.neo9.ingress.access.config.UpdateIstioIngressSidecarConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.neo9.ingress.access.config.ExposerConfig",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  },
+  {
+    "name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources",
+    "allDeclaredMethods": true,
+    "allPublicConstructors": true
+  }
 ]

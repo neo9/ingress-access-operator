@@ -5,7 +5,7 @@ import lombok.Getter;
 public class VisitorGroupNotFoundException extends RuntimeException {
 
 	@Getter
-	private String visitorGroupName;
+	private final String visitorGroupName;
 
 	public VisitorGroupNotFoundException(String visitorGroupName) {
 		super(String.format("could not retrieve visitorGroup with name %s . May it does not exists ?", visitorGroupName));

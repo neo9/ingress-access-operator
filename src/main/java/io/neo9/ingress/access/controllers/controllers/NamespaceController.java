@@ -41,7 +41,7 @@ public class NamespaceController {
 			log.info("update event detected for namespace : {}", namespace.getMetadata().getName());
 			// always reconcile sidecar config
 			try {
-				istioSidecarReconciler.reconcile(namespace);
+				istioSidecarReconciler.reconcile();
 			}
 			catch (ResourceNotManagedByOperatorException e) {
 				log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
