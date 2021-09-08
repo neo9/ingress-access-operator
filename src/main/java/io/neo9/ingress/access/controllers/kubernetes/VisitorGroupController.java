@@ -1,4 +1,4 @@
-package io.neo9.ingress.access.controllers.operators;
+package io.neo9.ingress.access.controllers.kubernetes;
 
 import io.javaoperatorsdk.operator.api.Context;
 import io.javaoperatorsdk.operator.api.Controller;

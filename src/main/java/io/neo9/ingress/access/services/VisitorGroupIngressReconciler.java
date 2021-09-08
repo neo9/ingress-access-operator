@@ -2,7 +2,7 @@ package io.neo9.ingress.access.services;
 
 import java.util.Collection;
 
-import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.customresources.VisitorGroup;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;

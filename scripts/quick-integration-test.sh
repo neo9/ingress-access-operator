@@ -13,7 +13,7 @@ function checkWhitelistValue() {
     if [ ${ips} == ${expectation} ]; then
         echo "assertion ok"
     else
-        echo "Unexpected value"
+        echo "Unexpected value for ingress ${ingressName}"
         echo "${ips}"
         echo "${expectation}"
         exit 1
@@ -50,36 +50,55 @@ function checkIfNotExists() {
   fi
 }
 
-# operator filtering
+sleep 5
 
-kubectl ${kubeContextArgs} apply -f ../example-conf/
+kubernetesMajorMinorVersion=$(kubectl version --short | grep 'Server Version' | awk -F':' '{print $2}' | sed 's/.*v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\).*/\1\2/')
+for f in $(ls ../example-conf/); do
+    kubectl ${kubeContextArgs} apply -f ../example-conf/$f
+done
+
+#
+# operator filtering
+#
+
 sleep 3
 checkWhitelistValue "demoingress2" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32,10.1.2.1/32,10.1.2.2/32"
 
-kubectl ${kubeContextArgs} apply -f ./test-patch/patch-visitorgroup-customer.yaml
+kubectl ${kubeContextArgs} apply -f ./test-patch/visitorgroups/patch-visitorgroup-customer.yaml
 sleep 3
 checkWhitelistValue "demoingress2" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32,10.1.2.1/32,10.1.2.3/32"
 
-kubectl ${kubeContextArgs} apply -f ./test-patch/patch-ingress-2g.yaml
+kubectl ${kubeContextArgs} apply -f ./test-patch/ingresses/patch-ingress-2g.yaml
 sleep 3
 checkWhitelistValue "demoingress2" "10.1.2.1/32,10.1.2.3/32"
 
-checkWhitelistValue "xposer-demoingress" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
+checkWhitelistValue "watch-on-annotation" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
 
-checkWhitelistValue "xposer-not-watched-ingress" "10.1.9.1/32"
+checkWhitelistValue "not-watched-ingress-with-annotations" "10.1.9.1/32"
 
 checkWhitelistValue "not-watched-ingress" "10.1.9.1/32"
 
+if [ ${kubernetesMajorMinorVersion} -lt 122 ]; then
+    checkWhitelistValue "ingress-v1beta1" "0.0.0.0/0"
+else
+    # kubernetes should have rejected resource creation
+    checkIfNotExists "ingress" "default" "ingress-v1beta1"
+fi
+
+#
 # istio sidecar
+#
 
 checkIfExists "sidecar" "nginx-istio-ingress" "ingress"
 
-# ingress
+#
+# ingress exposer
+#
 
 checkIfExists "ingress" "default" "service-to-expose"
 checkIfNotExists "ingress" "default" "service-not-to-expose"
 
-kubectl ${kubeContextArgs} delete -f ../example-conf/service-to-expose.yaml
+kubectl ${kubeContextArgs} delete -f ../example-conf/services/service-to-expose.yaml
 sleep 3
 
 checkIfNotExists "ingress" "default" "service-to-expose"

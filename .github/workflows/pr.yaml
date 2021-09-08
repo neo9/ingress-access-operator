@@ -32,8 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # https://github.com/debianmaster/actions-k3s#k3s-version-mapping-with-k8s
-        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1]
+        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
     steps:
     - uses: actions/checkout@v2
     - name: Download test image
@@ -48,7 +47,7 @@ jobs:
       run: |
         kubectl apply -f ./crds/
         kubectl create namespace nginx-istio-ingress
-        kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.10.2/manifests/charts/base/crds/crd-all.gen.yaml
+        kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
         docker run -d --rm \
                 --network host \
                 --name ingress-access-operator-test \
@@ -65,5 +64,6 @@ jobs:
         cd scripts
         ./quick-integration-test.sh || testsFailed=1
         cd -
+        docker logs ingress-access-operator-test
         docker stop ingress-access-operator-test
         exit ${testsFailed}

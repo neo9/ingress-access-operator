@@ -3,8 +3,8 @@ package io.neo9.ingress.access.service;
 import java.util.List;
 import java.util.Map;
 
-import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.config.MutationAnnotations;
 import io.neo9.ingress.access.customresources.VisitorGroup;

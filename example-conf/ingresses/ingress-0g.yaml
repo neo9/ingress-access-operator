@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    ingress.neo9.io/access-operator-enabled: "true"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: demoingress0
+  namespace: default
+spec:
+  rules:
+  - host: demoingress0.dev-xmichel.neokube.neo9.pro
+    http:
+      paths:
+      - backend:
+          service:
+            name: nginx-ingress-controller-default-backend
+            port:
+              number: 80
+        path: /demo
+        pathType: Prefix

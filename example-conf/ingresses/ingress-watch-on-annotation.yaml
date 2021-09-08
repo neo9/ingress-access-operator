@@ -1,11 +1,11 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     ingress.neo9.io/access-operator-enabled: "true" # because xposer can't place labels on generated resource
     ingress.neo9.io/allowed-visitors: neo9
-  name: xposer-demoingress
+  name: watch-on-annotation
   namespace: default
 spec:
   rules:
@@ -13,6 +13,9 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: nginx-ingress-controller-default-backend
-          servicePort: 80
+          service:
+            name: nginx-ingress-controller-default-backend
+            port:
+              number: 80
         path: /demo
+        pathType: Prefix

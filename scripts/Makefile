@@ -15,7 +15,7 @@ run-integration-tests:
 apply-crd:
 	kubectl --context=k3d-$(CLUSTER_NAME) apply -f ../crds/
 	kubectl --context=k3d-$(CLUSTER_NAME) create namespace nginx-istio-ingress
-	kubectl --context=k3d-$(CLUSTER_NAME) apply -f https://raw.githubusercontent.com/istio/istio/1.10.2/manifests/charts/base/crds/crd-all.gen.yaml
+	kubectl --context=k3d-$(CLUSTER_NAME) apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
 
 generate-authentication-file:
 	mkdir -p /tmp/kube/ || true

@@ -11,6 +11,11 @@ filter3='istio.api.networking.*'
 filter4='Serializer|Deserializer'
 filter="${filter1}|${filter2}|${filter3}|${filter4}"
 
+
+exclusionFilterFabric8="io.fabric8.kubernetes.api.model.networking.v1beta1|io.fabric8.kubernetes.api.model.apiextensions.v1beta1"
+exclusionFilterIstio="me.snowdrop.istio.api.networking.v1beta1" # warning : we still use v1alpha3
+exclusionFilter="${exclusionFilterFabric8}|${exclusionFilterIstio}"
+
 cat <<EOF > $targetFile
 [
   {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
@@ -38,6 +43,11 @@ for jarGroupArtefactVersion in \
     cd -
   fi
 
+  completeExclusionFilter='Fluent|Builder'
+  if [ ! -z "${exclusionFilter}" ]; then
+    completeExclusionFilter="${completeExclusionFilter}|${exclusionFilter}"
+  fi
+
   unzip -l "${workDir}/${jarFileName}" \
     | grep '.class' \
     | awk '{print $4}' \
@@ -45,7 +55,7 @@ for jarGroupArtefactVersion in \
     | tr '/' '.' \
     | grep -Ev '\.$' \
     | grep -E ${filter} \
-    | grep -Ev 'Fluent|Builder' \
+    | grep -Ev ${completeExclusionFilter} \
     | while read l; do
         echo "  {\"name\": \"$l\", \"allDeclaredMethods\": true, \"allPublicConstructors\": true},";
       done >> $targetFile

@@ -7,16 +7,17 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
-import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.Service;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.HTTPIngressPathBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.HTTPIngressRuleValueBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBackendBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressFluent.SpecNested;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressRuleBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressTLSBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressPathBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressRuleValueBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressBackendBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent.SpecNested;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressRuleBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressServiceBackendBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressTLSBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.ServiceBackendPortBuilder;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.repositories.IngressRepository;
@@ -78,11 +79,18 @@ public class ServiceReconciler {
 										.withPaths(
 												new HTTPIngressPathBuilder()
 														.withPath("/")
+														.withPathType("Prefix")
 														.withBackend(
 																new IngressBackendBuilder()
-																		.withServiceName(service.getMetadata().getName())
-																		.withServicePort(new IntOrString(service.getSpec().getPorts().get(0).getPort()))
-																		.build()
+																		.withService(
+																				new IngressServiceBackendBuilder()
+																						.withName(service.getMetadata().getName())
+																						.withPort(
+																								new ServiceBackendPortBuilder()
+																										.withNumber(service.getSpec().getPorts().get(0).getPort())
+																										.build()
+																						).build()
+																		).build()
 														).build()
 										).build()
 								).build()
