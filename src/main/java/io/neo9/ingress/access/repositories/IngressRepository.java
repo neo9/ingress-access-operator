@@ -2,8 +2,8 @@ package io.neo9.ingress.access.repositories;
 
 import java.util.List;
 
-import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
-import io.fabric8.kubernetes.api.model.networking.v1beta1.IngressBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
 
 import org.springframework.stereotype.Component;
@@ -18,15 +18,20 @@ public class IngressRepository {
 	}
 
 	public List<Ingress> listIngressWithLabel(String labelKey, String labelValue) {
-		return kubernetesClient.network().ingresses().inAnyNamespace().withLabel(labelKey, labelValue).list().getItems();
+		return kubernetesClient
+				.network().v1().ingresses()
+				.inAnyNamespace().withLabel(labelKey, labelValue).list().getItems();
 	}
 
 	public List<Ingress> listIngressWithoutLabel(String labelKey, String labelValue) {
-		return kubernetesClient.network().ingresses().inAnyNamespace().withoutLabel(labelKey, labelValue).list().getItems();
+		return kubernetesClient
+				.network().v1().ingresses()
+				.inAnyNamespace().withoutLabel(labelKey, labelValue).list().getItems();
 	}
 
 	public Ingress patchWithAnnotation(Ingress ingress, String annotationKey, String annotationValue) {
-		return kubernetesClient.network().ingress()
+		return kubernetesClient
+				.network().v1().ingresses()
 				.inNamespace(ingress.getMetadata().getNamespace())
 				.withName(ingress.getMetadata().getName())
 				.edit(
@@ -46,7 +51,7 @@ public class IngressRepository {
 
 	public Ingress get(String namespace, String name) {
 		return kubernetesClient
-				.network().ingresses()
+				.network().v1().ingresses()
 				.inNamespace(namespace)
 				.withName(name)
 				.fromServer()
@@ -55,7 +60,7 @@ public class IngressRepository {
 
 	public Boolean delete(String namespace, String name) {
 		return kubernetesClient
-				.network().ingresses()
+				.network().v1().ingresses()
 				.inNamespace(namespace)
 				.withName(name)
 				.delete();

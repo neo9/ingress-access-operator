@@ -9,7 +9,7 @@ kubernetes ingress. It have three main features :
 
 * easily whitelist IPs which can enter by a kubernetes ingress, and think it globally (note by ingress). More
 than a cluster view, you can share the `VisitorGroup` definition across cluster.  More concretely, it manages the nginx `nginx.ingress.kubernetes.io/whitelist-source-range` annotation by allowing a list of CIDR, which are store in a CRD (`VisitorGroup`).
-  
+
 * Keep up to date Istio ingress Sidecar with namespaces watched by istiod (configure the ingress sidecar to route traffic 
 to services in the mesh).
 
@@ -18,7 +18,8 @@ to services in the mesh).
 Compatibility
 -------------
 
-Test with kubernetes 1.19, 1.20 and 1.21 (Not yet compatible with kubernetes 1.22+).
+Tested with kubernetes from version 1.19 to 1.22+.
+The istio sidecar generation was tested with istio 1.10 and 1.11.
 
 Concepts and usage
 ------------------
@@ -179,7 +180,8 @@ Or simply add git tag, it will generate a release with the tag version.
 Generation reflect source for spring native image
 -------------------------------------------------
 
-To generate the reflection config file, use the appropriate script :
+To generate the reflection configuration file, use the appropriate script :
 ```
 cd scripts && ./generate-reflect-config.sh && cd ..
 ```
+

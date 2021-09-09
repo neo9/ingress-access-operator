@@ -1,11 +1,11 @@
-package io.neo9.ingress.access.controllers.controllers;
+package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.function.BiFunction;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import io.fabric8.kubernetes.api.model.networking.v1beta1.Ingress;
+import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.Watcher.Action;
@@ -86,7 +86,7 @@ public class IngressController {
 	}
 
 	private void watchIngressesOnLabel() {
-		ingressWatchOnLabel = kubernetesClient.network().ingresses()
+		ingressWatchOnLabel = kubernetesClient.network().v1().ingresses()
 				.inAnyNamespace()
 				.withLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
 				.watch(new RetryableWatcher<>(
@@ -99,7 +99,7 @@ public class IngressController {
 	}
 
 	private void watchIngressesOnAnnotation() {
-		ingressWatchOnAnnotations = kubernetesClient.network().ingresses()
+		ingressWatchOnAnnotations = kubernetesClient.network().v1().ingresses()
 				.inAnyNamespace()
 				.withoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE) // exclude because already retrieved by previous watcher
 				.watch(new RetryableWatcher<>(

@@ -1,4 +1,4 @@
-package io.neo9.ingress.access.controllers.controllers;
+package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.function.BiFunction;
 
