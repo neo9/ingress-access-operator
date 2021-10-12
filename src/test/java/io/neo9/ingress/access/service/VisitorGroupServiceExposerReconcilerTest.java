@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class VisitorGroupServiceReconcilerTest {
+public class VisitorGroupServiceExposerReconcilerTest {
 
 	private final static VisitorGroup visitorGroup1;
 

@@ -36,14 +36,14 @@ import static java.util.Objects.nonNull;
 
 @org.springframework.stereotype.Service
 @Slf4j
-public class ServiceReconciler {
+public class ServiceExposerReconciler {
 
 
 	private final IngressRepository ingressRepository;
 
 	private final AdditionalWatchersConfig additionalWatchersConfig;
 
-	public ServiceReconciler(IngressRepository ingressRepository, AdditionalWatchersConfig additionalWatchersConfig) {
+	public ServiceExposerReconciler(IngressRepository ingressRepository, AdditionalWatchersConfig additionalWatchersConfig) {
 		this.ingressRepository = ingressRepository;
 		this.additionalWatchersConfig = additionalWatchersConfig;
 	}
@@ -118,7 +118,7 @@ public class ServiceReconciler {
 			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(oldIngress));
 		}
 		if (nonNull(oldIngress)) {
-			log.info("Deleting ingress {} due to service deletion {}", getResourceNamespaceAndName(oldIngress), serviceNamespaceAndName);
+			log.info("deleting ingress {} due to service deletion {}", getResourceNamespaceAndName(oldIngress), serviceNamespaceAndName);
 			ingressRepository.delete(oldIngress.getMetadata().getNamespace(), oldIngress.getMetadata().getName());
 		}
 		log.trace("end of working with deleted service {}", serviceNamespaceAndName);

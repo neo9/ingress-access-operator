@@ -9,7 +9,7 @@ import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.config.ExposerConfig;
 import io.neo9.ingress.access.repositories.IngressRepository;
-import io.neo9.ingress.access.services.ServiceReconciler;
+import io.neo9.ingress.access.services.ServiceExposerReconciler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-public class ServiceReconcilerTest {
+public class ServiceExposerReconcilerTest {
 
 	@Mock
 	private IngressRepository ingressRepository;
@@ -29,7 +29,7 @@ public class ServiceReconcilerTest {
 	@Mock
 	private AdditionalWatchersConfig additionalWatchersConfig;
 
-	private ServiceReconciler serviceReconciler;
+	private ServiceExposerReconciler serviceExposerReconciler;
 
 	@BeforeEach
 	public void setUp() {
@@ -40,7 +40,7 @@ public class ServiceReconcilerTest {
 
 		lenient().when(additionalWatchersConfig.exposer()).thenReturn(exposerConfig);
 
-		serviceReconciler = new ServiceReconciler(ingressRepository, additionalWatchersConfig);
+		serviceExposerReconciler = new ServiceExposerReconciler(ingressRepository, additionalWatchersConfig);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class ServiceReconcilerTest {
 				.build();
 
 		// when
-		String hostname = serviceReconciler.generateHostname(service);
+		String hostname = serviceExposerReconciler.generateHostname(service);
 
 		// then
 		assertThat(hostname).isEqualTo("myname.mynamespace.neokube.pro");
@@ -72,7 +72,7 @@ public class ServiceReconcilerTest {
 				.build();
 
 		// when
-		String hostname = serviceReconciler.generateHostname(service);
+		String hostname = serviceExposerReconciler.generateHostname(service);
 
 		// then
 		assertThat(hostname).isEqualTo("hello.neokube.pro");
@@ -90,7 +90,7 @@ public class ServiceReconcilerTest {
 				.build();
 
 		// when
-		boolean shouldEnableTls = serviceReconciler.shouldEnableTls(ingress.getMetadata().getAnnotations());
+		boolean shouldEnableTls = serviceExposerReconciler.shouldEnableTls(ingress.getMetadata().getAnnotations());
 
 		// then
 		assertThat(shouldEnableTls).isFalse();
@@ -109,7 +109,7 @@ public class ServiceReconcilerTest {
 				.build();
 
 		// when
-		boolean shouldEnableTls = serviceReconciler.shouldEnableTls(ingress.getMetadata().getAnnotations());
+		boolean shouldEnableTls = serviceExposerReconciler.shouldEnableTls(ingress.getMetadata().getAnnotations());
 
 		// then
 		assertThat(shouldEnableTls).isTrue();
