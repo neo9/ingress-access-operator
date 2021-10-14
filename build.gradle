@@ -39,12 +39,8 @@ if (buildNativeImage) {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
-	if (! buildNativeImage) {
-		println "[dependencies] Including devtools"
-		developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	}
 
 	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorVersion}"
 	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
@@ -63,13 +59,6 @@ dependencies {
 
 test {
 	useJUnitPlatform()
-}
-
-bootJar {
-	if (! buildNativeImage) {
-		println "[bootJar] Including devtools"
-		classpath configurations.developmentOnly
-	}
 }
 
 bootBuildImage {
