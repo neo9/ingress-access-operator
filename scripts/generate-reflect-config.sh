@@ -20,12 +20,12 @@ cat <<EOF > $targetFile
 EOF
 
 for jarGroupArtefactVersion in \
-      io.javaoperatorsdk:operator-framework:1.7.5     \
-      io.fabric8:kubernetes-model-common:5.1.1        \
-      io.fabric8:kubernetes-model-core:5.1.1          \
-      io.fabric8:kubernetes-model-networking:5.1.1    \
-      io.fabric8:kubernetes-model-apiextensions:5.1.1 \
-      io.fabric8:kubernetes-client:5.1.1              \
+      io.javaoperatorsdk:operator-framework:1.8.4     \
+      io.fabric8:kubernetes-model-common:5.3.1        \
+      io.fabric8:kubernetes-model-core:5.3.1          \
+      io.fabric8:kubernetes-model-networking:5.3.1    \
+      io.fabric8:kubernetes-model-apiextensions:5.3.1 \
+      io.fabric8:kubernetes-client:5.3.1              \
     ; do
 
   jarGroup=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $1}')

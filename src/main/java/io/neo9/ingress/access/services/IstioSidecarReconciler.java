@@ -64,8 +64,9 @@ public class IstioSidecarReconciler {
 		sidecar.getMetadata().setNamespace(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace());
 		sidecar.getMetadata().setName(SIDECAR_NAME);
 		sidecar.getMetadata().setLabels(Map.of(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));
+		EgressSpec egressSpec = new EgressSpec(namespaceForSidecar);
 		SidecarSpec sidecarSpec = new SidecarSpec();
-		sidecarSpec.setEgress(List.of(EgressSpec.builder().hosts(namespaceForSidecar).build()));
+		sidecarSpec.setEgress(List.of(egressSpec));
 		sidecar.setSpec(sidecarSpec);
 
 		sidecarRepository.createOrReplace(sidecar);

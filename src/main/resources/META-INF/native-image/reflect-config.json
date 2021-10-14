@@ -312,7 +312,6 @@
   {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.ServiceReference", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.WebhookClientConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.api.model.apiextensions.v1.WebhookConversion", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.fabric8.kubernetes.client.CustomResource$Instantiator", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.client.CustomResource", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.client.CustomResourceList", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.client.dsl.base.CustomResourceDefinitionContext", "allDeclaredMethods": true, "allPublicConstructors": true},
