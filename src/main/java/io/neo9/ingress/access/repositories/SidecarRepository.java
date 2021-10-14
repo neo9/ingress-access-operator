@@ -1,8 +1,7 @@
 package io.neo9.ingress.access.repositories;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
-import me.snowdrop.istio.api.networking.v1alpha3.Sidecar;
-import me.snowdrop.istio.api.networking.v1alpha3.SidecarBuilder;
+import io.neo9.ingress.access.customresources.external.istio.Sidecar;
 
 import org.springframework.stereotype.Component;
 
@@ -17,20 +16,17 @@ public class SidecarRepository {
 
 	public Sidecar createOrReplace(Sidecar sidecar) {
 		return kubernetesClient
-				.resource(sidecar)
-				.createOrReplace();
+				.customResources(Sidecar.class)
+				.inNamespace(sidecar.getMetadata().getNamespace())
+				.withName(sidecar.getMetadata().getName())
+				.createOrReplace(sidecar);
 	}
 
 	public Sidecar getSidecar(String namespace, String name) {
-		Sidecar sidecar = new SidecarBuilder()
-				.withNewMetadata()
-				.withNamespace(namespace)
-				.withName(name)
-				.endMetadata()
-				.build();
 		return kubernetesClient
-				.resource(sidecar)
+				.customResources(Sidecar.class)
 				.inNamespace(namespace)
+				.withName(name)
 				.fromServer()
 				.get();
 	}

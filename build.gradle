@@ -25,7 +25,6 @@ repositories {
 ext {
 	javaOperatorVersion = '1.7.5'
 	bouncycastleVersion = '1.69'
-	istioJavaApiVersion = '1.7.7.1'
 
 	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
 }
@@ -45,8 +44,6 @@ dependencies {
 	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorVersion}"
 	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
 	implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
-	implementation "me.snowdrop:istio-client:${istioJavaApiVersion}"
-	implementation "me.snowdrop:istio-model:${istioJavaApiVersion}"
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"

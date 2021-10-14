@@ -7,14 +7,12 @@ targetFile=../src/main/resources/META-INF/native-image/reflect-config.json
 
 filter1='io.fabric8.kubernetes.api.model'
 filter2='io.fabric8.kubernetes.client.*CustomResource'
-filter3='istio.api.networking.*'
-filter4='Serializer|Deserializer'
-filter="${filter1}|${filter2}|${filter3}|${filter4}"
+filter3='Serializer|Deserializer'
+filter="${filter1}|${filter2}|${filter3}"
 
 
 exclusionFilterFabric8="io.fabric8.kubernetes.api.model.networking.v1beta1|io.fabric8.kubernetes.api.model.apiextensions.v1beta1"
-exclusionFilterIstio="me.snowdrop.istio.api.networking.v1beta1" # warning : we still use v1alpha3
-exclusionFilter="${exclusionFilterFabric8}|${exclusionFilterIstio}"
+exclusionFilter="${exclusionFilterFabric8}"
 
 cat <<EOF > $targetFile
 [
@@ -28,8 +26,6 @@ for jarGroupArtefactVersion in \
       io.fabric8:kubernetes-model-networking:5.1.1    \
       io.fabric8:kubernetes-model-apiextensions:5.1.1 \
       io.fabric8:kubernetes-client:5.1.1              \
-      me.snowdrop:istio-model:1.7.7.1                 \
-      me.snowdrop:istio-client:1.7.7.1                \
     ; do
 
   jarGroup=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $1}')
@@ -69,7 +65,10 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.config.UpdateIstioIngressSidecarConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.ExposerConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true}
+  {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.istio.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allPublicConstructors": true}
 ]
 EOF
 

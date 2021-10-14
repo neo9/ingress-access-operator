@@ -11,7 +11,6 @@ import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.Watcher.Action;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.services.ServiceExposerReconciler;
-import io.neo9.ingress.access.utils.Debouncer;
 import io.neo9.ingress.access.utils.RetryContext;
 import io.neo9.ingress.access.utils.RetryableWatcher;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +32,6 @@ public class ServiceController {
 
 	private final BiFunction<Action, Service, Void> onEventReceived;
 
-	private final Debouncer debouncer = new Debouncer();
-
 	private Watch serviceWatchOnLabel;
 
 	public ServiceController(KubernetesClient kubernetesClient, ServiceExposerReconciler serviceExposerReconciler) {
@@ -46,25 +43,21 @@ public class ServiceController {
 				case ADDED:
 				case MODIFIED:
 					log.info("update event detected for service : {}", serviceNamespaceAndName);
-					debouncer.debounce(serviceNamespaceAndName, () -> {
-						try {
-							serviceExposerReconciler.reconcile(service);
-						}
-						catch (ResourceNotManagedByOperatorException e) {
-							log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
-						}
-					});
+					try {
+						serviceExposerReconciler.reconcile(service);
+					}
+					catch (ResourceNotManagedByOperatorException e) {
+						log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
+					}
 					break;
 				case DELETED:
 					log.info("delete event detected for service : {}", serviceNamespaceAndName);
-					debouncer.debounce(serviceNamespaceAndName, () -> {
-						try {
-							serviceExposerReconciler.reconcileOnDelete(service);
-						}
-						catch (ResourceNotManagedByOperatorException e) {
-							log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
-						}
-					});
+					try {
+						serviceExposerReconciler.reconcileOnDelete(service);
+					}
+					catch (ResourceNotManagedByOperatorException e) {
+						log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
+					}
 					break;
 				default:
 					// do nothing on error
@@ -84,7 +77,6 @@ public class ServiceController {
 	public void stopWatch() {
 		closeServicesWatchOnLabel();
 		retryContext.shutdown();
-		debouncer.shutdown();
 	}
 
 	private void closeServicesWatchOnLabel() {

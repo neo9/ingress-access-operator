@@ -12,7 +12,6 @@ import io.fabric8.kubernetes.client.Watcher.Action;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
-import io.neo9.ingress.access.utils.Debouncer;
 import io.neo9.ingress.access.utils.RetryContext;
 import io.neo9.ingress.access.utils.RetryableWatcher;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +36,6 @@ public class IngressController {
 
 	private final BiFunction<Action, Ingress, Void> onEventReceived;
 
-	private final Debouncer debouncer = new Debouncer();
-
 	private Watch ingressWatchOnLabel;
 
 	private Watch ingressWatchOnAnnotations;
@@ -52,14 +49,12 @@ public class IngressController {
 				case ADDED:
 				case MODIFIED:
 					log.info("update event detected for ingress : {}", ingressNamespaceAndName);
-					debouncer.debounce(ingressNamespaceAndName, () -> {
-						try {
-							visitorGroupIngressReconciler.reconcile(ingress);
-						}
-						catch (VisitorGroupNotFoundException e) {
-							log.error("panic: could not resolve visitorGroup {} for ingress {}", e.getVisitorGroupName(), ingressNamespaceAndName, e);
-						}
-					});
+					try {
+						visitorGroupIngressReconciler.reconcile(ingress);
+					}
+					catch (VisitorGroupNotFoundException e) {
+						log.error("panic: could not resolve visitorGroup {} for ingress {}", e.getVisitorGroupName(), ingressNamespaceAndName, e);
+					}
 					break;
 				default:
 					// do nothing on ingress deletion
@@ -82,7 +77,6 @@ public class IngressController {
 		closeIngressWatchOnLabel();
 		closeIngressWatchOnAnnotations();
 		retryContext.shutdown();
-		debouncer.shutdown();
 	}
 
 	private void closeIngressWatchOnLabel() {
