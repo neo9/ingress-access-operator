@@ -147,12 +147,7 @@ docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/i
 Remote development
 ------------------
 
-A deployment made with garden is configured to not use native image, and to
-includes devtools.
-
-*Devtools*
-
-You may want to use devtools to update remote application : https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.devtools.remote-applications.client
+A deployment made with garden is configured to not use native image
 
 *Remote debug*
 

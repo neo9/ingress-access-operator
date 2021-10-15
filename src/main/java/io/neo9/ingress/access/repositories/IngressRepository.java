@@ -45,8 +45,10 @@ public class IngressRepository {
 
 	public Ingress createOrReplace(Ingress ingress) {
 		return kubernetesClient
-				.resource(ingress)
-				.createOrReplace();
+				.network().v1().ingresses()
+				.inNamespace(ingress.getMetadata().getNamespace())
+				.withName(ingress.getMetadata().getName())
+				.createOrReplace(ingress);
 	}
 
 	public Ingress get(String namespace, String name) {

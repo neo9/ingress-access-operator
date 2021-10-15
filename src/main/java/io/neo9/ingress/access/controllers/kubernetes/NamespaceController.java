@@ -2,9 +2,6 @@ package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
@@ -12,6 +9,7 @@ import io.fabric8.kubernetes.client.Watcher.Action;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.services.IstioSidecarReconciler;
+import io.neo9.ingress.access.utils.Debouncer;
 import io.neo9.ingress.access.utils.RetryContext;
 import io.neo9.ingress.access.utils.RetryableWatcher;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +20,15 @@ import static java.util.Objects.nonNull;
 
 @Component
 @Slf4j
-public class NamespaceController {
+public class NamespaceController implements ReconnectableWatcher {
 
 	private final KubernetesClient kubernetesClient;
 
 	private final AdditionalWatchersConfig additionalWatchersConfig;
 
 	private final RetryContext retryContext = new RetryContext();
+
+	private final Debouncer debouncer = new Debouncer();
 
 	private final BiFunction<Action, Namespace, Void> onEventReceived;
 
@@ -40,39 +40,46 @@ public class NamespaceController {
 		this.onEventReceived = (action, namespace) -> {
 			log.info("update event detected for namespace : {}", namespace.getMetadata().getName());
 			// always reconcile sidecar config
-			try {
-				istioSidecarReconciler.reconcile();
-			}
-			catch (ResourceNotManagedByOperatorException e) {
-				log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
-			}
+			debouncer.debounce("all-namespaces-debounce", () -> {
+				try {
+					istioSidecarReconciler.reconcile();
+				}
+				catch (ResourceNotManagedByOperatorException e) {
+					log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
+				}
+			});
 			return null;
 		};
 	}
 
-	@PostConstruct
-	public void startWatch() {
+	public void startWatch(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
 		if (additionalWatchersConfig.updateIstioIngressSidecar().isEnabled()) {
-			log.info("starting watch loop on namespaces");
-			watchNamespaces();
+			watchNamespaces(reconnectableControllerOrchestrator);
 		}
 	}
 
-	@PreDestroy
 	public void stopWatch() {
-		log.info("closing watch loop on namespaces");
-		if (nonNull(namespaceWatchOnLabel)) {
-			namespaceWatchOnLabel.close();
-		}
+		closeNamespaceWatch();
 		retryContext.shutdown();
+		debouncer.shutdown();
 	}
 
-	private void watchNamespaces() {
+	private void closeNamespaceWatch() {
+		if (nonNull(namespaceWatchOnLabel)) {
+			log.info("closing watch loop on namespaces");
+			namespaceWatchOnLabel.close();
+			namespaceWatchOnLabel = null;
+		}
+	}
+
+	private void watchNamespaces(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
+		closeNamespaceWatch();
+		log.info("starting watch loop on namespaces");
 		namespaceWatchOnLabel = kubernetesClient.namespaces()
 				.watch(new RetryableWatcher<>(
 						retryContext,
 						String.format("%s-all", Namespace.class.getSimpleName()),
-						this::watchNamespaces,
+						reconnectableControllerOrchestrator::startOrRestartWatch,
 						namespace -> true,
 						onEventReceived
 				));

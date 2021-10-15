@@ -1,8 +1,3 @@
-spring:
-  devtools:
-    remote:
-      secret: aLongButInsecureSecretWhichIsCommitedInGit
-
 logging:
   level:
     io.neo9.ingress.access: TRACE

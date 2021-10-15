@@ -1,18 +1,19 @@
 package io.neo9.ingress.access.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
+import io.neo9.ingress.access.customresources.external.istio.Sidecar;
+import io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec;
+import io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.repositories.NamespaceRepository;
 import io.neo9.ingress.access.repositories.SidecarRepository;
 import lombok.extern.slf4j.Slf4j;
-import me.snowdrop.istio.api.networking.v1alpha3.IstioEgressListenerBuilder;
-import me.snowdrop.istio.api.networking.v1alpha3.Sidecar;
-import me.snowdrop.istio.api.networking.v1alpha3.SidecarBuilder;
 
 import org.springframework.stereotype.Service;
 
@@ -59,15 +60,15 @@ public class IstioSidecarReconciler {
 
 		log.trace("computed namespace list : {}", namespaceForSidecar);
 
-		Sidecar sidecar = new SidecarBuilder()
-				.withNewMetadata()
-				.withNamespace(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace())
-				.withName(SIDECAR_NAME)
-				.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)
-				.endMetadata()
-				.withNewSpec()
-				.addToEgress(new IstioEgressListenerBuilder().addAllToHosts(namespaceForSidecar).build())
-				.endSpec().build();
+		Sidecar sidecar = new Sidecar();
+		sidecar.getMetadata().setNamespace(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace());
+		sidecar.getMetadata().setName(SIDECAR_NAME);
+		sidecar.getMetadata().setLabels(Map.of(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));
+		EgressSpec egressSpec = new EgressSpec(namespaceForSidecar);
+		SidecarSpec sidecarSpec = new SidecarSpec();
+		sidecarSpec.setEgress(List.of(egressSpec));
+		sidecar.setSpec(sidecarSpec);
+
 		sidecarRepository.createOrReplace(sidecar);
 	}
 
