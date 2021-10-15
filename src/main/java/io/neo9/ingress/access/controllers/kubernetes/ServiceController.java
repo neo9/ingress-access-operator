@@ -2,9 +2,6 @@ package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import io.fabric8.kubernetes.api.model.Service;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
@@ -24,7 +21,7 @@ import static java.util.Objects.nonNull;
 
 @Component
 @Slf4j
-public class ServiceController {
+public class ServiceController implements ReconnectableWatcher {
 
 	private final KubernetesClient kubernetesClient;
 
@@ -68,12 +65,10 @@ public class ServiceController {
 		};
 	}
 
-	@PostConstruct
-	public void startWatch() {
-		watchServicesOnLabel();
+	public void startWatch(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
+		watchServicesOnLabel(reconnectableControllerOrchestrator);
 	}
 
-	@PreDestroy
 	public void stopWatch() {
 		closeServicesWatchOnLabel();
 		retryContext.shutdown();
@@ -87,7 +82,7 @@ public class ServiceController {
 		}
 	}
 
-	private void watchServicesOnLabel() {
+	private void watchServicesOnLabel(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
 		closeServicesWatchOnLabel();
 		log.info("starting watch loop on service (by label)");
 		serviceWatchOnLabel = kubernetesClient.services()
@@ -96,7 +91,7 @@ public class ServiceController {
 				.watch(new RetryableWatcher<>(
 						retryContext,
 						String.format("%s-onLabel", Service.class.getSimpleName()),
-						this::watchServicesOnLabel,
+						reconnectableControllerOrchestrator::startOrRestartWatch,
 						service -> true,
 						onEventReceived
 				));

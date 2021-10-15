@@ -2,9 +2,6 @@ package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
@@ -26,7 +23,7 @@ import static java.util.Objects.nonNull;
 
 @Component
 @Slf4j
-public class IngressController {
+public class IngressController implements ReconnectableWatcher {
 
 	private final KubernetesClient kubernetesClient;
 
@@ -64,15 +61,13 @@ public class IngressController {
 		};
 	}
 
-	@PostConstruct
-	public void startWatch() {
-		watchIngressesOnLabel();
+	public void startWatch(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
+		watchIngressesOnLabel(reconnectableControllerOrchestrator);
 		if (additionalWatchersConfig.watchIngressAnnotations().isEnabled()) {
-			watchIngressesOnAnnotation();
+			watchIngressesOnAnnotation(reconnectableControllerOrchestrator);
 		}
 	}
 
-	@PreDestroy
 	public void stopWatch() {
 		closeIngressWatchOnLabel();
 		closeIngressWatchOnAnnotations();
@@ -95,7 +90,7 @@ public class IngressController {
 		}
 	}
 
-	private void watchIngressesOnLabel() {
+	private void watchIngressesOnLabel(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
 		closeIngressWatchOnLabel();
 		log.info("starting watch loop on ingress (by label)");
 		ingressWatchOnLabel = kubernetesClient.network().v1().ingresses()
@@ -104,13 +99,13 @@ public class IngressController {
 				.watch(new RetryableWatcher<>(
 						retryContext,
 						String.format("%s-onLabel", Ingress.class.getSimpleName()),
-						this::watchIngressesOnLabel,
+						reconnectableControllerOrchestrator::startOrRestartWatch,
 						ingress -> true,
 						onEventReceived
 				));
 	}
 
-	private void watchIngressesOnAnnotation() {
+	private void watchIngressesOnAnnotation(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
 		closeIngressWatchOnAnnotations();
 		log.info("starting watch loop on ingress (by annotations)");
 		ingressWatchOnAnnotations = kubernetesClient.network().v1().ingresses()
@@ -119,7 +114,7 @@ public class IngressController {
 				.watch(new RetryableWatcher<>(
 						retryContext,
 						String.format("%s-onAnnotations", Ingress.class.getSimpleName()),
-						this::watchIngressesOnAnnotation,
+						reconnectableControllerOrchestrator::startOrRestartWatch,
 						ingress -> getAnnotationValue(MUTABLE_LABEL_KEY, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE),
 						onEventReceived
 				));

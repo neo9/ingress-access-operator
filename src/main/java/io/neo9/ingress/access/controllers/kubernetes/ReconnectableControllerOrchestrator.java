@@ -1,43 +1,39 @@
 package io.neo9.ingress.access.controllers.kubernetes;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
 /**
- * When we meet an exception, some listener are in a blocked state
- * and cannot recover by themself.
+ * When we meet an exception (#25), some listeners are in a blocked
+ * state and cannot recover by itself.
  *
- * The goal of this class is to centralize stop/start listen
- * action.
+ * The goal of this class is to centralize stop/start listen action.
  */
 @Component
-public class RevivalControllerOrchestrator {
+@Slf4j
+public class ReconnectableControllerOrchestrator {
 
-	private final IngressController ingressController;
+	private final List<ReconnectableWatcher> watchers;
 
-	private final NamespaceController namespaceController;
-
-	private final ServiceController serviceController;
-
-	public RevivalControllerOrchestrator(IngressController ingressController, NamespaceController namespaceController, ServiceController serviceController) {
-		this.ingressController = ingressController;
-		this.namespaceController = namespaceController;
-		this.serviceController = serviceController;
+	public ReconnectableControllerOrchestrator(List<ReconnectableWatcher> watchers) {
+		this.watchers = watchers;
 	}
 
 	@PostConstruct
 	public void startOrRestartWatch() {
-		ingressController.startWatch(this);
-		namespaceController.startWatch(this);
-		serviceController.startWatch(this);
+		log.info("start or restart all watchers");
+		watchers.forEach(w -> w.startWatch(this));
 	}
 
 	@PreDestroy
 	public void stopWatch() {
-		ingressController.stopWatch();
-		namespaceController.stopWatch();
-		serviceController.stopWatch();
+		log.info("stop all watchers");
+		watchers.forEach(ReconnectableWatcher::stopWatch);
 	}
 }

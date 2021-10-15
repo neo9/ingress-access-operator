@@ -2,9 +2,6 @@ package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.function.BiFunction;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
@@ -22,7 +19,7 @@ import static java.util.Objects.nonNull;
 
 @Component
 @Slf4j
-public class NamespaceController {
+public class NamespaceController implements ReconnectableWatcher {
 
 	private final KubernetesClient kubernetesClient;
 
@@ -50,14 +47,12 @@ public class NamespaceController {
 		};
 	}
 
-	@PostConstruct
-	public void startWatch() {
+	public void startWatch(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
 		if (additionalWatchersConfig.updateIstioIngressSidecar().isEnabled()) {
-			watchNamespaces();
+			watchNamespaces(reconnectableControllerOrchestrator);
 		}
 	}
 
-	@PreDestroy
 	public void stopWatch() {
 		closeNamespaceWatch();
 		retryContext.shutdown();
@@ -71,14 +66,14 @@ public class NamespaceController {
 		}
 	}
 
-	private void watchNamespaces() {
+	private void watchNamespaces(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
 		closeNamespaceWatch();
 		log.info("starting watch loop on namespaces");
 		namespaceWatchOnLabel = kubernetesClient.namespaces()
 				.watch(new RetryableWatcher<>(
 						retryContext,
 						String.format("%s-all", Namespace.class.getSimpleName()),
-						this::watchNamespaces,
+						reconnectableControllerOrchestrator::startOrRestartWatch,
 						namespace -> true,
 						onEventReceived
 				));
