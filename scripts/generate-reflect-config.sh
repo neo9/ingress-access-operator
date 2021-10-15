@@ -14,18 +14,23 @@ filter="${filter1}|${filter2}|${filter3}"
 exclusionFilterFabric8="io.fabric8.kubernetes.api.model.networking.v1beta1|io.fabric8.kubernetes.api.model.apiextensions.v1beta1"
 exclusionFilter="${exclusionFilterFabric8}"
 
+cd ..
+javaoperatorsdkVersion=$(./gradlew dependencyInsight --configuration annotationProcessor --dependency io.javaoperatorsdk:operator-framework | grep -A1 ':dependencyInsight' | tail -1 | awk -F: '{print $NF}' | awk '{print $1}')
+fabric8Version=$(./gradlew dependencyInsight --configuration annotationProcessor --dependency io.fabric8:kubernetes-client | grep -A1 ':dependencyInsight' | tail -1 | awk -F: '{print $NF}' | awk '{print $1}')
+cd -
+
 cat <<EOF > $targetFile
 [
   {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
 EOF
 
 for jarGroupArtefactVersion in \
-      io.javaoperatorsdk:operator-framework:1.8.4     \
-      io.fabric8:kubernetes-model-common:5.3.1        \
-      io.fabric8:kubernetes-model-core:5.3.1          \
-      io.fabric8:kubernetes-model-networking:5.3.1    \
-      io.fabric8:kubernetes-model-apiextensions:5.3.1 \
-      io.fabric8:kubernetes-client:5.3.1              \
+      io.javaoperatorsdk:operator-framework:${javaoperatorsdkVersion} \
+      io.fabric8:kubernetes-model-common:${fabric8Version}            \
+      io.fabric8:kubernetes-model-core:${fabric8Version}              \
+      io.fabric8:kubernetes-model-networking:${fabric8Version}        \
+      io.fabric8:kubernetes-model-apiextensions:${fabric8Version}     \
+      io.fabric8:kubernetes-client:${fabric8Version}                  \
     ; do
 
   jarGroup=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $1}')

@@ -39,7 +39,7 @@ public class NamespaceController {
 		this.additionalWatchersConfig = additionalWatchersConfig;
 		this.onEventReceived = (action, namespace) -> {
 			log.info("update event detected for namespace : {}", namespace.getMetadata().getName());
-			// always reconcile sidecar config, we same key
+			// always reconcile sidecar config
 			try {
 				istioSidecarReconciler.reconcile();
 			}
