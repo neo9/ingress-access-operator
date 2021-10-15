@@ -9,6 +9,7 @@ import io.fabric8.kubernetes.client.Watcher.Action;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.services.IstioSidecarReconciler;
+import io.neo9.ingress.access.utils.Debouncer;
 import io.neo9.ingress.access.utils.RetryContext;
 import io.neo9.ingress.access.utils.RetryableWatcher;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,8 @@ public class NamespaceController implements ReconnectableWatcher {
 
 	private final RetryContext retryContext = new RetryContext();
 
+	private final Debouncer debouncer = new Debouncer();
+
 	private final BiFunction<Action, Namespace, Void> onEventReceived;
 
 	private Watch namespaceWatchOnLabel;
@@ -37,12 +40,14 @@ public class NamespaceController implements ReconnectableWatcher {
 		this.onEventReceived = (action, namespace) -> {
 			log.info("update event detected for namespace : {}", namespace.getMetadata().getName());
 			// always reconcile sidecar config
-			try {
-				istioSidecarReconciler.reconcile();
-			}
-			catch (ResourceNotManagedByOperatorException e) {
-				log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
-			}
+			debouncer.debounce("all-namespaces-debounce", () -> {
+				try {
+					istioSidecarReconciler.reconcile();
+				}
+				catch (ResourceNotManagedByOperatorException e) {
+					log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
+				}
+			});
 			return null;
 		};
 	}
@@ -56,6 +61,7 @@ public class NamespaceController implements ReconnectableWatcher {
 	public void stopWatch() {
 		closeNamespaceWatch();
 		retryContext.shutdown();
+		debouncer.shutdown();
 	}
 
 	private void closeNamespaceWatch() {
