@@ -23,7 +23,7 @@ repositories {
 }
 
 ext {
-	javaOperatorVersion = '1.10.0'
+	javaOperatorVersion = '1.10.1'
 	javaOperatorStarterVersion = '1.8.4'
 	bouncycastleVersion = '1.70'
 
