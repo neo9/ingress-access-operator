@@ -12,6 +12,7 @@ import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.repositories.IngressRepository;
+import io.neo9.ingress.access.repositories.ServiceRepository;
 import io.neo9.ingress.access.repositories.VisitorGroupRepository;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,6 +93,9 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Mock
 	private IngressRepository ingressRepository;
 
+	@Mock
+	private ServiceRepository serviceRepository;
+
 	private VisitorGroupIngressReconciler visitorGroupIngressReconciler;
 
 	@BeforeEach
@@ -101,7 +105,7 @@ public class VisitorGroupServiceExposerReconcilerTest {
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg1bis")).thenReturn(visitorGroup1bis);
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vgUndefined")).thenThrow(new VisitorGroupNotFoundException("vgUndefined"));
 
-		visitorGroupIngressReconciler = new VisitorGroupIngressReconciler(visitorGroupRepository, ingressRepository, new AdditionalWatchersConfig());
+		visitorGroupIngressReconciler = new VisitorGroupIngressReconciler(visitorGroupRepository, ingressRepository, serviceRepository, new AdditionalWatchersConfig());
 	}
 
 	@Test

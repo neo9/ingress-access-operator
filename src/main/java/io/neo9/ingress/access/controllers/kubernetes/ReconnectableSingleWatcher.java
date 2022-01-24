@@ -47,7 +47,7 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 	}
 
 	public void startWatch(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
-		if (! active) {
+		if (!active) {
 			return;
 		}
 		stopWatch(); // make sur only one watch is open at any time

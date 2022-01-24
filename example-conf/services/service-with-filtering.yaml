@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-with-filtering
+  namespace: default
+  labels:
+    ingress.neo9.io/access-operator-enabled: "true"
+  annotations:
+    ingress.neo9.io/allowed-visitors: neo9,customer
+spec:
+  selector:
+    app: MyApp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

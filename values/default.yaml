@@ -56,8 +56,19 @@ clusterrole:
     - apiGroups:
         - ""
       resources:
-        - namespaces
         - services
+      verbs:
+        - get
+        - list
+        - watch
+        - update
+        - patch
+        - create
+        - delete
+    - apiGroups:
+        - ""
+      resources:
+        - namespaces
       verbs:
         - get
         - list
