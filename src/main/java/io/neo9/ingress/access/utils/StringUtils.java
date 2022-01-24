@@ -38,7 +38,7 @@ public class StringUtils {
 				.stream()
 				.filter(org.apache.commons.lang3.StringUtils::isNotBlank)
 				.filter(s -> !startsWith(s.trim(), SHARP))
-				.map(str -> str.split(COLON))
+				.map(str -> str.split(COLON, 2))
 				.collect(toMap(strSplit -> strSplit[0].trim(), strSplit -> (strSplit.length < 2 ? EMPTY : unquote(strSplit[1].trim()))));
 	}
 
