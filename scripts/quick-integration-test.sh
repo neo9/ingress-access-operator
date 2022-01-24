@@ -20,6 +20,20 @@ function checkWhitelistValue() {
     fi
 }
 
+function checkServiceWhitelistValue() {
+    serviceName=$1
+    expectation=$2
+    ips=$(kubectl ${kubeContextArgs} get service ${serviceName} -o=jsonpath="{.spec.loadBalancerSourceRanges}")
+    if [ ${ips} == ${expectation} ]; then
+        echo "assertion ok"
+    else
+        echo "Unexpected value for services ${serviceName}"
+        echo "${ips}"
+        echo "${expectation}"
+        exit 1
+    fi
+}
+
 function checkIfExists() {
   resourceType=$1
   namespace=$2
@@ -102,3 +116,8 @@ kubectl ${kubeContextArgs} delete -f ../example-conf/services/service-to-expose.
 sleep 3
 
 checkIfNotExists "ingress" "default" "service-to-expose"
+
+#
+# tcp filtering on service
+#
+checkServiceWhitelistValue "service-with-filtering" '["10.1.1.1/32","10.1.1.2/32","10.1.1.3/32","10.1.2.1/32","10.1.2.3/32"]'

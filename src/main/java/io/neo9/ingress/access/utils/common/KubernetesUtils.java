@@ -57,4 +57,8 @@ public class KubernetesUtils {
 	public static boolean isManagedByOperator(HasMetadata hasMetadata) {
 		return MANAGED_BY_OPERATOR_VALUE.equals(getLabelValue(MANAGED_BY_OPERATOR_KEY, hasMetadata));
 	}
+
+	public static boolean hasLabel(HasMetadata hasMetadata, String key, String value) {
+		return value.equalsIgnoreCase(getLabelValue(key, hasMetadata));
+	}
 }
