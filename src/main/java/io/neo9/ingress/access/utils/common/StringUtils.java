@@ -1,4 +1,4 @@
-package io.neo9.ingress.access.utils;
+package io.neo9.ingress.access.utils.common;
 
 import java.util.Arrays;
 import java.util.Map;

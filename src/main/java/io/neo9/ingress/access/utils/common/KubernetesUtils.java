@@ -1,4 +1,4 @@
-package io.neo9.ingress.access.utils;
+package io.neo9.ingress.access.utils.common;
 
 import java.util.Map;
 
@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
+import static org.springframework.util.StringUtils.uncapitalize;
 
 @UtilityClass
 public class KubernetesUtils {
@@ -23,7 +24,11 @@ public class KubernetesUtils {
 
 	@Nullable
 	public static String getAnnotationValue(String key, HasMetadata hasMetadata) {
-		return hasMetadata.getMetadata().getAnnotations().get(key);
+		Map<String, String> annotations = hasMetadata.getMetadata().getAnnotations();
+		if (annotations == null) {
+			return null;
+		}
+		return annotations.get(key);
 	}
 
 	public static String getLabelValue(String key, HasMetadata hasMetadata, String defaultValue) {
@@ -46,7 +51,7 @@ public class KubernetesUtils {
 	public static String getResourceNamespaceAndName(HasMetadata hasMetadata) {
 		String namespace = hasMetadata.getMetadata().getNamespace();
 		String name = hasMetadata.getMetadata().getName();
-		return String.format("%s/%s", namespace, name);
+		return String.format("%s/%s/%s", uncapitalize(hasMetadata.getKind()), namespace, name);
 	}
 
 	public static boolean isManagedByOperator(HasMetadata hasMetadata) {

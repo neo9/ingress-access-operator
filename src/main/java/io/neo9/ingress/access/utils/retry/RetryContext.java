@@ -1,4 +1,4 @@
-package io.neo9.ingress.access.utils;
+package io.neo9.ingress.access.utils.retry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
