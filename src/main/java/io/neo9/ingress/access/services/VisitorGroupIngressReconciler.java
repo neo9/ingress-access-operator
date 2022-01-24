@@ -18,10 +18,10 @@ import static io.neo9.ingress.access.config.MutationAnnotations.MUTABLE_INGRESS_
 import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
-import static io.neo9.ingress.access.utils.KubernetesUtils.getAnnotationValue;
-import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
-import static io.neo9.ingress.access.utils.StringUtils.COMMA;
-import static io.neo9.ingress.access.utils.StringUtils.EMPTY;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getAnnotationValue;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.common.StringUtils.COMMA;
+import static io.neo9.ingress.access.utils.common.StringUtils.EMPTY;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 

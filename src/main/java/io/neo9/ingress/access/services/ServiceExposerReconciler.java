@@ -28,10 +28,10 @@ import static io.neo9.ingress.access.config.MutationAnnotations.EXPOSE_INGRESS_A
 import static io.neo9.ingress.access.config.MutationAnnotations.EXPOSE_INGRESS_HOSTNAME;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
-import static io.neo9.ingress.access.utils.KubernetesUtils.getAnnotationValue;
-import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
-import static io.neo9.ingress.access.utils.KubernetesUtils.isManagedByOperator;
-import static io.neo9.ingress.access.utils.StringUtils.rawBlockToMap;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getAnnotationValue;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.isManagedByOperator;
+import static io.neo9.ingress.access.utils.common.StringUtils.rawBlockToMap;
 import static java.util.Objects.nonNull;
 
 @org.springframework.stereotype.Service

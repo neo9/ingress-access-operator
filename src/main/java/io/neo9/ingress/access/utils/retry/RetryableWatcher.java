@@ -1,4 +1,4 @@
-package io.neo9.ingress.access.utils;
+package io.neo9.ingress.access.utils.retry;
 
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -8,7 +8,7 @@ import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.kubernetes.client.WatcherException;
 import lombok.extern.slf4j.Slf4j;
 
-import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
 
 @Slf4j
 public class RetryableWatcher<T extends HasMetadata> implements Watcher<T> {

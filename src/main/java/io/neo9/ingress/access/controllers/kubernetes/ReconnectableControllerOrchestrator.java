@@ -19,9 +19,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ReconnectableControllerOrchestrator {
 
-	private final List<ReconnectableWatcher> watchers;
+	private final List<ReconnectableSingleWatcher> watchers;
 
-	public ReconnectableControllerOrchestrator(List<ReconnectableWatcher> watchers) {
+	public ReconnectableControllerOrchestrator(List<ReconnectableSingleWatcher> watchers) {
 		this.watchers = watchers;
 	}
 
@@ -34,6 +34,6 @@ public class ReconnectableControllerOrchestrator {
 	@PreDestroy
 	public void stopWatch() {
 		log.info("stop all watchers");
-		watchers.forEach(ReconnectableWatcher::stopWatch);
+		watchers.forEach(ReconnectableSingleWatcher::stopWatch);
 	}
 }

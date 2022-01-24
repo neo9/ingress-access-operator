@@ -21,8 +21,8 @@ import static io.neo9.ingress.access.config.MutationLabels.ISTIO_WATCH_NAMESPACE
 import static io.neo9.ingress.access.config.MutationLabels.ISTIO_WATCH_NAMESPACE_LABEL_VALUE;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
-import static io.neo9.ingress.access.utils.KubernetesUtils.getResourceNamespaceAndName;
-import static io.neo9.ingress.access.utils.KubernetesUtils.isManagedByOperator;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.isManagedByOperator;
 import static java.util.Objects.nonNull;
 
 @Service
