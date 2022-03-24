@@ -1,20 +1,16 @@
 package io.neo9.ingress.access.controllers.kubernetes;
 
-import io.javaoperatorsdk.operator.api.Context;
-import io.javaoperatorsdk.operator.api.Controller;
-import io.javaoperatorsdk.operator.api.DeleteControl;
-import io.javaoperatorsdk.operator.api.ResourceController;
-import io.javaoperatorsdk.operator.api.UpdateControl;
+import io.javaoperatorsdk.operator.api.reconciler.*;
 import io.neo9.ingress.access.customresources.VisitorGroup;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
-@Controller
+@ControllerConfiguration
 @Component
 @Slf4j
-public class VisitorGroupController implements ResourceController<VisitorGroup> {
+public class VisitorGroupController implements Reconciler<VisitorGroup> {
 
 	private final VisitorGroupIngressReconciler visitorGroupIngressReconciler;
 
@@ -23,16 +19,16 @@ public class VisitorGroupController implements ResourceController<VisitorGroup> 
 	}
 
 	@Override
-	public UpdateControl<VisitorGroup> createOrUpdateResource(VisitorGroup visitorGroup, Context<VisitorGroup> context) {
+	public UpdateControl<VisitorGroup> reconcile(VisitorGroup visitorGroup, Context context) {
 		log.info("update event detected for visitor group : {}", visitorGroup.getMetadata().getName());
 		visitorGroupIngressReconciler.reconcile(visitorGroup);
-		return UpdateControl.updateCustomResource(visitorGroup);
+		return UpdateControl.updateStatus(visitorGroup);
 	}
 
 	@Override
-	public DeleteControl deleteResource(VisitorGroup visitorGroup, Context<VisitorGroup> context) {
+	public DeleteControl cleanup(VisitorGroup visitorGroup, Context context) {
 		log.info("delete event detected for visitor group : {}", visitorGroup.getMetadata().getName());
 		visitorGroupIngressReconciler.reconcile(visitorGroup); // will display panic message if there still
-		return DeleteControl.DEFAULT_DELETE;
+		return DeleteControl.defaultDelete();
 	}
 }
