@@ -21,14 +21,123 @@ jobs:
     - name: Run tests
       run: ./gradlew test
     - name: Build container image
-      run: ./gradlew bootBuildImage
+      run: NATIVE_IMAGE=false ./gradlew bootBuildImage
     - name: Upload test image
       uses: ishworkh/docker-image-artifact-upload@v1
       with:
         image: "docker.io/neo9sas/ingress-access-operator:latest"
 
-  security-scan:
+  integration-tests:
     needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download test image
+        uses: ishworkh/docker-image-artifact-download@v1
+        with:
+          image: "docker.io/neo9sas/ingress-access-operator:latest"
+      - uses: xaviermichel/actions-k3s@master
+        id: k3s
+        with:
+          version: ${{ matrix.k8s_version }}
+      - name: test on k3s
+        run: |
+          kubectl apply -f ./crds/
+          kubectl create namespace nginx-istio-ingress
+          kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
+          docker run -d --rm \
+                  --network host \
+                  --name ingress-access-operator-test \
+                  -e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
+                  -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
+                  -e EXTENSION_EXPOSER_ENABLED=true \
+                  -v /tmp/output:/tmp/output:ro \
+                  -e KUBECONFIG=${KUBECONFIG} \
+                  docker.io/neo9sas/ingress-access-operator:latest
+          sleep 30
+          docker ps
+          docker logs ingress-access-operator-test
+          curl 'http://127.0.0.1:8081/actuator/info'
+          echo
+          testsFailed=0
+          cd scripts
+          ./quick-integration-test.sh || testsFailed=1
+          cd -
+          docker logs ingress-access-operator-test
+          docker stop ingress-access-operator-test
+          exit ${testsFailed}
+
+  native-build:
+    needs: [integration-tests] # not really needed, but is a way to not duplicate build errors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Compile
+        run: ./gradlew build -x test
+      - name: Run tests
+        run: ./gradlew test
+      - name: Build container image
+        run: NATIVE_IMAGE=true ./gradlew bootBuildImage
+      - name: Upload test image
+        uses: ishworkh/docker-image-artifact-upload@v1
+        with:
+          image: "docker.io/neo9sas/ingress-access-operator:latest"
+
+  native-integration-tests:
+    needs: [native-build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download test image
+        uses: ishworkh/docker-image-artifact-download@v1
+        with:
+          image: "docker.io/neo9sas/ingress-access-operator:latest"
+      - uses: xaviermichel/actions-k3s@master
+        id: k3s
+        with:
+          version: ${{ matrix.k8s_version }}
+      - name: test on k3s
+        run: |
+          kubectl apply -f ./crds/
+          kubectl create namespace nginx-istio-ingress
+          kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
+          docker run -d --rm \
+                  --network host \
+                  --name ingress-access-operator-test \
+                  -e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
+                  -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
+                  -e EXTENSION_EXPOSER_ENABLED=true \
+                  -v /tmp/output:/tmp/output:ro \
+                  -e KUBECONFIG=${KUBECONFIG} \
+                  docker.io/neo9sas/ingress-access-operator:latest
+          sleep 5
+          docker ps
+          docker logs ingress-access-operator-test
+          curl 'http://127.0.0.1:8081/actuator/info'
+          echo
+          testsFailed=0
+          cd scripts
+          ./quick-integration-test.sh || testsFailed=1
+          cd -
+          docker logs ingress-access-operator-test
+          docker stop ingress-access-operator-test
+          exit ${testsFailed}
+
+  security-scan:
+    needs: [native-build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -45,44 +154,3 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-
-  integration-tests:
-    needs: [build]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
-    steps:
-    - uses: actions/checkout@v3
-    - name: Download test image
-      uses: ishworkh/docker-image-artifact-download@v1
-      with:
-        image: "docker.io/neo9sas/ingress-access-operator:latest"
-    - uses: debianmaster/actions-k3s@master
-      id: k3s
-      with:
-        version: ${{ matrix.k8s_version }}
-    - name: test on k3s
-      run: |
-        kubectl apply -f ./crds/
-        kubectl create namespace nginx-istio-ingress
-        kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
-        docker run -d --rm \
-                --network host \
-                --name ingress-access-operator-test \
-                -e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
-                -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
-                -e EXTENSION_EXPOSER_ENABLED=true \
-                -v /tmp/output:/tmp/output:ro \
-                -e KUBECONFIG=${KUBECONFIG} \
-                docker.io/neo9sas/ingress-access-operator:latest
-        sleep 5
-        curl 'http://127.0.0.1:8081/actuator/info'
-        echo
-        testsFailed=0
-        cd scripts
-        ./quick-integration-test.sh || testsFailed=1
-        cd -
-        docker logs ingress-access-operator-test
-        docker stop ingress-access-operator-test
-        exit ${testsFailed}
