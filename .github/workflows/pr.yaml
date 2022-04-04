@@ -64,7 +64,7 @@ jobs:
           echo
           testsFailed=0
           cd scripts
-          ./quick-integration-test.sh || testsFailed=1
+          ./run-integration-test.sh || testsFailed=1
           cd -
           docker logs ingress-access-operator-test
           docker stop ingress-access-operator-test
@@ -130,7 +130,7 @@ jobs:
           echo
           testsFailed=0
           cd scripts
-          ./quick-integration-test.sh || testsFailed=1
+          ./run-integration-test.sh || testsFailed=1
           cd -
           docker logs ingress-access-operator-test
           docker stop ingress-access-operator-test
