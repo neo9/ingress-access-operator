@@ -10,7 +10,7 @@ delete-kube-for-test:
 	k3d cluster delete $(CLUSTER_NAME)
 
 run-integration-tests:
-	./quick-integration-test.sh k3d-$(CLUSTER_NAME)
+	./run-integration-test.sh k3d-$(CLUSTER_NAME)
 
 apply-crd:
 	kubectl --context=k3d-$(CLUSTER_NAME) apply -f ../crds/
