@@ -64,6 +64,36 @@ function checkIfNotExists() {
   fi
 }
 
+function doNotHaveAnnotation() {
+    kind=$1
+    namespace=$2
+    name=$3
+    annotation=$4
+    annotations=$(kubectl ${kubeContextArgs} -n ${namespace} get ${kind} ${name} -o jsonpath='{.metadata.annotations}')
+    if echo "$annotations" | grep -vq "$annotation";then
+        echo "assertion ok"
+    else
+        echo "Found annotation"
+        exit 1
+    fi
+}
+
+function haveFieldWithValue() {
+  kind=$1
+  namespace=$2
+  name=$3
+  fieldPath=$4
+  expectedValue=$5
+  currentValue=$(kubectl ${kubeContextArgs} -n ${namespace} get ${kind} ${name} -o jsonpath="$fieldPath")
+  if [ "${expectedValue}" == "${currentValue}" ]; then
+      echo "assertion ok"
+  else
+      echo "Found not expected value for field $fieldPath"
+      echo "$currentValue instead of $expectedValue"
+      exit 1
+  fi
+}
+
 sleep 5
 
 kubernetesMajorMinorVersion=$(kubectl version --short | grep 'Server Version' | awk -F':' '{print $2}' | sed 's/.*v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\).*/\1\2/')
@@ -110,6 +140,9 @@ checkIfExists "sidecar" "nginx-istio-ingress" "ingress"
 #
 
 checkIfExists "ingress" "default" "service-to-expose"
+doNotHaveAnnotation "ingress" "default" "service-to-expose" "kubernetes.io/ingress.class"
+haveFieldWithValue "ingress" "default" "service-to-expose" '{.spec.ingressClassName}' "nginx"
+
 checkIfNotExists "ingress" "default" "service-not-to-expose"
 
 kubectl ${kubeContextArgs} delete -f ../example-conf/services/service-to-expose.yaml
