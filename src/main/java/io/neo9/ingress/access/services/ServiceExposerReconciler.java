@@ -38,6 +38,7 @@ import static java.util.Objects.nonNull;
 @Slf4j
 public class ServiceExposerReconciler {
 
+	private final static String INGRESS_CLASS_ANNOTATION = "kubernetes.io/ingress.class";
 
 	private final IngressRepository ingressRepository;
 
@@ -63,6 +64,10 @@ public class ServiceExposerReconciler {
 		Map<String, String> ingressAnnotations = rawBlockToMap(getAnnotationValue(EXPOSE_INGRESS_ADDITIONAL_ANNOTATIONS, service, ""));
 		Map<String, String> ingressLabels = rawBlockToMap(getAnnotationValue(EXPOSE_INGRESS_ADDITIONAL_LABELS, service, ""));
 
+		// retrieve ingress class to put in the spec, and remove it from annotation
+		String ingressClassName = ingressAnnotations.get(INGRESS_CLASS_ANNOTATION);
+		ingressAnnotations.remove(INGRESS_CLASS_ANNOTATION);
+
 		SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder()
 				.withNewMetadata()
 				.withNamespace(service.getMetadata().getNamespace())
@@ -72,6 +77,7 @@ public class ServiceExposerReconciler {
 				.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)
 				.endMetadata()
 				.withNewSpec()
+				.withIngressClassName(ingressClassName)
 				.withRules(
 						new IngressRuleBuilder()
 								.withHost(hostname)
