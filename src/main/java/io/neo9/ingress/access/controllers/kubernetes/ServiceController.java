@@ -8,15 +8,11 @@ import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.services.ServiceExposerReconciler;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
-import io.neo9.ingress.access.utils.common.KubernetesUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
-import static io.neo9.ingress.access.config.MutationLabels.EXPOSE_LABEL_KEY;
-import static io.neo9.ingress.access.config.MutationLabels.EXPOSE_LABEL_VALUE;
-import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
-import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
+import static io.neo9.ingress.access.config.MutationLabels.*;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.hasLabel;
 
@@ -40,7 +36,7 @@ public class ServiceController extends ReconnectableSingleWatcher<Service, Servi
 						case MODIFIED:
 							log.info("update event detected for service : {}", serviceNamespaceAndName);
 							// service whitelist
-							if (hasLabel(service, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+							if (hasLabel(service, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE) || hasLabel(service, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 								try {
 									visitorGroupIngressReconciler.reconcile(service);
 								}

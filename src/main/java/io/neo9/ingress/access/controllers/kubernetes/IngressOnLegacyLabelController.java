@@ -3,33 +3,27 @@ package io.neo9.ingress.access.controllers.kubernetes;
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressList;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Component;
 
-import static io.neo9.ingress.access.config.MutationLabels.*;
-import static io.neo9.ingress.access.utils.common.KubernetesUtils.getAnnotationValue;
+import static io.neo9.ingress.access.config.MutationLabels.LEGACY_MUTABLE_LABEL_KEY;
+import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
 
 @Component
 @Slf4j
-public class IngressOnAnnotationsController extends ReconnectableSingleWatcher<Ingress, IngressList> {
+public class IngressOnLegacyLabelController extends ReconnectableSingleWatcher<Ingress, IngressList> {
 
-	public IngressOnAnnotationsController(KubernetesClient kubernetesClient, VisitorGroupIngressReconciler visitorGroupIngressReconciler, AdditionalWatchersConfig additionalWatchersConfig) {
+	public IngressOnLegacyLabelController(KubernetesClient kubernetesClient, VisitorGroupIngressReconciler visitorGroupIngressReconciler) {
 		super(
-				/* activation condition */
-				additionalWatchersConfig.watchIngressAnnotations().isEnabled(),
 				/* unique name */
-				"ingress-onAnnotations",
+				"ingress-onLabelLegacy",
 				/* watch what */
 				kubernetesClient.network().v1().ingresses()
 						.inAnyNamespace()
-						.withoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE),
-				/* post watch filter */
-				ingress -> MUTABLE_LABEL_VALUE.equalsIgnoreCase(getAnnotationValue(MUTABLE_LABEL_KEY, ingress)),
+						.withLabel(LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE),
 				/* on event */
 				(action, ingress) -> {
 					String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
