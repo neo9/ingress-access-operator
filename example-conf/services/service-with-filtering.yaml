@@ -4,7 +4,7 @@ metadata:
   name: service-with-filtering
   namespace: default
   labels:
-    ingress.neo9.io/access-operator-enabled: "true"
+    ingress.neo9.io/access-filtered: "true"
   annotations:
     ingress.neo9.io/allowed-visitors: neo9,customer
 spec:

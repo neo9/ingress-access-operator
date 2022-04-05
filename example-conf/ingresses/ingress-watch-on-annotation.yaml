@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
-    ingress.neo9.io/access-operator-enabled: "true" # because xposer can't place labels on generated resource
+    ingress.neo9.io/access-filtered: "true" # because xposer can't place labels on generated resource
     ingress.neo9.io/allowed-visitors: neo9
   name: watch-on-annotation
   namespace: default

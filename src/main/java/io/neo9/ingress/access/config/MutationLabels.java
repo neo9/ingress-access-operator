@@ -2,10 +2,16 @@ package io.neo9.ingress.access.config;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+
 @UtilityClass
 public class MutationLabels {
 
-	public static final String MUTABLE_LABEL_KEY = "ingress.neo9.io/access-operator-enabled";
+	public static final String LEGACY_MUTABLE_LABEL_KEY = "ingress.neo9.io/access-operator-enabled";
+
+	public static final String MUTABLE_LABEL_KEY = "ingress.neo9.io/access-filtered";
+
+	public static final List<String> MUTABLE_FILTERING_LABELS = List.of(LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_KEY);
 
 	public static final String MUTABLE_LABEL_VALUE = "true";
 

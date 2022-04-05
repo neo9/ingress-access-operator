@@ -18,12 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import static io.neo9.ingress.access.config.MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY;
 import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
-import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
-import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
+import static io.neo9.ingress.access.config.MutationLabels.*;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.getAnnotationValue;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
 import static io.neo9.ingress.access.utils.common.StringUtils.COMMA;
@@ -73,27 +71,30 @@ public class VisitorGroupIngressReconciler {
 	public void reconcile(VisitorGroup visitorGroup) {
 		String visitorGroupName = visitorGroup.getMetadata().getName();
 		log.info("starting reconcile for visitor group {}", visitorGroupName);
-		ingressRepository.listIngressWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-				.forEach(ingress -> reconcileIfLinkedToVisitorGroup(ingress, visitorGroupName));
 
-		serviceRepository.listWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-				.forEach(service -> reconcileIfLinkedToVisitorGroup(service, visitorGroupName));
+		for (String filteringLabel : MUTABLE_FILTERING_LABELS) {
+			ingressRepository.listIngressWithLabel(filteringLabel, MUTABLE_LABEL_VALUE)
+					.forEach(ingress -> reconcileIfLinkedToVisitorGroup(ingress, visitorGroupName));
+			serviceRepository.listWithLabel(filteringLabel, MUTABLE_LABEL_VALUE)
+					.forEach(service -> reconcileIfLinkedToVisitorGroup(service, visitorGroupName));
+		}
 
 		if (additionalWatchersConfig.watchIngressAnnotations().isEnabled()) {
-			ingressRepository.listIngressWithoutLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE).forEach( // exclude because already retrieved by previous watcher
-					ingress -> {
-						if (getAnnotationValue(MUTABLE_LABEL_KEY, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE)) {
-							String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
-							log.info("ingress {} have to be marked for update check", ingressNamespaceAndName);
-							try {
-								reconcile(ingress);
-							}
-							catch (VisitorGroupNotFoundException e) {
-								log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName, ingressNamespaceAndName);
+			for (String filteringLabel : MUTABLE_FILTERING_LABELS) {
+				ingressRepository.listIngressWithoutLabel(filteringLabel, MUTABLE_LABEL_VALUE).forEach( // exclude because already retrieved by previous watcher
+						ingress -> {
+							if (getAnnotationValue(filteringLabel, ingress, "").equalsIgnoreCase(MUTABLE_LABEL_VALUE)) {
+								String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
+								log.info("ingress {} have to be marked for update check", ingressNamespaceAndName);
+								try {
+									reconcile(ingress);
+								} catch (VisitorGroupNotFoundException e) {
+									log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName, ingressNamespaceAndName);
+								}
 							}
 						}
-					}
-			);
+				);
+			}
 		}
 	}
 

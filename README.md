@@ -44,14 +44,14 @@ spec:
 The name is only here for information purpose.
 
 Then, create an `Ingress` with :
-* label `ingress.neo9.io/access-operator-enabled: "true"`, to allow the operator to control that resource
+* label `ingress.neo9.io/access-filtered: "true"` (or the legacy version : `ingress.neo9.io/access-operator-enabled: "true"`), to allow the operator to control that resource
 * annotation `ingress.neo9.io/allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   labels:
-    ingress.neo9.io/access-operator-enabled: "true"
+    ingress.neo9.io/access-filtered: "true"
   annotations:
     ingress.neo9.io/allowed-visitors: neo9
     ...
@@ -104,7 +104,7 @@ metadata:
   annotations:
     # ingress.neo9.io/expose-hostname: "{{name}}.{{namespace}}.{{domain}}"
     ingress.neo9.io/expose-labels: |-
-      ingress.neo9.io/access-operator-enabled: "true"
+      ingress.neo9.io/access-filtered: "true"
     ingress.neo9.io/expose-annotations: |-
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-dns-staging-gcp

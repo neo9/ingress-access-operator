@@ -9,8 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
-import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
-import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
+import static io.neo9.ingress.access.config.MutationLabels.*;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
 
 @Component

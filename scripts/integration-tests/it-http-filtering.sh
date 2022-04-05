@@ -4,7 +4,9 @@ box $1
 
 kubernetesMajorMinorVersion=$(kubectl version --short | grep 'Server Version' | awk -F':' '{print $2}' | sed 's/.*v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\).*/\1\2/')
 
-sleep 3
+checkWhitelistValue "demoingress1" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
+checkWhitelistValue "demoingress1legacy" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
+
 checkWhitelistValue "demoingress2" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32,10.1.2.1/32,10.1.2.2/32"
 
 kubectl ${kubeContextArgs} apply -f ./test-patch/visitorgroups/patch-visitorgroup-customer.yaml
