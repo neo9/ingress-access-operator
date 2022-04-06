@@ -24,7 +24,7 @@ repositories {
 
 ext {
 	javaOperatorVersion = '2.1.3'
-	javaOperatorStarterVersion = '2.1.0'
+	javaOperatorStarterVersion = '2.2.0'
 	bouncycastleVersion = '1.70'
 
 	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
