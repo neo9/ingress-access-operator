@@ -10,17 +10,13 @@ import org.springframework.stereotype.Component;
 public class AdditionalWatchersConfig {
 
 	@Setter
-	private WatchIngressAnnotationsConfig watchIngressAnnotations;
-
-	@Setter
 	private UpdateIstioIngressSidecarConfig updateIstioIngressSidecar;
 
 	@Setter
 	private ExposerConfig exposer;
 
-	public WatchIngressAnnotationsConfig watchIngressAnnotations() {
-		return watchIngressAnnotations;
-	}
+	@Setter
+	private DefaultFilteringConfig defaultFiltering;
 
 	public UpdateIstioIngressSidecarConfig updateIstioIngressSidecar() {
 		return updateIstioIngressSidecar;
@@ -28,6 +24,10 @@ public class AdditionalWatchersConfig {
 
 	public ExposerConfig exposer() {
 		return exposer;
+	}
+
+	public DefaultFilteringConfig defaultFiltering() {
+		return defaultFiltering;
 	}
 
 }

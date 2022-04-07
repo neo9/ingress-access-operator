@@ -23,7 +23,8 @@ public class RetryableWatcher<T extends HasMetadata> implements Watcher<T> {
 
 	private final Predicate<T> eventFilter;
 
-	public RetryableWatcher(RetryContext retryContext, String retryKey, Runnable reconnect, Predicate<T> eventFilter, BiFunction<Action, T, Void> onEventReceived) {
+	public RetryableWatcher(RetryContext retryContext, String retryKey, Runnable reconnect, Predicate<T> eventFilter,
+			BiFunction<Action, T, Void> onEventReceived) {
 		this.retryContext = retryContext;
 		this.retryKey = retryKey;
 		this.reconnect = reconnect;
@@ -39,7 +40,8 @@ public class RetryableWatcher<T extends HasMetadata> implements Watcher<T> {
 		}
 		else {
 			String ingressNamespaceAndName = getResourceNamespaceAndName(resource);
-			log.debug("won't apply reconciliation on {} because it does not match with predicate", ingressNamespaceAndName);
+			log.debug("won't apply reconciliation on {} because it does not match with predicate",
+					ingressNamespaceAndName);
 		}
 	}
 

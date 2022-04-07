@@ -4,12 +4,12 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/whitelist-source-range: 10.1.9.1/32
-    ingress.neo9.io/allowed-visitors: neo9,customer # no label, no resource edition !
-  name: not-watched-ingress-with-annotations
+    ingress.neo9.io/allowed-visitors: neo9,customer
+  name: with-hardcoded-filter-and-groups
   namespace: default
 spec:
   rules:
-  - host: not-watched-ingress.dev-xmichel.neokube.neo9.pro
+  - host: harcoded-filter-group.dev-xmichel.neokube.neo9.pro
     http:
       paths:
       - backend:

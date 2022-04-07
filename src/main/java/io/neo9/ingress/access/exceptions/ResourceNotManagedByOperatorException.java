@@ -11,7 +11,9 @@ public class ResourceNotManagedByOperatorException extends RuntimeException {
 	private final String resourceNamespaceName;
 
 	public ResourceNotManagedByOperatorException(String resourceNamespaceName) {
-		super(String.format("should not manipulate resource %s . It sounds not managed by operator (labels not detected %s=%s)", resourceNamespaceName, MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));
+		super(String.format(
+				"should not manipulate resource %s . It sounds not managed by operator (labels not detected %s=%s)",
+				resourceNamespaceName, MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));
 		this.resourceNamespaceName = resourceNamespaceName;
 	}
 

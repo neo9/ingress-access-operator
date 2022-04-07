@@ -15,4 +15,6 @@ public class MutationAnnotations {
 
 	public static final String EXPOSE_INGRESS_HOSTNAME = "ingress.neo9.io/expose-hostname";
 
+	public static final String FILTERING_MANAGED_BY_OPERATOR_KEY = "filtering-managed-by";
+
 }

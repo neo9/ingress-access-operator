@@ -1,5 +1,5 @@
 CLUSTER_NAME=ingress-access-operator-test
-CLUSTER_VERSION=v1.21.3-k3s1
+CLUSTER_VERSION=v1.21.2-k3s1
 #CLUSTER_VERSION=v1.22.1-rc1-k3s1
 
 setup-kube-for-test:
@@ -25,9 +25,9 @@ start-operator-locally:
 	docker run -d --rm \
 		--network host \
 		--name ingress-access-operator-test \
-		-e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
 		-e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
 		-e EXTENSION_EXPOSER_ENABLED=true \
+		-e EXTENSION_DEFAULT_FILTERING_ENABLED=true \
 		-v /tmp/kube/:/conf:ro \
 		-e KUBECONFIG=/conf/config \
 		docker.io/neo9sas/ingress-access-operator:latest

@@ -6,6 +6,10 @@ import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Component
 public class VisitorGroupRepository {
 
@@ -16,10 +20,16 @@ public class VisitorGroupRepository {
 	}
 
 	public VisitorGroup getVisitorGroupByName(String visitorGroupName) {
-		VisitorGroup visitorGroup = kubernetesClient.customResources(VisitorGroup.class).withName(visitorGroupName).get();
+		VisitorGroup visitorGroup = kubernetesClient.customResources(VisitorGroup.class).withName(visitorGroupName)
+				.get();
 		if (visitorGroup == null) {
 			throw new VisitorGroupNotFoundException(visitorGroupName);
 		}
 		return visitorGroup;
 	}
+
+	public List<VisitorGroup> getByLabel(String key, String value) {
+		return kubernetesClient.customResources(VisitorGroup.class).withLabel(key, value).list().getItems();
+	}
+
 }

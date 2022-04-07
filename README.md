@@ -5,7 +5,7 @@ Goal
 ----
 
 The goal of this operator is to easily manage resources relative to
-kubernetes ingress. It have three main features :
+kubernetes ingress. It has three main features :
 
 * easily whitelist IPs which can enter by a kubernetes ingress, and think it globally (note by ingress). More
 than a cluster view, you can share the `VisitorGroup` definition across cluster.  More concretely, it manages the nginx `nginx.ingress.kubernetes.io/whitelist-source-range` annotation by allowing a list of CIDR, which are store in a CRD (`VisitorGroup`).
@@ -18,7 +18,7 @@ to services in the mesh).
 Compatibility
 -------------
 
-Tested with kubernetes from version 1.19 to 1.22+.
+Tested with kubernetes from version 1.19 to 1.22.
 The istio sidecar generation was tested with istio 1.10 and 1.11.
 
 Concepts and usage
@@ -61,16 +61,48 @@ spec:
   ...
 ```
 
-The operator will auto fill nginx whitelist annotation.
+The operator will autofill nginx whitelist annotation.
 
-_Extension : watch ingress on annotations_
+By default :
+1. `ingress.neo9.io/allowed-visitors` is prioritized
+2. If the annotation is not present, default groups are applied (visitor groups with label `ingress.neo9.io/category: default`)
+3. If there is no default Visitor Groups, the whitelist 0.0.0.0/0 is applied
 
-Some tool may not allow to configure ingress labels, that's why
-you can also customize watcher rules. To be sur you are not editing a resource you don't want to, 
-you have to place operator `label` value in `annotations` block (see examples). That's a way to 
-bypass label placing limitation, but it does not takes all advantages of kubernetes.
 
-These feature is disabled by default, and can be activated by setting an environment variable : `EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED` with value `true`.
+**Filtering by default**
+
+These feature is disabled by default, and can be activated by setting an
+environment variable : `EXTENSION_DEFAULT_FILTERING_ENABLED` with value `true`.
+
+All `VisitorGroupe` labeled with the `ingress.neo9.io/category: default` will
+be applied to ALL ingresses on your cluster. For example :
+
+```
+apiVersion: "ingress.neo9.io/v1"
+kind: VisitorGroup
+metadata:
+  name: self
+  labels:
+    ingress.neo9.io/category: default
+spec:
+  ...
+```
+
+If there is already an existing filtering, it will not be overridden, unless the operator label is present. To 
+save which ingress have been updated by operator, it adds an annotation (`filtering-managed-by`) in ingress annotations.
+
+Here is rules which are applied in order to update whitelist (you should only manage default filtering option and operator label).
+
+| Default filtering is enabled | Operator label is present |   Operator annotation is present   |      Whitelist is updated/Override       | Annotation is added |
+|:----------------------------:|:-------------------------:|:----------------------------------:|:----------------------------------------:|:-------------------:|
+|              No              |            No             |                 No                 |                    No                    |         No          |
+|              No              |            No             |       Yes (should not occur)       |                    No                    |         No          |
+|              No              |            Yes            |                 No                 |                   Yes                    |         No          |
+|              No              |            Yes            |       Yes (should not occur)       |                   Yes                    |         No          |
+|             Yes              |            No             |                 No                 | Only if there is not already a whitelist |         Yes         |
+|             Yes              |            No             | Yes (added by the operator itself) |                   Yes                    |         Yes         |
+|             Yes              |            Yes            |                 No                 |                   Yes                    |         No          |
+|             Yes              |            Yes            |       Yes (should not occur)       |                   Yes                    |         No          |
 
 
 **Istio ingress sidecar autoconfiguration**
@@ -142,6 +174,12 @@ kubectl --context=neokube config view --raw --minify | sed 's/cmd-path.*/cmd-pat
 
 ./gradlew bootBuildImage
 docker run -v /tmp/kube/:/conf:ro -e KUBECONFIG=/conf/config docker.io/neo9sas/ingress-access-operator:latest
+```
+
+*Format code*
+
+```
+./gradlew format
 ```
 
 Remote development

@@ -11,4 +11,5 @@ import io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec;
 @Version("v1alpha3")
 @Plural("sidecars")
 public class Sidecar extends CustomResource<SidecarSpec, Void> implements Namespaced {
+
 }

@@ -43,3 +43,8 @@ extension:
     tlsEnabledDetectionAnnotation:
       - cert-manager.io/issuer
       - cert-manager.io/cluster-issuer
+
+  defaultFiltering:
+    enabled: false
+    categories:
+      - default

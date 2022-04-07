@@ -18,25 +18,13 @@ public class ServiceRepository {
 	}
 
 	public List<Service> listWithLabel(String labelKey, String labelValue) {
-		return kubernetesClient
-				.services()
-				.inAnyNamespace()
-				.withLabel(labelKey, labelValue)
-				.list().getItems();
+		return kubernetesClient.services().inAnyNamespace().withLabel(labelKey, labelValue).list().getItems();
 	}
 
 	public Service patchLoadBalancerSourceRanges(Service service, List<String> sources) {
-		return kubernetesClient
-				.services()
-				.inNamespace(service.getMetadata().getNamespace())
+		return kubernetesClient.services().inNamespace(service.getMetadata().getNamespace())
 				.withName(service.getMetadata().getName())
-				.edit(
-						svc -> new ServiceBuilder(svc)
-								.editSpec()
-								.withLoadBalancerSourceRanges(sources)
-								.and()
-								.build()
-				);
+				.edit(svc -> new ServiceBuilder(svc).editSpec().withLoadBalancerSourceRanges(sources).and().build());
 	}
 
 }

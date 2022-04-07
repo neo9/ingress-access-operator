@@ -28,7 +28,9 @@ public class VisitorGroupController implements Reconciler<VisitorGroup> {
 	@Override
 	public DeleteControl cleanup(VisitorGroup visitorGroup, Context context) {
 		log.info("delete event detected for visitor group : {}", visitorGroup.getMetadata().getName());
-		visitorGroupIngressReconciler.reconcile(visitorGroup); // will display panic message if there still
+		visitorGroupIngressReconciler.reconcile(visitorGroup); // will display panic
+																// message if there still
 		return DeleteControl.defaultDelete();
 	}
+
 }

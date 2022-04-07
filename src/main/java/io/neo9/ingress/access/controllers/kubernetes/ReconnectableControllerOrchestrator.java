@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * When we meet an exception (#25), some listeners are in a blocked
- * state and cannot recover by itself.
+ * When we meet an exception (#25), some listeners are in a blocked state and cannot
+ * recover by itself.
  *
  * The goal of this class is to centralize stop/start listen action.
  */
@@ -36,4 +36,5 @@ public class ReconnectableControllerOrchestrator {
 		log.info("stop all watchers");
 		watchers.forEach(ReconnectableSingleWatcher::stopWatch);
 	}
+
 }
