@@ -32,6 +32,8 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @Slf4j
 public class VisitorGroupIngressReconciler {
 
+	private final static String ALL_CIDR = "0.0.0.0/0";
+
 	private final VisitorGroupRepository visitorGroupRepository;
 
 	private final IngressRepository ingressRepository;
@@ -119,6 +121,10 @@ public class VisitorGroupIngressReconciler {
 					&& !hasLabel(ingress, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 				annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
 			}
+			if (hasAnnotation(ingress, FORECASTLE_EXPOSE)) {
+				annotationsToApply.put(FORECASTLE_NETWORK_RESTRICTED,
+						Boolean.toString(!ALL_CIDR.equals(cidrListAsString)));
+			}
 			ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
 		}
 
@@ -161,7 +167,7 @@ public class VisitorGroupIngressReconciler {
 
 		// by default, open access
 		if (isEmpty(cidrListAsString)) {
-			cidrListAsString = "0.0.0.0/0";
+			cidrListAsString = ALL_CIDR;
 		}
 
 		log.trace("computed cidr list : {}", cidrListAsString);

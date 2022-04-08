@@ -76,6 +76,20 @@ function doNotHaveAnnotation() {
     fi
 }
 
+function haveAnnotation() {
+    kind=$1
+    namespace=$2
+    name=$3
+    annotation=$4
+    annotations=$(kubectl ${kubeContextArgs} -n ${namespace} get ${kind} ${name} -o jsonpath='{.metadata.annotations}')
+    if echo "$annotations" | grep -q "$annotation";then
+        echo "assertion ok"
+    else
+        echo "Found annotation"
+        exit 1
+    fi
+}
+
 function haveFieldWithValue() {
   kind=$1
   namespace=$2

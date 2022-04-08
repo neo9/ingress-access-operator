@@ -1,0 +1,8 @@
+apiVersion: "ingress.neo9.io/v1"
+kind: VisitorGroup
+metadata:
+  name: public
+spec:
+  sources:
+    - name: all
+      cidr: 0.0.0.0/0

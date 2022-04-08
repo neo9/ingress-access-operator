@@ -17,4 +17,8 @@ public class MutationAnnotations {
 
 	public static final String FILTERING_MANAGED_BY_OPERATOR_KEY = "filtering-managed-by";
 
+	public static final String FORECASTLE_EXPOSE = "forecastle.stakater.com/expose";
+
+	public static final String FORECASTLE_NETWORK_RESTRICTED = "forecastle.stakater.com/network-restricted";
+
 }
