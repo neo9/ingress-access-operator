@@ -25,5 +25,3 @@ public class VisitorGroup extends CustomResource<V1VisitorGroupSpec, Void> {
 	}
 
 }
-
-

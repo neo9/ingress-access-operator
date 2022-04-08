@@ -15,20 +15,12 @@ public class SidecarRepository {
 	}
 
 	public Sidecar createOrReplace(Sidecar sidecar) {
-		return kubernetesClient
-				.customResources(Sidecar.class)
-				.inNamespace(sidecar.getMetadata().getNamespace())
-				.withName(sidecar.getMetadata().getName())
-				.createOrReplace(sidecar);
+		return kubernetesClient.customResources(Sidecar.class).inNamespace(sidecar.getMetadata().getNamespace())
+				.withName(sidecar.getMetadata().getName()).createOrReplace(sidecar);
 	}
 
 	public Sidecar getSidecar(String namespace, String name) {
-		return kubernetesClient
-				.customResources(Sidecar.class)
-				.inNamespace(namespace)
-				.withName(name)
-				.fromServer()
-				.get();
+		return kubernetesClient.customResources(Sidecar.class).inNamespace(namespace).withName(name).fromServer().get();
 	}
 
 }

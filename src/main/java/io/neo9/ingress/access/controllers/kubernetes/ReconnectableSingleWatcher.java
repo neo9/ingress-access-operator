@@ -30,15 +30,19 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 
 	private Watch watch;
 
-	protected ReconnectableSingleWatcher(String uniqueWatcherIdentifier, FilterWatchListDeletable<Kind, KindList> filterWatch, BiFunction<Action, Kind, Void> onEventReceived) {
+	protected ReconnectableSingleWatcher(String uniqueWatcherIdentifier,
+			FilterWatchListDeletable<Kind, KindList> filterWatch, BiFunction<Action, Kind, Void> onEventReceived) {
 		this(true, uniqueWatcherIdentifier, filterWatch, kind -> true, onEventReceived);
 	}
 
-	protected ReconnectableSingleWatcher(boolean active, String uniqueWatcherIdentifier, FilterWatchListDeletable<Kind, KindList> filterWatch, BiFunction<Action, Kind, Void> onEventReceived) {
+	protected ReconnectableSingleWatcher(boolean active, String uniqueWatcherIdentifier,
+			FilterWatchListDeletable<Kind, KindList> filterWatch, BiFunction<Action, Kind, Void> onEventReceived) {
 		this(active, uniqueWatcherIdentifier, filterWatch, kind -> true, onEventReceived);
 	}
 
-	protected ReconnectableSingleWatcher(boolean active, String uniqueWatcherIdentifier, FilterWatchListDeletable<Kind, KindList> filterWatch, Predicate<Kind> eventFilter, BiFunction<Action, Kind, Void> onEventReceived) {
+	protected ReconnectableSingleWatcher(boolean active, String uniqueWatcherIdentifier,
+			FilterWatchListDeletable<Kind, KindList> filterWatch, Predicate<Kind> eventFilter,
+			BiFunction<Action, Kind, Void> onEventReceived) {
 		this.active = active;
 		this.uniqueWatcherIdentifier = uniqueWatcherIdentifier;
 		this.filterWatch = filterWatch;
@@ -52,13 +56,8 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 		}
 		stopWatch(); // make sur only one watch is open at any time
 		log.info("starting watch loop {}", uniqueWatcherIdentifier);
-		watch = filterWatch.watch(new RetryableWatcher<>(
-				retryContext,
-				String.format("%s", uniqueWatcherIdentifier),
-				reconnectableControllerOrchestrator::startOrRestartWatch,
-				eventFilter,
-				onEventReceived
-		));
+		watch = filterWatch.watch(new RetryableWatcher<>(retryContext, String.format("%s", uniqueWatcherIdentifier),
+				reconnectableControllerOrchestrator::startOrRestartWatch, eventFilter, onEventReceived));
 	}
 
 	public void stopWatch() {
@@ -69,4 +68,5 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 		}
 		retryContext.shutdown();
 	}
+
 }

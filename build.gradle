@@ -5,11 +5,18 @@ plugins {
 	id 'org.springframework.experimental.aot' version '0.11.4' apply false
 	id "org.sonarqube" version "3.3"
 	id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+	id 'io.spring.javaformat'
 }
 
 group = 'io.neo9'
 version = scmVersion.version
 sourceCompatibility = '11'
+
+tasks.whenTaskAdded { task ->
+	if (task.name.startsWith("checkFormatAotMain")) {
+		task.enabled = false
+	}
+}
 
 configurations {
 	compileOnly {
@@ -79,10 +86,3 @@ subprojects {
         }
     }
 }
-
-/*
-tasks.withType(JavaCompile) {
-  options.compilerArgs << "-Xlint:unchecked" << "-Werror"
-}
-*/
-

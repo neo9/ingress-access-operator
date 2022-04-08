@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class NamespaceController extends ReconnectableSingleWatcher<Namespace, NamespaceList> {
 
-	public NamespaceController(KubernetesClient kubernetesClient, IstioSidecarReconciler istioSidecarReconciler, AdditionalWatchersConfig additionalWatchersConfig) {
+	public NamespaceController(KubernetesClient kubernetesClient, IstioSidecarReconciler istioSidecarReconciler,
+			AdditionalWatchersConfig additionalWatchersConfig) {
 		super(
 				/* activation condition */
 				additionalWatchersConfig.updateIstioIngressSidecar().isEnabled(),
@@ -32,8 +33,7 @@ public class NamespaceController extends ReconnectableSingleWatcher<Namespace, N
 						log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
 					}
 					return null;
-				}
-		);
+				});
 	}
 
 }

@@ -14,4 +14,5 @@ public class ExposerConfig {
 	private String hostnameTemplate;
 
 	private List<String> tlsEnabledDetectionAnnotation;
+
 }

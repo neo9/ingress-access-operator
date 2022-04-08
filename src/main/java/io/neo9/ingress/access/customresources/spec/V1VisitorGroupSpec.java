@@ -16,4 +16,3 @@ public class V1VisitorGroupSpec {
 	private List<V1VisitorGroupSpecSources> sources;
 
 }
-

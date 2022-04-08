@@ -7,28 +7,25 @@ import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Component;
 
 import static io.neo9.ingress.access.config.MutationLabels.*;
-import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.*;
 
 @Component
 @Slf4j
-public class IngressOnLabelController extends ReconnectableSingleWatcher<Ingress, IngressList> {
+public class IngressAllController extends ReconnectableSingleWatcher<Ingress, IngressList> {
 
-	public IngressOnLabelController(KubernetesClient kubernetesClient,
+	public IngressAllController(KubernetesClient kubernetesClient,
 			VisitorGroupIngressReconciler visitorGroupIngressReconciler,
 			AdditionalWatchersConfig additionalWatchersConfig) {
 		super(
 				/* activation condition */
-				// avoid double reconciliation
-				!additionalWatchersConfig.defaultFiltering().isEnabled(),
+				additionalWatchersConfig.defaultFiltering().isEnabled(),
 				/* unique name */
-				"ingress-onLabel",
+				"ingress-all",
 				/* watch what */
-				kubernetesClient.network().v1().ingresses().inAnyNamespace().withLabel(MUTABLE_LABEL_KEY,
-						MUTABLE_LABEL_VALUE),
+				kubernetesClient.network().v1().ingresses().inAnyNamespace(),
 				/* on event */
 				(action, ingress) -> {
 					String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);

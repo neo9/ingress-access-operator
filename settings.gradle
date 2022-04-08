@@ -4,4 +4,14 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.31")
+	}
+}
+
 rootProject.name = 'ingress-access-operator'

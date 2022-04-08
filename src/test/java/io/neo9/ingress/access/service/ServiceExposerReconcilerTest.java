@@ -36,7 +36,8 @@ public class ServiceExposerReconcilerTest {
 		ExposerConfig exposerConfig = new ExposerConfig();
 		exposerConfig.setDomain("neokube.pro");
 		exposerConfig.setHostnameTemplate("{{name}}.{{namespace}}.{{domain}}");
-		exposerConfig.setTlsEnabledDetectionAnnotation(List.of("cert-manager.io/issuer", "cert-manager.io/cluster-issuer"));
+		exposerConfig
+				.setTlsEnabledDetectionAnnotation(List.of("cert-manager.io/issuer", "cert-manager.io/cluster-issuer"));
 
 		lenient().when(additionalWatchersConfig.exposer()).thenReturn(exposerConfig);
 
@@ -46,12 +47,8 @@ public class ServiceExposerReconcilerTest {
 	@Test
 	public void shouldUseDefaultHostnameTemplate() {
 		// given
-		Service service = new ServiceBuilder()
-				.withNewMetadata()
-				.withNamespace("mynamespace")
-				.withName("myname")
-				.endMetadata()
-				.build();
+		Service service = new ServiceBuilder().withNewMetadata().withNamespace("mynamespace").withName("myname")
+				.endMetadata().build();
 
 		// when
 		String hostname = serviceExposerReconciler.generateHostname(service);
@@ -63,13 +60,8 @@ public class ServiceExposerReconcilerTest {
 	@Test
 	public void shouldUseOverrideHostnameTemplate() {
 		// given
-		Service service = new ServiceBuilder()
-				.withNewMetadata()
-				.withNamespace("mynamespace")
-				.withName("myname")
-				.addToAnnotations(EXPOSE_INGRESS_HOSTNAME, "hello.{{domain}}")
-				.endMetadata()
-				.build();
+		Service service = new ServiceBuilder().withNewMetadata().withNamespace("mynamespace").withName("myname")
+				.addToAnnotations(EXPOSE_INGRESS_HOSTNAME, "hello.{{domain}}").endMetadata().build();
 
 		// when
 		String hostname = serviceExposerReconciler.generateHostname(service);
@@ -81,13 +73,8 @@ public class ServiceExposerReconcilerTest {
 	@Test
 	public void shouldNotEnableTlsByDefault() {
 		// given
-		Ingress ingress = new IngressBuilder()
-				.withNewMetadata()
-				.withNamespace("mynamespace")
-				.withName("myname")
-				.addToAnnotations(EXPOSE_INGRESS_HOSTNAME, "hello.{{domain}}")
-				.endMetadata()
-				.build();
+		Ingress ingress = new IngressBuilder().withNewMetadata().withNamespace("mynamespace").withName("myname")
+				.addToAnnotations(EXPOSE_INGRESS_HOSTNAME, "hello.{{domain}}").endMetadata().build();
 
 		// when
 		boolean shouldEnableTls = serviceExposerReconciler.shouldEnableTls(ingress.getMetadata().getAnnotations());
@@ -99,14 +86,9 @@ public class ServiceExposerReconcilerTest {
 	@Test
 	public void shouldNotEnableTlsIfAnnotationIsDetected() {
 		// given
-		Ingress ingress = new IngressBuilder()
-				.withNewMetadata()
-				.withNamespace("mynamespace")
-				.withName("myname")
+		Ingress ingress = new IngressBuilder().withNewMetadata().withNamespace("mynamespace").withName("myname")
 				.addToAnnotations(EXPOSE_INGRESS_HOSTNAME, "hello.{{domain}}")
-				.addToAnnotations("cert-manager.io/cluster-issuer", "my-issuer")
-				.endMetadata()
-				.build();
+				.addToAnnotations("cert-manager.io/cluster-issuer", "my-issuer").endMetadata().build();
 
 		// when
 		boolean shouldEnableTls = serviceExposerReconciler.shouldEnableTls(ingress.getMetadata().getAnnotations());
@@ -114,4 +96,5 @@ public class ServiceExposerReconcilerTest {
 		// then
 		assertThat(shouldEnableTls).isTrue();
 	}
+
 }

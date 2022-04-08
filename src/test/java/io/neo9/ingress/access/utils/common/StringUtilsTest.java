@@ -11,8 +11,7 @@ public class StringUtilsTest {
 	@Test
 	public void shouldParseRawBlockToMap() {
 		// given
-		String rawBlock = " kubernetes.io/ingress.class: nginx\n"
-				+ "      test: http://$host/test\n"
+		String rawBlock = " kubernetes.io/ingress.class: nginx\n" + "      test: http://$host/test\n"
 				+ "  # this line is a comment";
 
 		// when
@@ -20,9 +19,8 @@ public class StringUtilsTest {
 
 		// then
 		assertThat(stringStringMap).hasSize(2);
-		assertThat(stringStringMap)
-				.extractingByKeys("kubernetes.io/ingress.class", "test")
-				.contains("nginx", "http://$host/test");
+		assertThat(stringStringMap).extractingByKeys("kubernetes.io/ingress.class", "test").contains("nginx",
+				"http://$host/test");
 	}
 
 }

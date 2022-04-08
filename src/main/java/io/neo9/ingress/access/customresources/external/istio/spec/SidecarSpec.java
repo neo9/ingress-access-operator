@@ -14,4 +14,3 @@ public class SidecarSpec {
 	private List<EgressSpec> egress;
 
 }
-

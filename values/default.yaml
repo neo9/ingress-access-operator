@@ -6,9 +6,11 @@ image:
 pod:
   env:
     values:
-    - name: EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED
-      value: false
     - name: EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED
+      value: false
+    - name: EXTENSION_EXPOSER_ENABLED
+      value: false
+    - name: EXTENSION_DEFAULT_FILTERING_ENABLED
       value: false
 
 serviceAccount:

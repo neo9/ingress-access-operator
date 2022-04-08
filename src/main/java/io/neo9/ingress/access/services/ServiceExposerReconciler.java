@@ -44,7 +44,8 @@ public class ServiceExposerReconciler {
 
 	private final AdditionalWatchersConfig additionalWatchersConfig;
 
-	public ServiceExposerReconciler(IngressRepository ingressRepository, AdditionalWatchersConfig additionalWatchersConfig) {
+	public ServiceExposerReconciler(IngressRepository ingressRepository,
+			AdditionalWatchersConfig additionalWatchersConfig) {
 		this.ingressRepository = ingressRepository;
 		this.additionalWatchersConfig = additionalWatchersConfig;
 	}
@@ -53,7 +54,8 @@ public class ServiceExposerReconciler {
 		String serviceNamespaceAndName = getResourceNamespaceAndName(service);
 		log.trace("start working with service {}", serviceNamespaceAndName);
 
-		Ingress oldIngress = ingressRepository.get(service.getMetadata().getNamespace(), service.getMetadata().getName());
+		Ingress oldIngress = ingressRepository.get(service.getMetadata().getNamespace(),
+				service.getMetadata().getName());
 		if (nonNull(oldIngress) && !isManagedByOperator(oldIngress)) {
 			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(oldIngress));
 		}
@@ -61,53 +63,34 @@ public class ServiceExposerReconciler {
 		String hostname = generateHostname(service);
 		log.debug("generating ingress for hostname : {}", hostname);
 
-		Map<String, String> ingressAnnotations = rawBlockToMap(getAnnotationValue(EXPOSE_INGRESS_ADDITIONAL_ANNOTATIONS, service, ""));
-		Map<String, String> ingressLabels = rawBlockToMap(getAnnotationValue(EXPOSE_INGRESS_ADDITIONAL_LABELS, service, ""));
+		Map<String, String> ingressAnnotations = rawBlockToMap(
+				getAnnotationValue(service, EXPOSE_INGRESS_ADDITIONAL_ANNOTATIONS, ""));
+		Map<String, String> ingressLabels = rawBlockToMap(
+				getAnnotationValue(service, EXPOSE_INGRESS_ADDITIONAL_LABELS, ""));
 
 		// retrieve ingress class to put in the spec, and remove it from annotation
 		String ingressClassName = ingressAnnotations.get(INGRESS_CLASS_ANNOTATION);
 		ingressAnnotations.remove(INGRESS_CLASS_ANNOTATION);
 
-		SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder()
-				.withNewMetadata()
-				.withNamespace(service.getMetadata().getNamespace())
-				.withName(service.getMetadata().getName())
-				.addToAnnotations(ingressAnnotations)
-				.addToLabels(ingressLabels)
-				.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)
-				.endMetadata()
-				.withNewSpec()
+		SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder().withNewMetadata()
+				.withNamespace(service.getMetadata().getNamespace()).withName(service.getMetadata().getName())
+				.addToAnnotations(ingressAnnotations).addToLabels(ingressLabels)
+				.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE).endMetadata().withNewSpec()
 				.withIngressClassName(ingressClassName)
-				.withRules(
-						new IngressRuleBuilder()
-								.withHost(hostname)
-								.withHttp(new HTTPIngressRuleValueBuilder()
-										.withPaths(
-												new HTTPIngressPathBuilder()
-														.withPath("/")
-														.withPathType("Prefix")
-														.withBackend(
-																new IngressBackendBuilder()
-																		.withService(
-																				new IngressServiceBackendBuilder()
-																						.withName(service.getMetadata().getName())
-																						.withPort(
-																								new ServiceBackendPortBuilder()
-																										.withNumber(service.getSpec().getPorts().get(0).getPort())
-																										.build()
-																						).build()
-																		).build()
-														).build()
-										).build()
-								).build()
-				);
+				.withRules(new IngressRuleBuilder().withHost(hostname)
+						.withHttp(new HTTPIngressRuleValueBuilder().withPaths(new HTTPIngressPathBuilder().withPath("/")
+								.withPathType("Prefix")
+								.withBackend(new IngressBackendBuilder().withService(new IngressServiceBackendBuilder()
+										.withName(service.getMetadata().getName())
+										.withPort(new ServiceBackendPortBuilder()
+												.withNumber(service.getSpec().getPorts().get(0).getPort()).build())
+										.build()).build())
+								.build()).build())
+						.build());
 
 		if (shouldEnableTls(ingressAnnotations)) {
-			ingressBuilderSpecNested = ingressBuilderSpecNested
-					.withTls(new IngressTLSBuilder()
-							.addToHosts(hostname)
-							.withSecretName(String.format("%s-tls", service.getMetadata().getName()))
-							.build());
+			ingressBuilderSpecNested = ingressBuilderSpecNested.withTls(new IngressTLSBuilder().addToHosts(hostname)
+					.withSecretName(String.format("%s-tls", service.getMetadata().getName())).build());
 		}
 
 		Ingress ingress = ingressBuilderSpecNested.endSpec().build();
@@ -119,12 +102,14 @@ public class ServiceExposerReconciler {
 	public void reconcileOnDelete(Service service) {
 		String serviceNamespaceAndName = getResourceNamespaceAndName(service);
 		log.trace("start working with deleted service {}", serviceNamespaceAndName);
-		Ingress oldIngress = ingressRepository.get(service.getMetadata().getNamespace(), service.getMetadata().getName());
+		Ingress oldIngress = ingressRepository.get(service.getMetadata().getNamespace(),
+				service.getMetadata().getName());
 		if (nonNull(oldIngress) && !isManagedByOperator(oldIngress)) {
 			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(oldIngress));
 		}
 		if (nonNull(oldIngress)) {
-			log.info("deleting ingress {} due to service deletion {}", getResourceNamespaceAndName(oldIngress), serviceNamespaceAndName);
+			log.info("deleting ingress {} due to service deletion {}", getResourceNamespaceAndName(oldIngress),
+					serviceNamespaceAndName);
 			ingressRepository.delete(oldIngress.getMetadata().getNamespace(), oldIngress.getMetadata().getName());
 		}
 		log.trace("end of working with deleted service {}", serviceNamespaceAndName);
@@ -133,10 +118,13 @@ public class ServiceExposerReconciler {
 	public String generateHostname(HasMetadata service) {
 		List<UnaryOperator<String>> hostnameReplacements = new ArrayList<>();
 		hostnameReplacements.add(s -> s.replaceAll(Pattern.quote("{{name}}"), service.getMetadata().getName()));
-		hostnameReplacements.add(s -> s.replaceAll(Pattern.quote("{{namespace}}"), service.getMetadata().getNamespace()));
-		hostnameReplacements.add(s -> s.replaceAll(Pattern.quote("{{domain}}"), additionalWatchersConfig.exposer().getDomain()));
+		hostnameReplacements
+				.add(s -> s.replaceAll(Pattern.quote("{{namespace}}"), service.getMetadata().getNamespace()));
+		hostnameReplacements
+				.add(s -> s.replaceAll(Pattern.quote("{{domain}}"), additionalWatchersConfig.exposer().getDomain()));
 
-		String hostnameTemplate = getAnnotationValue(EXPOSE_INGRESS_HOSTNAME, service, additionalWatchersConfig.exposer().getHostnameTemplate());
+		String hostnameTemplate = getAnnotationValue(service, EXPOSE_INGRESS_HOSTNAME,
+				additionalWatchersConfig.exposer().getHostnameTemplate());
 		for (UnaryOperator<String> fn : hostnameReplacements) {
 			hostnameTemplate = fn.apply(hostnameTemplate);
 		}
@@ -151,4 +139,5 @@ public class ServiceExposerReconciler {
 		}
 		return false;
 	}
+
 }

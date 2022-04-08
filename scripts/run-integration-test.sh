@@ -18,6 +18,6 @@ sleep 10
 
 . ./integration-tests/it-istio-sidecar.sh "istio-sidecar"
 
-. ./integration-tests/it-expoer.sh "ingress-exposer"
+. ./integration-tests/it-exposer.sh "ingress-exposer"
 
 . ./integration-tests/it-tcp-filtering.sh "tcp-filtering"

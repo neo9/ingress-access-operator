@@ -51,9 +51,9 @@ jobs:
           docker run -d --rm \
                   --network host \
                   --name ingress-access-operator-test \
-                  -e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
                   -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
                   -e EXTENSION_EXPOSER_ENABLED=true \
+                  -e EXTENSION_DEFAULT_FILTERING_ENABLED=true \
                   -v /tmp/output:/tmp/output:ro \
                   -e KUBECONFIG=${KUBECONFIG} \
                   docker.io/neo9sas/ingress-access-operator:latest
@@ -117,9 +117,9 @@ jobs:
           docker run -d --rm \
                   --network host \
                   --name ingress-access-operator-test \
-                  -e EXTENSION_WATCH_INGRESS_ANNOTATIONS_ENABLED=true \
                   -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
                   -e EXTENSION_EXPOSER_ENABLED=true \
+                  -e EXTENSION_DEFAULT_FILTERING_ENABLED=true \
                   -v /tmp/output:/tmp/output:ro \
                   -e KUBECONFIG=${KUBECONFIG} \
                   docker.io/neo9sas/ingress-access-operator:latest

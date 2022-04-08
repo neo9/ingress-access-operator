@@ -20,57 +20,60 @@ import static io.neo9.ingress.access.utils.common.KubernetesUtils.hasLabel;
 @Slf4j
 public class ServiceController extends ReconnectableSingleWatcher<Service, ServiceList> {
 
-	public ServiceController(KubernetesClient kubernetesClient, ServiceExposerReconciler serviceExposerReconciler, AdditionalWatchersConfig additionalWatchersConfig, VisitorGroupIngressReconciler visitorGroupIngressReconciler) {
+	public ServiceController(KubernetesClient kubernetesClient, ServiceExposerReconciler serviceExposerReconciler,
+			AdditionalWatchersConfig additionalWatchersConfig,
+			VisitorGroupIngressReconciler visitorGroupIngressReconciler) {
 		super(
 				/* unique name */
 				"services-all",
 				/* watch what */
-				kubernetesClient.services()
-						.inAnyNamespace(),
+				kubernetesClient.services().inAnyNamespace(),
 				/* on event */
 				(action, service) -> {
 					String serviceNamespaceAndName = getResourceNamespaceAndName(service);
 					log.trace("start process event on {}", serviceNamespaceAndName);
 					switch (action) {
-						case ADDED:
-						case MODIFIED:
-							log.info("update event detected for service : {}", serviceNamespaceAndName);
-							// service whitelist
-							if (hasLabel(service, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE) || hasLabel(service, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
-								try {
-									visitorGroupIngressReconciler.reconcile(service);
-								}
-								catch (VisitorGroupNotFoundException e) {
-									log.error("panic: could not resolve visitorGroup {} for service {}", e.getVisitorGroupName(), serviceNamespaceAndName, e);
-								}
-							}
-							// exposer
-							if (additionalWatchersConfig.exposer().isEnabled() && hasLabel(service, EXPOSE_LABEL_KEY, EXPOSE_LABEL_VALUE)) {
-								try {
-									serviceExposerReconciler.reconcile(service);
-								}
-								catch (ResourceNotManagedByOperatorException e) {
-									log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
-								}
-							}
-							break;
-						case DELETED:
-							log.info("delete event detected for service : {}", serviceNamespaceAndName);
+					case ADDED:
+					case MODIFIED:
+						log.info("update event detected for service : {}", serviceNamespaceAndName);
+						// service whitelist
+						if (hasLabel(service, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+								|| hasLabel(service, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 							try {
-								serviceExposerReconciler.reconcileOnDelete(service);
+								visitorGroupIngressReconciler.reconcile(service);
+							}
+							catch (VisitorGroupNotFoundException e) {
+								log.error("panic: could not resolve visitorGroup {} for service {}",
+										e.getVisitorGroupName(), serviceNamespaceAndName, e);
+							}
+						}
+						// exposer
+						if (additionalWatchersConfig.exposer().isEnabled()
+								&& hasLabel(service, EXPOSE_LABEL_KEY, EXPOSE_LABEL_VALUE)) {
+							try {
+								serviceExposerReconciler.reconcile(service);
 							}
 							catch (ResourceNotManagedByOperatorException e) {
 								log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
 							}
-							break;
-						default:
-							// do nothing on error
-							break;
+						}
+						break;
+					case DELETED:
+						log.info("delete event detected for service : {}", serviceNamespaceAndName);
+						try {
+							serviceExposerReconciler.reconcileOnDelete(service);
+						}
+						catch (ResourceNotManagedByOperatorException e) {
+							log.error("panic: could not work on resource {}", e.getResourceNamespaceName(), e);
+						}
+						break;
+					default:
+						// do nothing on error
+						break;
 					}
 					log.trace("end of process event on {}", serviceNamespaceAndName);
 					return null;
-				}
-		);
+				});
 	}
 
 }
