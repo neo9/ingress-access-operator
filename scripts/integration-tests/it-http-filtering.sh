@@ -5,7 +5,13 @@ box $1
 kubernetesMajorMinorVersion=$(kubectl version --short | grep 'Server Version' | awk -F':' '{print $2}' | sed 's/.*v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\).*/\1\2/')
 
 checkWhitelistValue "demoingress1" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
+haveAnnotation "ingress" "default" "demoingress1" '"forecastle.stakater.com/network-restricted":"true"'
+
 checkWhitelistValue "demoingress1legacy" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32"
+doNotHaveAnnotation "ingress" "default" "demoingress1legacy" "forecastle.stakater.com/network-restricted"
+
+checkWhitelistValue "public" "0.0.0.0/0"
+haveAnnotation "ingress" "default" "public" '"forecastle.stakater.com/network-restricted":"false"'
 
 checkWhitelistValue "demoingress2" "10.1.1.1/32,10.1.1.2/32,10.1.1.3/32,10.1.2.1/32,10.1.2.2/32"
 
