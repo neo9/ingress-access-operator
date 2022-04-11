@@ -9,19 +9,25 @@ import io.fabric8.kubernetes.model.annotation.ShortNames;
 import io.fabric8.kubernetes.model.annotation.Version;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
+import io.neo9.ingress.access.customresources.status.V1VisitorGroupStatus;
 
 import static org.apache.commons.lang3.ObjectUtils.anyNull;
 
 @Group("ingress.neo9.io")
 @Version("v1")
 @ShortNames("vg")
-public class VisitorGroup extends CustomResource<V1VisitorGroupSpec, Void> {
+public class VisitorGroup extends CustomResource<V1VisitorGroupSpec, V1VisitorGroupStatus> {
 
 	public List<V1VisitorGroupSpecSources> extractSpecSources() {
 		if (anyNull(getSpec(), getSpec().getSources())) {
 			return Collections.emptyList();
 		}
 		return getSpec().getSources();
+	}
+
+	@Override
+	protected V1VisitorGroupStatus initStatus() {
+		return new V1VisitorGroupStatus();
 	}
 
 }

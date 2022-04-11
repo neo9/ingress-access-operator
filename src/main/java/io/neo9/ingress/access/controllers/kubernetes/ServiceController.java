@@ -24,8 +24,6 @@ public class ServiceController extends ReconnectableSingleWatcher<Service, Servi
 			AdditionalWatchersConfig additionalWatchersConfig,
 			VisitorGroupIngressReconciler visitorGroupIngressReconciler) {
 		super(
-				/* unique name */
-				"services-all",
 				/* watch what */
 				kubernetesClient.services().inAnyNamespace(),
 				/* on event */

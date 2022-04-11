@@ -22,8 +22,6 @@ public class IngressAllController extends ReconnectableSingleWatcher<Ingress, In
 		super(
 				/* activation condition */
 				additionalWatchersConfig.defaultFiltering().isEnabled(),
-				/* unique name */
-				"ingress-all",
 				/* watch what */
 				kubernetesClient.network().v1().ingresses().inAnyNamespace(),
 				/* on event */

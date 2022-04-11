@@ -24,8 +24,6 @@ public class IngressOnLabelController extends ReconnectableSingleWatcher<Ingress
 				/* activation condition */
 				// avoid double reconciliation
 				!additionalWatchersConfig.defaultFiltering().isEnabled(),
-				/* unique name */
-				"ingress-onLabel",
 				/* watch what */
 				kubernetesClient.network().v1().ingresses().inAnyNamespace().withLabel(MUTABLE_LABEL_KEY,
 						MUTABLE_LABEL_VALUE),
