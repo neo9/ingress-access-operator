@@ -19,8 +19,6 @@ public class NamespaceController extends ReconnectableSingleWatcher<Namespace, N
 		super(
 				/* activation condition */
 				additionalWatchersConfig.updateIstioIngressSidecar().isEnabled(),
-				/* unique name */
-				"namespaces-all",
 				/* watch what */
 				kubernetesClient.namespaces(),
 				/* on event */

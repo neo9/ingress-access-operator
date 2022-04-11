@@ -74,6 +74,7 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.customresources.VisitorGroup", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.status.V1VisitorGroupStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allPublicConstructors": true}

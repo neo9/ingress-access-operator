@@ -30,24 +30,24 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 
 	private Watch watch;
 
-	protected ReconnectableSingleWatcher(String uniqueWatcherIdentifier,
-			FilterWatchListDeletable<Kind, KindList> filterWatch, BiFunction<Action, Kind, Void> onEventReceived) {
-		this(true, uniqueWatcherIdentifier, filterWatch, kind -> true, onEventReceived);
-	}
-
-	protected ReconnectableSingleWatcher(boolean active, String uniqueWatcherIdentifier,
-			FilterWatchListDeletable<Kind, KindList> filterWatch, BiFunction<Action, Kind, Void> onEventReceived) {
-		this(active, uniqueWatcherIdentifier, filterWatch, kind -> true, onEventReceived);
-	}
-
-	protected ReconnectableSingleWatcher(boolean active, String uniqueWatcherIdentifier,
-			FilterWatchListDeletable<Kind, KindList> filterWatch, Predicate<Kind> eventFilter,
+	protected ReconnectableSingleWatcher(FilterWatchListDeletable<Kind, KindList> filterWatch,
 			BiFunction<Action, Kind, Void> onEventReceived) {
+		this(true, filterWatch, kind -> true, onEventReceived);
+	}
+
+	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList> filterWatch,
+			BiFunction<Action, Kind, Void> onEventReceived) {
+		this(active, filterWatch, kind -> true, onEventReceived);
+	}
+
+	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList> filterWatch,
+			Predicate<Kind> eventFilter, BiFunction<Action, Kind, Void> onEventReceived) {
 		this.active = active;
-		this.uniqueWatcherIdentifier = uniqueWatcherIdentifier;
+		this.uniqueWatcherIdentifier = this.getClass().getCanonicalName();
 		this.filterWatch = filterWatch;
 		this.eventFilter = eventFilter;
 		this.onEventReceived = onEventReceived;
+
 	}
 
 	public void startWatch(ReconnectableControllerOrchestrator reconnectableControllerOrchestrator) {
