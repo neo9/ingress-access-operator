@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'org.springframework.experimental.aot' version '0.11.4' apply false
 	id "org.sonarqube" version "3.3"
-	id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+	id 'pl.allegro.tech.build.axion-release' version '1.13.10'
 	id 'io.spring.javaformat'
 }
 
