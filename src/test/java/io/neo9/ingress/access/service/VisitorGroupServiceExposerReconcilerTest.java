@@ -1,30 +1,31 @@
 package io.neo9.ingress.access.service;
 
-import java.util.List;
-import java.util.Map;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.lenient;
 
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressSpecBuilder;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.config.DefaultFilteringConfig;
 import io.neo9.ingress.access.config.MutationAnnotations;
 import io.neo9.ingress.access.customresources.VisitorGroup;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
+import io.neo9.ingress.access.exceptions.NotHandledIngressClass;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.repositories.IngressRepository;
 import io.neo9.ingress.access.repositories.ServiceRepository;
 import io.neo9.ingress.access.repositories.VisitorGroupRepository;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class VisitorGroupServiceExposerReconcilerTest {
@@ -210,6 +211,56 @@ public class VisitorGroupServiceExposerReconcilerTest {
 		// when / then
 		assertThatThrownBy(() -> visitorGroupIngressReconciler.getCidrListAsString(ingress))
 				.isInstanceOf(VisitorGroupNotFoundException.class);
+	}
+
+	@Test
+	public void shouldDetectAlbIngressOnMetadata() {
+		// given
+		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
+				.withAnnotations(Map.of("kubernetes.io/ingress.class", "alb")).endMetadata().build();
+
+		// when
+		String whitelistAnnotation = visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress);
+
+		// then
+		assertThat(whitelistAnnotation).isEqualTo("alb.ingress.kubernetes.io/inbound-cidrs");
+	}
+
+	@Test
+	public void shouldDetectAlbIngressOnClassName() {
+		// given
+		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test").endMetadata()
+				.withSpec(new IngressSpecBuilder().withIngressClassName("alb").build()).build();
+
+		// when
+		String whitelistAnnotation = visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress);
+
+		// then
+		assertThat(whitelistAnnotation).isEqualTo("alb.ingress.kubernetes.io/inbound-cidrs");
+	}
+
+	@Test
+	public void shouldDetectNginxIngressOnClassName() {
+		// given
+		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test").endMetadata()
+				.withSpec(new IngressSpecBuilder().withIngressClassName("my-nginx").build()).build();
+
+		// when
+		String whitelistAnnotation = visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress);
+
+		// then
+		assertThat(whitelistAnnotation).isEqualTo("nginx.ingress.kubernetes.io/whitelist-source-range");
+	}
+
+	@Test
+	public void shouldPanicOnUnknownIngressClassName() {
+		// given
+		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test").endMetadata()
+				.withSpec(new IngressSpecBuilder().withIngressClassName("noop").build()).build();
+
+		// when / then
+		assertThatThrownBy(() -> visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress))
+				.isInstanceOf(NotHandledIngressClass.class);
 	}
 
 }

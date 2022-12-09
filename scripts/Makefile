@@ -1,5 +1,5 @@
 CLUSTER_NAME=ingress-access-operator-test
-CLUSTER_VERSION=v1.21.2-k3s1
+CLUSTER_VERSION=v1.21.14-k3s1
 #CLUSTER_VERSION=v1.22.1-rc1-k3s1
 
 setup-kube-for-test:

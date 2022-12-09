@@ -1,32 +1,44 @@
 package io.neo9.ingress.access.services;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import static io.neo9.ingress.access.config.MutationAnnotations.ALB_INGRESS_WHITELIST_ANNOTATION_KEY;
+import static io.neo9.ingress.access.config.MutationAnnotations.FILTERING_MANAGED_BY_OPERATOR_KEY;
+import static io.neo9.ingress.access.config.MutationAnnotations.FORECASTLE_EXPOSE;
+import static io.neo9.ingress.access.config.MutationAnnotations.FORECASTLE_NETWORK_RESTRICTED;
+import static io.neo9.ingress.access.config.MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY;
+import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
+import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
+import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
+import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
+import static io.neo9.ingress.access.config.MutationLabels.VISITOR_GROUP_LABEL_CATEGORY;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getAnnotationValue;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.getResourceNamespaceAndName;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.hasAnnotation;
+import static io.neo9.ingress.access.utils.common.KubernetesUtils.hasLabel;
+import static io.neo9.ingress.access.utils.common.StringUtils.COMMA;
+import static io.neo9.ingress.access.utils.common.StringUtils.EMPTY;
+import static java.util.Arrays.stream;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.customresources.VisitorGroup;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
+import io.neo9.ingress.access.exceptions.NotHandledIngressClass;
 import io.neo9.ingress.access.exceptions.NotHandledWorkloadException;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.repositories.IngressRepository;
 import io.neo9.ingress.access.repositories.ServiceRepository;
 import io.neo9.ingress.access.repositories.VisitorGroupRepository;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-
 import org.springframework.stereotype.Service;
-
-import static io.neo9.ingress.access.config.MutationAnnotations.*;
-import static io.neo9.ingress.access.config.MutationLabels.*;
-import static io.neo9.ingress.access.utils.common.KubernetesUtils.*;
-import static io.neo9.ingress.access.utils.common.StringUtils.COMMA;
-import static io.neo9.ingress.access.utils.common.StringUtils.EMPTY;
-import static java.util.Arrays.stream;
-import static java.util.Objects.nonNull;
-import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Service
 @Slf4j
@@ -93,15 +105,13 @@ public class VisitorGroupIngressReconciler {
 			});
 		}
 		else {
-			MUTABLE_FILTERING_LABELS.forEach(
-					filteringLabelKey -> ingressRepository.listIngressWithLabel(filteringLabelKey, MUTABLE_LABEL_VALUE)
-							.forEach(ingress -> reconcileIfLinkedToVisitorGroup(ingress, visitorGroupName)));
+			ingressRepository.listIngressWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+					.forEach(ingress -> reconcileIfLinkedToVisitorGroup(ingress, visitorGroupName));
 		}
 
 		// reconcile services
-		MUTABLE_FILTERING_LABELS
-				.forEach(filteringLabelKey -> serviceRepository.listWithLabel(filteringLabelKey, MUTABLE_LABEL_VALUE)
-						.forEach(service -> reconcileIfLinkedToVisitorGroup(service, visitorGroupName)));
+		serviceRepository.listWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+				.forEach(service -> reconcileIfLinkedToVisitorGroup(service, visitorGroupName));
 	}
 
 	public void reconcile(Ingress ingress) {
@@ -113,12 +123,11 @@ public class VisitorGroupIngressReconciler {
 		}
 
 		String cidrListAsString = getCidrListAsString(ingress);
-		if (!cidrListAsString.equals(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY))) {
+		if (!cidrListAsString.equals(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress)))) {
 			log.info("updating ingress {} because the targeted value changed", resourceNamespaceAndName);
 			Map<String, String> annotationsToApply = new HashMap<>();
-			annotationsToApply.put(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
-			if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-					&& !hasLabel(ingress, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+			annotationsToApply.put(getIngressWhitelistAnnotation(ingress), cidrListAsString);
+			if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 				annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
 			}
 			if (hasAnnotation(ingress, FORECASTLE_EXPOSE)) {
@@ -132,14 +141,30 @@ public class VisitorGroupIngressReconciler {
 	}
 
 	private boolean whitelistCanBeUpdated(Ingress ingress) {
-		if (hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-				|| hasLabel(ingress, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+		if (hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 			return true;
 		}
 		if (hasAnnotation(ingress, FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)) {
 			return true;
 		}
-		return isEmpty(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, EMPTY));
+		return isEmpty(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress), EMPTY));
+	}
+
+	public String getIngressWhitelistAnnotation(Ingress ingress) {
+		String ingressClassName = null;
+		if (ingress.getSpec() != null) {
+			ingressClassName = ingress.getSpec().getIngressClassName();
+		}
+		if (ingressClassName == null) {
+			ingressClassName = ingress.getMetadata().getAnnotations().get("kubernetes.io/ingress.class");
+		}
+		if (ingressClassName.contains("nginx")) {
+			return NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
+		}
+		else if (ingressClassName.contains("alb")) {
+			return ALB_INGRESS_WHITELIST_ANNOTATION_KEY;
+		}
+		throw new NotHandledIngressClass(String.format("Ingress class %s is not handled", ingressClassName));
 	}
 
 	public void reconcile(io.fabric8.kubernetes.api.model.Service service) {

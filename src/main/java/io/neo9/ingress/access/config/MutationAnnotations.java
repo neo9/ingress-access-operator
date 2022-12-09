@@ -9,6 +9,8 @@ public class MutationAnnotations {
 
 	public static final String NGINX_INGRESS_WHITELIST_ANNOTATION_KEY = "nginx.ingress.kubernetes.io/whitelist-source-range";
 
+	public static final String ALB_INGRESS_WHITELIST_ANNOTATION_KEY = "alb.ingress.kubernetes.io/inbound-cidrs";
+
 	public static final String EXPOSE_INGRESS_ADDITIONAL_LABELS = "ingress.neo9.io/expose-labels";
 
 	public static final String EXPOSE_INGRESS_ADDITIONAL_ANNOTATIONS = "ingress.neo9.io/expose-annotations";

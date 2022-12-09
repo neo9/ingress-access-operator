@@ -20,6 +20,7 @@ Compatibility
 
 Tested with kubernetes from version 1.19 to 1.22.
 The istio sidecar generation was tested with istio 1.10 and 1.11.
+Compatible with ingress classes ALB and nginx.
 
 Concepts and usage
 ------------------
@@ -44,7 +45,7 @@ spec:
 The name is only here for information purpose.
 
 Then, create an `Ingress` with :
-* label `ingress.neo9.io/access-filtered: "true"` (or the legacy version : `ingress.neo9.io/access-operator-enabled: "true"`), to allow the operator to control that resource
+* label `ingress.neo9.io/access-filtered: "true"`, to allow the operator to control that resource
 * annotation `ingress.neo9.io/allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
 ```
 apiVersion: extensions/v1beta1
