@@ -32,19 +32,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
+        k8s_version: [v1.21.14+k3s1, v1.22.16+k3s1, v1.23.15-rc1+k3s1]
     steps:
       - uses: actions/checkout@v3
       - name: Download test image
         uses: ishworkh/docker-image-artifact-download@v1
         with:
           image: "docker.io/neo9sas/ingress-access-operator:latest"
-      - uses: xaviermichel/actions-k3s@master
+      - uses: jupyterhub/action-k3s-helm@v3
         id: k3s
         with:
-          version: ${{ matrix.k8s_version }}
+          k3s-version: ${{ matrix.k8s_version }}
       - name: test on k3s
         run: |
+          mkdir /tmp/output
+          cp ${KUBECONFIG} /tmp/output
+          chmod 777 /tmp/output/config
           kubectl apply -f ./crds/
           kubectl create namespace nginx-istio-ingress
           kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
@@ -55,7 +58,7 @@ jobs:
                   -e EXTENSION_EXPOSER_ENABLED=true \
                   -e EXTENSION_DEFAULT_FILTERING_ENABLED=true \
                   -v /tmp/output:/tmp/output:ro \
-                  -e KUBECONFIG=${KUBECONFIG} \
+                  -e KUBECONFIG=/tmp/output/config \
                   docker.io/neo9sas/ingress-access-operator:latest
           sleep 30
           docker ps
@@ -98,19 +101,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
+        k8s_version: [v1.21.14+k3s1, v1.22.16+k3s1, v1.23.15-rc1+k3s1]
     steps:
       - uses: actions/checkout@v3
       - name: Download test image
         uses: ishworkh/docker-image-artifact-download@v1
         with:
           image: "docker.io/neo9sas/ingress-access-operator:latest"
-      - uses: xaviermichel/actions-k3s@master
+      - uses: jupyterhub/action-k3s-helm@v3
         id: k3s
         with:
-          version: ${{ matrix.k8s_version }}
+          k3s-version: ${{ matrix.k8s_version }}
       - name: test on k3s
         run: |
+          mkdir /tmp/output
+          cp ${KUBECONFIG} /tmp/output
+          chmod 777 /tmp/output/config
           kubectl apply -f ./crds/
           kubectl create namespace nginx-istio-ingress
           kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
@@ -121,7 +127,7 @@ jobs:
                   -e EXTENSION_EXPOSER_ENABLED=true \
                   -e EXTENSION_DEFAULT_FILTERING_ENABLED=true \
                   -v /tmp/output:/tmp/output:ro \
-                  -e KUBECONFIG=${KUBECONFIG} \
+                  -e KUBECONFIG=/tmp/output/config \
                   docker.io/neo9sas/ingress-access-operator:latest
           sleep 5
           docker ps

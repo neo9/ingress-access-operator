@@ -35,8 +35,7 @@ public class ServiceController extends ReconnectableSingleWatcher<Service, Servi
 					case MODIFIED:
 						log.info("update event detected for service : {}", serviceNamespaceAndName);
 						// service whitelist
-						if (hasLabel(service, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-								|| hasLabel(service, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+						if (hasLabel(service, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 							try {
 								visitorGroupIngressReconciler.reconcile(service);
 							}

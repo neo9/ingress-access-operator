@@ -18,6 +18,20 @@ function checkWhitelistValue() {
     fi
 }
 
+function checkAlbWhitelistValue() {
+    ingressName=$1
+    expectation=$2
+    ips=$(kubectl ${kubeContextArgs} get ingress ${ingressName} -o yaml | grep 'alb.ingress.kubernetes.io/inbound-cidrs' | grep -v 'f:' | awk '{print $2}')
+    if [ ${ips} == ${expectation} ]; then
+        echo "assertion ok"
+    else
+        echo "Unexpected value for ingress ${ingressName}"
+        echo "${ips}"
+        echo "${expectation}"
+        exit 1
+    fi
+}
+
 function checkServiceWhitelistValue() {
     serviceName=$1
     expectation=$2
