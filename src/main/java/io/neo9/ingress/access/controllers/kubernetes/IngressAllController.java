@@ -3,6 +3,7 @@ package io.neo9.ingress.access.controllers.kubernetes;
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.Resource;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
@@ -14,7 +15,7 @@ import static io.neo9.ingress.access.utils.common.KubernetesUtils.*;
 
 @Component
 @Slf4j
-public class IngressAllController extends ReconnectableSingleWatcher<Ingress, IngressList> {
+public class IngressAllController extends ReconnectableSingleWatcher<Ingress, IngressList, Resource<Ingress>> {
 
 	public IngressAllController(KubernetesClient kubernetesClient,
 			VisitorGroupIngressReconciler visitorGroupIngressReconciler,

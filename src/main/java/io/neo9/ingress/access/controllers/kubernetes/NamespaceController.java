@@ -3,6 +3,7 @@ package io.neo9.ingress.access.controllers.kubernetes;
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.api.model.NamespaceList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.Resource;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.services.IstioSidecarReconciler;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class NamespaceController extends ReconnectableSingleWatcher<Namespace, NamespaceList> {
+public class NamespaceController extends ReconnectableSingleWatcher<Namespace, NamespaceList, Resource<Namespace>> {
 
 	public NamespaceController(KubernetesClient kubernetesClient, IstioSidecarReconciler istioSidecarReconciler,
 			AdditionalWatchersConfig additionalWatchersConfig) {

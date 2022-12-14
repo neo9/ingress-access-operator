@@ -6,9 +6,11 @@ workDir=~/Téléchargements
 targetFile=../src/main/resources/META-INF/native-image/reflect-config.json
 
 filter1='io.fabric8.kubernetes.api.model'
-filter2='io.fabric8.kubernetes.client.*CustomResource'
+filter2='io.fabric8.kubernetes.client.CustomResource|io.fabric8.kubernetes.client.*CustomResource'
 filter3='Serializer|Deserializer'
-filter="${filter1}|${filter2}|${filter3}"
+filter4='io.fabric8.kubernetes.client.impl.*'
+filter5='io.javaoperatorsdk.operator.processing.event.rate.LinearRateLimiter'
+filter="${filter1}|${filter2}|${filter3}|${filter4}|${filter5}"
 
 
 exclusionFilterFabric8="io.fabric8.kubernetes.api.model.networking.v1beta1|io.fabric8.kubernetes.api.model.apiextensions.v1beta1"
@@ -24,15 +26,18 @@ cd -
 cat <<EOF > $targetFile
 [
   {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
+  {"name": "java.util.concurrent.ThreadPoolExecutor", "allDeclaredMethods": true, "allPublicConstructors": true},
 EOF
 
 for jarGroupArtefactVersion in \
-      io.javaoperatorsdk:operator-framework:${javaoperatorsdkVersion} \
-      io.fabric8:kubernetes-model-common:${fabric8Version}            \
-      io.fabric8:kubernetes-model-core:${fabric8Version}              \
-      io.fabric8:kubernetes-model-networking:${fabric8Version}        \
-      io.fabric8:kubernetes-model-apiextensions:${fabric8Version}     \
-      io.fabric8:kubernetes-client:${fabric8Version}                  \
+      io.javaoperatorsdk:operator-framework:${javaoperatorsdkVersion}      \
+      io.javaoperatorsdk:operator-framework-core:${javaoperatorsdkVersion} \
+      io.fabric8:kubernetes-model-common:${fabric8Version}                 \
+      io.fabric8:kubernetes-model-core:${fabric8Version}                   \
+      io.fabric8:kubernetes-model-networking:${fabric8Version}             \
+      io.fabric8:kubernetes-model-apiextensions:${fabric8Version}          \
+      io.fabric8:kubernetes-client:${fabric8Version}                       \
+      io.fabric8:kubernetes-client-api:${fabric8Version}                   \
     ; do
 
   jarGroup=$(echo ${jarGroupArtefactVersion} | awk -F':' '{print $1}')
@@ -72,6 +77,7 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.config.ExposerConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.DefaultFilteringConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.VisitorGroup", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.VisitorGroupList", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.status.V1VisitorGroupStatus", "allDeclaredMethods": true, "allPublicConstructors": true},

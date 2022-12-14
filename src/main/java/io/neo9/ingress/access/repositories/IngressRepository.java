@@ -43,7 +43,7 @@ public class IngressRepository {
 	}
 
 	public Boolean delete(String namespace, String name) {
-		return kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).delete();
+		return ! kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).delete().isEmpty();
 	}
 
 }
