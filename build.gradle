@@ -1,22 +1,16 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.6.6'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'org.springframework.experimental.aot' version '0.11.4' apply false
-	id "org.sonarqube" version "3.5.0.2730"
-	id 'pl.allegro.tech.build.axion-release' version '1.14.3'
-	id 'io.spring.javaformat'
+	id 'checkstyle'
+	id 'org.springframework.boot' version '3.0.2'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.graalvm.buildtools.native' version '0.9.20' apply false
+	id "org.sonarqube" version "4.0.0.2929"
+	id 'pl.allegro.tech.build.axion-release' version '1.14.4'
 }
 
 group = 'io.neo9'
 version = scmVersion.version
-sourceCompatibility = '11'
-
-tasks.whenTaskAdded { task ->
-	if (task.name.startsWith("checkFormatAotMain")) {
-		task.enabled = false
-	}
-}
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -30,16 +24,37 @@ repositories {
 }
 
 ext {
-	javaOperatorVersion = '2.1.4'
-	javaOperatorStarterVersion = '2.3.0'
+	javaOperatorVersion = '4.2.7'
+	javaOperatorStarterVersion = '4.1.1'
 	bouncycastleVersion = '1.70'
 
 	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
 }
 
+
+checkstyleMain {
+	source = sourceSets.main.java.srcDirs
+}
+
+checkstyleTest {
+	source = sourceSets.test.java.srcDirs
+}
+
+// Modify checkstyle to generate an exception on checkstyle warnings.
+tasks.withType(Checkstyle)*.each { checkstyleTask ->
+    checkstyleTask.doLast {
+        reports.all { report ->
+            def outputFile = report.destination
+            if (outputFile.exists() && outputFile.text.contains("<error ")) {
+                throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
+            }
+        }
+    }
+}
+
 if (buildNativeImage) {
 	println "[plugins] Applying AOT plugin"
-	apply plugin: "org.springframework.experimental.aot"
+	apply plugin: "org.graalvm.buildtools.native"
 } else {
 	println "[plugins] NOT applying AOT plugin"
 }

@@ -3,6 +3,7 @@ package io.neo9.ingress.access.controllers.kubernetes;
 import io.fabric8.kubernetes.api.model.Service;
 import io.fabric8.kubernetes.api.model.ServiceList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.ServiceResource;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
 import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
@@ -18,7 +19,7 @@ import static io.neo9.ingress.access.utils.common.KubernetesUtils.hasLabel;
 
 @Component
 @Slf4j
-public class ServiceController extends ReconnectableSingleWatcher<Service, ServiceList> {
+public class ServiceController extends ReconnectableSingleWatcher<Service, ServiceList, ServiceResource<Service>> {
 
 	public ServiceController(KubernetesClient kubernetesClient, ServiceExposerReconciler serviceExposerReconciler,
 			AdditionalWatchersConfig additionalWatchersConfig,

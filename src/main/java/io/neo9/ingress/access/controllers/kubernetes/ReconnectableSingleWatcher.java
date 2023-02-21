@@ -1,5 +1,7 @@
 package io.neo9.ingress.access.controllers.kubernetes;
 
+import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.PodResource;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
@@ -14,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindList> {
+public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindList, KindResource> {
 
 	private final RetryContext retryContext = new RetryContext();
 
@@ -22,7 +24,7 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 
 	private final BiFunction<Action, Kind, Void> onEventReceived;
 
-	private final FilterWatchListDeletable<Kind, KindList> filterWatch;
+	private final FilterWatchListDeletable<Kind, KindList, KindResource> filterWatch;
 
 	private final Predicate<Kind> eventFilter;
 
@@ -30,17 +32,17 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 
 	private Watch watch;
 
-	protected ReconnectableSingleWatcher(FilterWatchListDeletable<Kind, KindList> filterWatch,
+	protected ReconnectableSingleWatcher(FilterWatchListDeletable<Kind, KindList, KindResource> filterWatch,
 			BiFunction<Action, Kind, Void> onEventReceived) {
 		this(true, filterWatch, kind -> true, onEventReceived);
 	}
 
-	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList> filterWatch,
+	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList, KindResource> filterWatch,
 			BiFunction<Action, Kind, Void> onEventReceived) {
 		this(active, filterWatch, kind -> true, onEventReceived);
 	}
 
-	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList> filterWatch,
+	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList, KindResource> filterWatch,
 			Predicate<Kind> eventFilter, BiFunction<Action, Kind, Void> onEventReceived) {
 		this.active = active;
 		this.uniqueWatcherIdentifier = this.getClass().getCanonicalName();

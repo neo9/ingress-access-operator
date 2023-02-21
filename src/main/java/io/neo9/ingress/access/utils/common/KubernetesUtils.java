@@ -1,8 +1,7 @@
 package io.neo9.ingress.access.utils.common;
 
+import jakarta.annotation.Nullable;
 import java.util.Map;
-
-import javax.annotation.Nullable;
 
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import lombok.experimental.UtilityClass;

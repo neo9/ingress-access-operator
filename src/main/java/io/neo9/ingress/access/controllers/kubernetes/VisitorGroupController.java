@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @ControllerConfiguration
 @Component
 @Slf4j
-public class VisitorGroupController implements Reconciler<VisitorGroup> {
+public class VisitorGroupController implements Reconciler<VisitorGroup>, Cleaner<VisitorGroup> {
 
 	private final VisitorGroupIngressReconciler visitorGroupIngressReconciler;
 

@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Set up JDK
       uses: actions/setup-java@v3.5.1
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'adopt'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -51,7 +51,7 @@ jobs:
           kubectl apply -f ./crds/
           kubectl create namespace nginx-istio-ingress
           kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
-          docker run -d --rm \
+          docker run -d \
                   --network host \
                   --name ingress-access-operator-test \
                   -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
@@ -71,6 +71,7 @@ jobs:
           cd -
           docker logs ingress-access-operator-test
           docker stop ingress-access-operator-test
+          docker rm ingress-access-operator-test
           exit ${testsFailed}
 
   native-build:
@@ -78,10 +79,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v3.5.1
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'adopt'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -120,7 +121,7 @@ jobs:
           kubectl apply -f ./crds/
           kubectl create namespace nginx-istio-ingress
           kubectl apply -f https://raw.githubusercontent.com/istio/istio/1.11.2/manifests/charts/base/crds/crd-all.gen.yaml
-          docker run -d --rm \
+          docker run -d \
                   --network host \
                   --name ingress-access-operator-test \
                   -e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
@@ -140,6 +141,7 @@ jobs:
           cd -
           docker logs ingress-access-operator-test
           docker stop ingress-access-operator-test
+          docker rm ingress-access-operator-test
           exit ${testsFailed}
 
   security-scan:

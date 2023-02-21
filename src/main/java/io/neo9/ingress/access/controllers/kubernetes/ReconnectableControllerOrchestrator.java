@@ -2,10 +2,10 @@ package io.neo9.ingress.access.controllers.kubernetes;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import lombok.extern.slf4j.Slf4j;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 import org.springframework.stereotype.Component;
 
