@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        k8s_version: [v1.21.14+k3s1, v1.22.16+k3s1, v1.23.15-rc1+k3s1]
+        k8s_version: [v1.25.10+k3s1, v1.26.5+k3s1, v1.27.2+k3s1]
     steps:
       - uses: actions/checkout@v3
       - name: Download test image
@@ -102,7 +102,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        k8s_version: [v1.21.14+k3s1, v1.22.16+k3s1, v1.23.15-rc1+k3s1]
+        k8s_version: [v1.25.10+k3s1, v1.26.5+k3s1, v1.27.2+k3s1]
     steps:
       - uses: actions/checkout@v3
       - name: Download test image
