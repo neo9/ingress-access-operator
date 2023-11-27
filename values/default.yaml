@@ -12,6 +12,8 @@ pod:
       value: false
     - name: EXTENSION_DEFAULT_FILTERING_ENABLED
       value: false
+    - name: AWS_REGION
+      value: eu-central-1
 
 serviceAccount:
   create: true

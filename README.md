@@ -18,8 +18,8 @@ to services in the mesh).
 Compatibility
 -------------
 
-Tested with kubernetes from version 1.19 to 1.22.
-The istio sidecar generation was tested with istio 1.10 and 1.11.
+Tested with kubernetes from version 1.26 to 1.27.
+The istio sidecar generation was tested with (old) istio 1.10 and 1.11.
 Compatible with ingress classes ALB and nginx.
 
 Concepts and usage
@@ -45,14 +45,14 @@ spec:
 The name is only here for information purpose.
 
 Then, create an `Ingress` with :
-* label `ingress.neo9.io/access-filtered: "true"`, to allow the operator to control that resource
+* label `ingress.neo9.io/enable-operator: "true"`, to allow the operator to control that resource
 * annotation `ingress.neo9.io/allowed-visitors: neo9,customer` which contains the list of authorized group of visitors (comma separated)
 ```
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1
 kind: Ingress
 metadata:
   labels:
-    ingress.neo9.io/access-filtered: "true"
+    ingress.neo9.io/enable-operator: "true"
   annotations:
     ingress.neo9.io/allowed-visitors: neo9
     ...
@@ -69,6 +69,26 @@ By default :
 2. If the annotation is not present, default groups are applied (visitor groups with label `ingress.neo9.io/category: default`)
 3. If there is no default Visitor Groups, the whitelist 0.0.0.0/0 is applied
 
+**AWS ACM certificate injection**
+
+Inject aws ACM certificate ARN from the target domain name.
+
+```
+apiVersion: extensions/v1
+kind: Ingress
+metadata:
+  labels:
+    ingress.neo9.io/enable-operator: "true"
+  annotations:
+    ingress.neo9.io/acm-certificate-domain: mydomain.tech.io
+    ...
+  name: demoingress
+  namespace: default
+spec:
+  rules:
+  - hosts: - host: mydomain.tech.io
+  ...
+```
 
 **Filtering by default**
 
@@ -137,7 +157,7 @@ metadata:
   annotations:
     # ingress.neo9.io/expose-hostname: "{{name}}.{{namespace}}.{{domain}}"
     ingress.neo9.io/expose-labels: |-
-      ingress.neo9.io/access-filtered: "true"
+      ingress.neo9.io/enable-operator: "true"
     ingress.neo9.io/expose-annotations: |-
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-dns-staging-gcp

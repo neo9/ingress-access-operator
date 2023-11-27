@@ -6,6 +6,8 @@ import static io.neo9.ingress.access.config.MutationAnnotations.FORECASTLE_EXPOS
 import static io.neo9.ingress.access.config.MutationAnnotations.FORECASTLE_NETWORK_RESTRICTED;
 import static io.neo9.ingress.access.config.MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY;
 import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
+import static io.neo9.ingress.access.config.MutationAnnotations.OPERATOR_AWS_ACM_CERT_DOMAIN;
+import static io.neo9.ingress.access.config.MutationAnnotations.OPERATOR_AWS_ALB_CERT_ARN;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
@@ -35,194 +37,240 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.services.acm.AcmClient;
+import software.amazon.awssdk.services.acm.model.CertificateStatus;
+import software.amazon.awssdk.services.acm.model.CertificateSummary;
+import software.amazon.awssdk.services.acm.model.ListCertificatesRequest;
+import software.amazon.awssdk.services.acm.model.ListCertificatesResponse;
 
 @Service
 @Slf4j
 public class VisitorGroupIngressReconciler {
 
-	private final static String ALL_CIDR = "0.0.0.0/0";
+  private final static String ALL_CIDR = "0.0.0.0/0";
 
-	private final VisitorGroupRepository visitorGroupRepository;
+  private final VisitorGroupRepository visitorGroupRepository;
 
-	private final IngressRepository ingressRepository;
+  private final IngressRepository ingressRepository;
 
-	private final ServiceRepository serviceRepository;
+  private final ServiceRepository serviceRepository;
 
-	private final AdditionalWatchersConfig additionalWatchersConfig;
+  private final AdditionalWatchersConfig additionalWatchersConfig;
 
-	public VisitorGroupIngressReconciler(VisitorGroupRepository visitorGroupRepository,
-			IngressRepository ingressRepository, ServiceRepository serviceRepository,
-			AdditionalWatchersConfig additionalWatchersConfig) {
-		this.visitorGroupRepository = visitorGroupRepository;
-		this.ingressRepository = ingressRepository;
-		this.serviceRepository = serviceRepository;
-		this.additionalWatchersConfig = additionalWatchersConfig;
-	}
+  public VisitorGroupIngressReconciler(VisitorGroupRepository visitorGroupRepository,
+                                       IngressRepository ingressRepository, ServiceRepository serviceRepository,
+                                       AdditionalWatchersConfig additionalWatchersConfig) {
+    this.visitorGroupRepository = visitorGroupRepository;
+    this.ingressRepository = ingressRepository;
+    this.serviceRepository = serviceRepository;
+    this.additionalWatchersConfig = additionalWatchersConfig;
+  }
 
-	private void reconcileIfLinkedToVisitorGroup(HasMetadata hasMetadata, String visitorGroupName) {
-		if (isLinkedToVisitorGroupName(hasMetadata, visitorGroupName)) {
-			String resourceNamespaceAndName = getResourceNamespaceAndName(hasMetadata);
-			log.info("{} have to be marked for update check", resourceNamespaceAndName);
-			try {
-				if (hasMetadata.getKind().equals(new Ingress().getKind())) {
-					reconcile((Ingress) hasMetadata);
-				}
-				else if (hasMetadata.getKind().equals(new io.fabric8.kubernetes.api.model.Service().getKind())) {
-					reconcile((io.fabric8.kubernetes.api.model.Service) hasMetadata);
-				}
-				else {
-					throw new NotHandledWorkloadException(
-							String.format("%s cannot be whitelisted !", hasMetadata.getKind()));
-				}
-			}
-			catch (VisitorGroupNotFoundException e) {
-				log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName,
-						resourceNamespaceAndName);
-			}
-		}
-	}
+  private void reconcileIfLinkedToVisitorGroup(HasMetadata hasMetadata, String visitorGroupName) {
+    if (isLinkedToVisitorGroupName(hasMetadata, visitorGroupName)) {
+      String resourceNamespaceAndName = getResourceNamespaceAndName(hasMetadata);
+      log.info("{} have to be marked for update check", resourceNamespaceAndName);
+      try {
+        if (hasMetadata.getKind().equals(new Ingress().getKind())) {
+          reconcile((Ingress) hasMetadata);
+        } else if (hasMetadata.getKind().equals(new io.fabric8.kubernetes.api.model.Service().getKind())) {
+          reconcile((io.fabric8.kubernetes.api.model.Service) hasMetadata);
+        } else {
+          throw new NotHandledWorkloadException(
+              String.format("%s cannot be whitelisted !", hasMetadata.getKind()));
+        }
+      } catch (VisitorGroupNotFoundException e) {
+        log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName,
+            resourceNamespaceAndName);
+      }
+    }
+  }
 
-	public void reconcile(VisitorGroup visitorGroup) {
-		String visitorGroupName = visitorGroup.getMetadata().getName();
-		log.info("starting reconcile for visitor group {}", visitorGroupName);
+  public void reconcile(VisitorGroup visitorGroup) {
+    String visitorGroupName = visitorGroup.getMetadata().getName();
+    log.info("starting reconcile for visitor group {}", visitorGroupName);
 
-		// reconcile ingresses
-		if (additionalWatchersConfig.defaultFiltering().isEnabled()) {
-			ingressRepository.listAllIngress().forEach(ingress -> {
-				String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
-				log.info("ingress {} have to be marked for update check", ingressNamespaceAndName);
-				try {
-					reconcile(ingress);
-				}
-				catch (VisitorGroupNotFoundException e) {
-					log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName,
-							ingressNamespaceAndName);
-				}
-			});
-		}
-		else {
-			ingressRepository.listIngressWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-					.forEach(ingress -> reconcileIfLinkedToVisitorGroup(ingress, visitorGroupName));
-		}
+    // reconcile ingresses
+    if (additionalWatchersConfig.defaultFiltering().isEnabled()) {
+      ingressRepository.listAllIngress().forEach(ingress -> {
+        String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
+        log.info("ingress {} have to be marked for update check", ingressNamespaceAndName);
+        try {
+          reconcile(ingress);
+        } catch (VisitorGroupNotFoundException e) {
+          log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName,
+              ingressNamespaceAndName);
+        }
+      });
+    } else {
+      ingressRepository.listIngressWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+          .forEach(ingress -> reconcileIfLinkedToVisitorGroup(ingress, visitorGroupName));
+    }
 
-		// reconcile services
-		serviceRepository.listWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
-				.forEach(service -> reconcileIfLinkedToVisitorGroup(service, visitorGroupName));
-	}
+    // reconcile services
+    serviceRepository.listWithLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+        .forEach(service -> reconcileIfLinkedToVisitorGroup(service, visitorGroupName));
+  }
 
-	public void reconcile(Ingress ingress) {
-		String resourceNamespaceAndName = getResourceNamespaceAndName(ingress);
-		log.trace("start patching of {}", resourceNamespaceAndName);
+  public void reconcile(Ingress ingress) {
+    String resourceNamespaceAndName = getResourceNamespaceAndName(ingress);
+    log.trace("start patching of {}", resourceNamespaceAndName);
 
-		if (!whitelistCanBeUpdated(ingress)) {
-			return;
-		}
+    // 1. reconcile ssl certificate
+    if (hasAnnotation(ingress, OPERATOR_AWS_ACM_CERT_DOMAIN)) {
+      CertificateSummary certificateSummary = getAcmCertificate(ingress);
+      String currentValue = getAnnotationValue(ingress, OPERATOR_AWS_ALB_CERT_ARN);
+      boolean valueChanged =
+          (certificateSummary != null) && (!certificateSummary.certificateArn().equals(currentValue));
+      if (valueChanged) {
+        log.info("updating ingress {} because the acm certificate value changed", resourceNamespaceAndName);
+        ingressRepository.patchWithAnnotations(ingress, Map.of(
+            OPERATOR_AWS_ALB_CERT_ARN, certificateSummary.certificateArn()
+        ));
+      }
+    }
 
-		String cidrListAsString = getCidrListAsString(ingress);
-		if (!cidrListAsString.equals(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress)))) {
-			log.info("updating ingress {} because the targeted value changed", resourceNamespaceAndName);
-			Map<String, String> annotationsToApply = new HashMap<>();
-			annotationsToApply.put(getIngressWhitelistAnnotation(ingress), cidrListAsString);
-			if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
-				annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
-			}
-			if (hasAnnotation(ingress, FORECASTLE_EXPOSE)) {
-				annotationsToApply.put(FORECASTLE_NETWORK_RESTRICTED,
-						Boolean.toString(!ALL_CIDR.equals(cidrListAsString)));
-			}
-			ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
-		}
+    // 2. reconcile whitelist
+    if (!whitelistCanBeUpdated(ingress)) {
+      return;
+    }
 
-		log.trace("end of patching of {}", resourceNamespaceAndName);
-	}
+    String cidrListAsString = getCidrListAsString(ingress);
+    if (!cidrListAsString.equals(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress)))) {
+      log.info("updating ingress {} because the targeted value changed", resourceNamespaceAndName);
+      Map<String, String> annotationsToApply = new HashMap<>();
+      annotationsToApply.put(getIngressWhitelistAnnotation(ingress), cidrListAsString);
+      if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+        annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
+      }
+      if (hasAnnotation(ingress, FORECASTLE_EXPOSE)) {
+        annotationsToApply.put(FORECASTLE_NETWORK_RESTRICTED,
+            Boolean.toString(!ALL_CIDR.equals(cidrListAsString)));
+      }
+      ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
+    }
 
-	private boolean whitelistCanBeUpdated(Ingress ingress) {
-		if (hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
-			return true;
-		}
-		if (hasAnnotation(ingress, FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)) {
-			return true;
-		}
-		return isEmpty(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress), EMPTY));
-	}
+    log.trace("end of patching of {}", resourceNamespaceAndName);
+  }
 
-	public String getIngressWhitelistAnnotation(Ingress ingress) {
-		String ingressClassName = null;
-		if (ingress.getSpec() != null) {
-			ingressClassName = ingress.getSpec().getIngressClassName();
-		}
-		if (ingressClassName == null) {
-			ingressClassName = ingress.getMetadata().getAnnotations().get("kubernetes.io/ingress.class");
-		}
-		if (ingressClassName.contains("nginx")) {
-			return NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
-		}
-		else if (ingressClassName.contains("alb")) {
-			return ALB_INGRESS_WHITELIST_ANNOTATION_KEY;
-		}
-		throw new NotHandledIngressClass(String.format("Ingress class %s is not handled", ingressClassName));
-	}
+  private CertificateSummary getAcmCertificate(Ingress ingress) {
+    String resourceNamespaceAndName = getResourceNamespaceAndName(ingress);
+    String domainName = getAnnotationValue(ingress, OPERATOR_AWS_ACM_CERT_DOMAIN);
 
-	public void reconcile(io.fabric8.kubernetes.api.model.Service service) {
-		String resourceNamespaceAndName = getResourceNamespaceAndName(service);
-		log.trace("start patching of {}", resourceNamespaceAndName);
+    AcmClient client = AcmClient.create();
 
-		List<String> cidrList = getCidrList(service);
-		if (!cidrList.equals(service.getSpec().getLoadBalancerSourceRanges())) {
-			log.info("updating service {} because the targeted value changed", resourceNamespaceAndName);
-			serviceRepository.patchLoadBalancerSourceRanges(service, cidrList);
-		}
+    ListCertificatesRequest req = ListCertificatesRequest.builder()
+        .certificateStatuses(CertificateStatus.ISSUED)
+        .maxItems(1000)
+        .build();
 
-		log.trace("end of patching of {}", resourceNamespaceAndName);
-	}
+    // Retrieve the list of certificates.
+    ListCertificatesResponse result = null;
+    try {
+      result = client.listCertificates(req);
+    } catch (Exception e) {
+      log.error("could not list acm certificates, wont make any change", e);
+      return null;
+    }
+    Optional<CertificateSummary> certificateSummaryOpt = result.certificateSummaryList().stream()
+        .filter(c -> c.domainName().equals(domainName))
+        .findFirst();
 
-	public List<String> getCidrList(HasMetadata hasMetadata) {
-		return stream(getVisitorGroupsFromCategoryLabelOrVisitorGroupAnnotation(hasMetadata).split(COMMA))
-				.map(String::trim).filter(StringUtils::isNotBlank).map(visitorGroupRepository::getVisitorGroupByName)
-				.map(VisitorGroup::extractSpecSources).flatMap(Collection::stream)
-				.map(V1VisitorGroupSpecSources::getCidr).distinct().collect(Collectors.toList());
-	}
+    if (certificateSummaryOpt.isEmpty()) {
+      log.warn("did not find acm certificate for ingress {}, domain = {}", resourceNamespaceAndName, domainName);
+      return null;
+    }
 
-	public String getCidrListAsString(HasMetadata hasMetadata) {
-		String cidrListAsString = getCidrList(hasMetadata).stream().collect(Collectors.joining(COMMA));
+    return certificateSummaryOpt.get();
+  }
 
-		// by default, open access
-		if (isEmpty(cidrListAsString)) {
-			cidrListAsString = ALL_CIDR;
-		}
+  private boolean whitelistCanBeUpdated(Ingress ingress) {
+    if (hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+      return true;
+    }
+    if (hasAnnotation(ingress, FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)) {
+      return true;
+    }
+    return isEmpty(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress), EMPTY));
+  }
 
-		log.trace("computed cidr list : {}", cidrListAsString);
-		return cidrListAsString;
-	}
+  public String getIngressWhitelistAnnotation(Ingress ingress) {
+    String ingressClassName = null;
+    if (ingress.getSpec() != null) {
+      ingressClassName = ingress.getSpec().getIngressClassName();
+    }
+    if (ingressClassName == null) {
+      ingressClassName = ingress.getMetadata().getAnnotations().get("kubernetes.io/ingress.class");
+    }
+    if (ingressClassName.contains("nginx")) {
+      return NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
+    } else if (ingressClassName.contains("alb")) {
+      return ALB_INGRESS_WHITELIST_ANNOTATION_KEY;
+    }
+    throw new NotHandledIngressClass(String.format("Ingress class %s is not handled", ingressClassName));
+  }
 
-	private boolean isLinkedToVisitorGroupName(HasMetadata hasMetadata, String visitorGroupName) {
-		log.debug("checking if {} is concerned by visitorGroupName {}", getResourceNamespaceAndName(hasMetadata),
-				visitorGroupName);
-		return stream(getVisitorGroupsFromCategoryLabelOrVisitorGroupAnnotation(hasMetadata).split(COMMA))
-				.anyMatch(s -> s.trim().equalsIgnoreCase(visitorGroupName));
-	}
+  public void reconcile(io.fabric8.kubernetes.api.model.Service service) {
+    String resourceNamespaceAndName = getResourceNamespaceAndName(service);
+    log.trace("start patching of {}", resourceNamespaceAndName);
 
-	private String getVisitorGroupsFromCategoryLabelOrVisitorGroupAnnotation(HasMetadata hasMetadata) {
-		// priority to visitor groups
-		if (hasAnnotation(hasMetadata, MUTABLE_INGRESS_VISITOR_GROUP_KEY)) {
-			return getAnnotationValue(hasMetadata, MUTABLE_INGRESS_VISITOR_GROUP_KEY);
-		}
+    List<String> cidrList = getCidrList(service);
+    if (!cidrList.equals(service.getSpec().getLoadBalancerSourceRanges())) {
+      log.info("updating service {} because the targeted value changed", resourceNamespaceAndName);
+      serviceRepository.patchLoadBalancerSourceRanges(service, cidrList);
+    }
 
-		// then default groups
-		List<VisitorGroup> defaultCategories = new ArrayList<>();
-		for (String category : additionalWatchersConfig.defaultFiltering().getCategories()) {
-			defaultCategories.addAll(visitorGroupRepository.getByLabel(VISITOR_GROUP_LABEL_CATEGORY, category));
-		}
-		if (!defaultCategories.isEmpty()) {
-			return defaultCategories.stream().map(vg -> vg.getMetadata().getName()).collect(Collectors.joining(COMMA));
-		}
+    log.trace("end of patching of {}", resourceNamespaceAndName);
+  }
 
-		// by default, nothing
-		return EMPTY;
-	}
+  public List<String> getCidrList(HasMetadata hasMetadata) {
+    return stream(getVisitorGroupsFromCategoryLabelOrVisitorGroupAnnotation(hasMetadata).split(COMMA))
+        .map(String::trim).filter(StringUtils::isNotBlank).map(visitorGroupRepository::getVisitorGroupByName)
+        .map(VisitorGroup::extractSpecSources).flatMap(Collection::stream)
+        .map(V1VisitorGroupSpecSources::getCidr).distinct().collect(Collectors.toList());
+  }
+
+  public String getCidrListAsString(HasMetadata hasMetadata) {
+    String cidrListAsString = getCidrList(hasMetadata).stream().collect(Collectors.joining(COMMA));
+
+    // by default, open access
+    if (isEmpty(cidrListAsString)) {
+      cidrListAsString = ALL_CIDR;
+    }
+
+    log.trace("computed cidr list : {}", cidrListAsString);
+    return cidrListAsString;
+  }
+
+  private boolean isLinkedToVisitorGroupName(HasMetadata hasMetadata, String visitorGroupName) {
+    log.debug("checking if {} is concerned by visitorGroupName {}", getResourceNamespaceAndName(hasMetadata),
+        visitorGroupName);
+    return stream(getVisitorGroupsFromCategoryLabelOrVisitorGroupAnnotation(hasMetadata).split(COMMA))
+        .anyMatch(s -> s.trim().equalsIgnoreCase(visitorGroupName));
+  }
+
+  private String getVisitorGroupsFromCategoryLabelOrVisitorGroupAnnotation(HasMetadata hasMetadata) {
+    // priority to visitor groups
+    if (hasAnnotation(hasMetadata, MUTABLE_INGRESS_VISITOR_GROUP_KEY)) {
+      return getAnnotationValue(hasMetadata, MUTABLE_INGRESS_VISITOR_GROUP_KEY);
+    }
+
+    // then default groups
+    List<VisitorGroup> defaultCategories = new ArrayList<>();
+    for (String category : additionalWatchersConfig.defaultFiltering().getCategories()) {
+      defaultCategories.addAll(visitorGroupRepository.getByLabel(VISITOR_GROUP_LABEL_CATEGORY, category));
+    }
+    if (!defaultCategories.isEmpty()) {
+      return defaultCategories.stream().map(vg -> vg.getMetadata().getName()).collect(Collectors.joining(COMMA));
+    }
+
+    // by default, nothing
+    return EMPTY;
+  }
 
 }

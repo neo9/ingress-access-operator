@@ -23,4 +23,8 @@ public class MutationAnnotations {
 
 	public static final String FORECASTLE_NETWORK_RESTRICTED = "forecastle.stakater.com/network-restricted";
 
+	public static final String OPERATOR_AWS_ACM_CERT_DOMAIN = "ingress.neo9.io/acm-certificate-domain";
+
+	public static final String OPERATOR_AWS_ALB_CERT_ARN ="alb.ingress.kubernetes.io/certificate-arn";
+
 }
