@@ -128,7 +128,7 @@ public class VisitorGroupIngressReconciler {
       boolean valueChanged =
           (certificateSummary != null) && (!certificateSummary.certificateArn().equals(currentValue));
       if (valueChanged) {
-        log.info("updating ingress {} because the acm certificate value changed", resourceNamespaceAndName);
+        log.info("updating ingress {} with acm certificate ({}) because value changed", resourceNamespaceAndName, certificateSummary.certificateArn());
         ingressRepository.patchWithAnnotations(ingress, Map.of(
             OPERATOR_AWS_ALB_CERT_ARN, certificateSummary.certificateArn()
         ));
