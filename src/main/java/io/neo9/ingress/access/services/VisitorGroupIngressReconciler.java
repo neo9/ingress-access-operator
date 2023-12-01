@@ -142,7 +142,7 @@ public class VisitorGroupIngressReconciler {
 
     String cidrListAsString = getCidrListAsString(ingress);
     if (!cidrListAsString.equals(getAnnotationValue(ingress, getIngressWhitelistAnnotation(ingress)))) {
-      log.info("updating ingress {} because the targeted value changed", resourceNamespaceAndName);
+      log.info("updating ingress {} because the access whitelist value changed", resourceNamespaceAndName);
       Map<String, String> annotationsToApply = new HashMap<>();
       annotationsToApply.put(getIngressWhitelistAnnotation(ingress), cidrListAsString);
       if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
@@ -221,7 +221,7 @@ public class VisitorGroupIngressReconciler {
 
     List<String> cidrList = getCidrList(service);
     if (!cidrList.equals(service.getSpec().getLoadBalancerSourceRanges())) {
-      log.info("updating service {} because the targeted value changed", resourceNamespaceAndName);
+      log.info("updating service {} because the access whitelist value changed", resourceNamespaceAndName);
       serviceRepository.patchLoadBalancerSourceRanges(service, cidrList);
     }
 
