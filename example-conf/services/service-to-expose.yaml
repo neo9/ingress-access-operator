@@ -8,7 +8,7 @@ metadata:
   annotations:
     # ingress.neo9.io/expose-hostname: "{{name}}.{{namespace}}.{{domain}}"
     ingress.neo9.io/expose-labels: |-
-      ingress.neo9.io/access-filtered: "true"
+      ingress.neo9.io/enable-operator: "true"
     ingress.neo9.io/expose-annotations: |-
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-dns-staging-gcp

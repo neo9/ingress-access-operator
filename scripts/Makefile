@@ -1,6 +1,5 @@
 CLUSTER_NAME=ingress-access-operator-test
-CLUSTER_VERSION=v1.21.14-k3s1
-#CLUSTER_VERSION=v1.22.1-rc1-k3s1
+CLUSTER_VERSION=v1.27.2-k3s1
 
 setup-kube-for-test:
 	k3d cluster create $(CLUSTER_NAME) --image rancher/k3s:$(CLUSTER_VERSION)
@@ -28,6 +27,7 @@ start-operator-locally:
 		-e EXTENSION_UPDATE_ISTIO_INGRESS_SIDECAR_ENABLED=true \
 		-e EXTENSION_EXPOSER_ENABLED=true \
 		-e EXTENSION_DEFAULT_FILTERING_ENABLED=true \
+		-e AWS_REGION=eu-central-1 \
 		-v /tmp/kube/:/conf:ro \
 		-e KUBECONFIG=/conf/config \
 		docker.io/neo9sas/ingress-access-operator:latest

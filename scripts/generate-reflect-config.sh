@@ -9,7 +9,7 @@ filter1='io.fabric8.kubernetes.api.model'
 filter2='io.fabric8.kubernetes.client.CustomResource|io.fabric8.kubernetes.client.*CustomResource'
 filter3='Serializer|Deserializer'
 filter4='io.fabric8.kubernetes.client.impl.*'
-filter5='io.javaoperatorsdk.operator.processing.event.rate.LinearRateLimiter'
+filter5='io.javaoperatorsdk.operator.processing'
 filter="${filter1}|${filter2}|${filter3}|${filter4}|${filter5}"
 
 
@@ -80,7 +80,6 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.customresources.VisitorGroupList", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.status.V1VisitorGroupStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allPublicConstructors": true}

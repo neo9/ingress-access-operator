@@ -1,5 +1,6 @@
 package io.neo9.ingress.access.services;
 
+import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent.SpecNested;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressRuleValueBuilder
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressBackendBuilder;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent.SpecNested;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressRuleBuilder;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressServiceBackendBuilder;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressTLSBuilder;

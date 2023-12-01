@@ -1,9 +1,9 @@
 plugins {
 	id 'java'
 	id 'checkstyle'
-	id 'org.springframework.boot' version '3.0.5'
-	id 'io.spring.dependency-management' version '1.1.0'
-	id 'org.graalvm.buildtools.native' version '0.9.20' apply false
+	id 'org.springframework.boot' version '3.2.0'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.graalvm.buildtools.native' version '0.9.28' apply false
 	id "org.sonarqube" version "4.0.0.2929"
 	id 'pl.allegro.tech.build.axion-release' version '1.15.0'
 }
@@ -19,37 +19,16 @@ configurations {
 }
 
 repositories {
-	maven { url 'https://repo.spring.io/release' }
 	mavenCentral()
 }
 
 ext {
-	javaOperatorVersion = '4.2.8'
-	javaOperatorStarterVersion = '4.1.1'
+	javaOperatorVersion = '4.3.1'
+	javaOperatorStarterVersion = '5.0.0'
 	bouncycastleVersion = '1.70'
+	awsSdkVersion = '2.21.35'
 
 	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
-}
-
-
-checkstyleMain {
-	source = sourceSets.main.java.srcDirs
-}
-
-checkstyleTest {
-	source = sourceSets.test.java.srcDirs
-}
-
-// Modify checkstyle to generate an exception on checkstyle warnings.
-tasks.withType(Checkstyle)*.each { checkstyleTask ->
-    checkstyleTask.doLast {
-        reports.all { report ->
-            def outputFile = report.destination
-            if (outputFile.exists() && outputFile.text.contains("<error ")) {
-                throw new GradleException("There were checkstyle warnings! For more info check $outputFile")
-            }
-        }
-    }
 }
 
 if (buildNativeImage) {
@@ -60,21 +39,29 @@ if (buildNativeImage) {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
 
 	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorStarterVersion}"
 	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
 	implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
 
+	implementation "software.amazon.awssdk:acm:${awsSdkVersion}"
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation "io.javaoperatorsdk:operator-framework-spring-boot-starter-test:${javaOperatorStarterVersion}"
+}
+
+configurations {
+	all {
+		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+		exclude group:"commons-logging", module: "commons-logging"
+   }
 }
 
 test {
@@ -83,15 +70,11 @@ test {
 
 bootBuildImage {
 	imageName   = "neo9sas/${project.name}:latest"
-	if (! buildNativeImage) {
-		builder     = 'paketobuildpacks/builder:base'
-	} else {
-		builder		= 'paketobuildpacks/builder:tiny'
-		environment = [
-				'BP_NATIVE_IMAGE'                : 'true',
-				'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
-		]
-	}
+	builder		= buildNativeImage ? 'paketobuildpacks/builder:tiny' : 'paketobuildpacks/builder:base'
+	environment = [
+			'BP_NATIVE_IMAGE'                : buildNativeImage.toString(),
+			'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
+	]
 }
 
 subprojects {

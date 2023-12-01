@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   labels:
-    ingress.neo9.io/access-filtered: "true"
+    ingress.neo9.io/enable-operator: "true"
   annotations:
     kubernetes.io/ingress.class: nginx
   name: ingress-v1beta1
