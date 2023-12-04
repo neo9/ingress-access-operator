@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up JDK
       uses: actions/setup-java@v4.0.0
       with:
@@ -34,7 +34,7 @@ jobs:
       matrix:
         k8s_version: [v1.27.2+k3s1, v1.28.3+k3s1]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download test image
         uses: ishworkh/docker-image-artifact-download@v1
         with:
@@ -78,7 +78,7 @@ jobs:
     needs: [integration-tests] # not really needed, but is a way to not duplicate build errors
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK
         uses: actions/setup-java@v4.0.0
         with:
@@ -104,7 +104,7 @@ jobs:
       matrix:
         k8s_version: [v1.27.2+k3s1, v1.28.3+k3s1]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download test image
         uses: ishworkh/docker-image-artifact-download@v1
         with:
@@ -148,7 +148,7 @@ jobs:
     needs: [native-build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Download test image
         uses: ishworkh/docker-image-artifact-download@v1
         with:
