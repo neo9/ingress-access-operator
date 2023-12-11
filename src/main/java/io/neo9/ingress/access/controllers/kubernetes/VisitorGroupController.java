@@ -16,25 +16,25 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class VisitorGroupController implements Reconciler<VisitorGroup>, Cleaner<VisitorGroup> {
 
-  private final VisitorGroupIngressReconciler visitorGroupIngressReconciler;
+	private final VisitorGroupIngressReconciler visitorGroupIngressReconciler;
 
-  public VisitorGroupController(VisitorGroupIngressReconciler visitorGroupIngressReconciler) {
-    this.visitorGroupIngressReconciler = visitorGroupIngressReconciler;
-  }
+	public VisitorGroupController(VisitorGroupIngressReconciler visitorGroupIngressReconciler) {
+		this.visitorGroupIngressReconciler = visitorGroupIngressReconciler;
+	}
 
-  @Override
-  public UpdateControl<VisitorGroup> reconcile(VisitorGroup visitorGroup, Context context) {
-    log.info("update event detected for visitor group : {}", visitorGroup.getMetadata().getName());
-    visitorGroupIngressReconciler.reconcile(visitorGroup);
-    return UpdateControl.noUpdate();
-  }
+	@Override
+	public UpdateControl<VisitorGroup> reconcile(VisitorGroup visitorGroup, Context context) {
+		log.info("update event detected for visitor group : {}", visitorGroup.getMetadata().getName());
+		visitorGroupIngressReconciler.reconcile(visitorGroup);
+		return UpdateControl.noUpdate();
+	}
 
-  @Override
-  public DeleteControl cleanup(VisitorGroup visitorGroup, Context context) {
-    log.info("delete event detected for visitor group : {}", visitorGroup.getMetadata().getName());
-    // will display panic message if there still
-    visitorGroupIngressReconciler.reconcile(visitorGroup);
-    return DeleteControl.defaultDelete();
-  }
+	@Override
+	public DeleteControl cleanup(VisitorGroup visitorGroup, Context context) {
+		log.info("delete event detected for visitor group : {}", visitorGroup.getMetadata().getName());
+		// will display panic message if there still
+		visitorGroupIngressReconciler.reconcile(visitorGroup);
+		return DeleteControl.defaultDelete();
+	}
 
 }

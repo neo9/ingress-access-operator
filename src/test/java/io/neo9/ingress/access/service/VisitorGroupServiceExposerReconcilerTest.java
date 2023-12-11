@@ -56,23 +56,23 @@ public class VisitorGroupServiceExposerReconcilerTest {
 
 	static {
 		V1VisitorGroupSpec visitorGroup1Spec = V1VisitorGroupSpec.builder()
-				.sources(List.of(V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1Ip1).build(),
-						V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1Ip2).build()))
-				.build();
+			.sources(List.of(V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1Ip1).build(),
+					V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1Ip2).build()))
+			.build();
 		visitorGroup1 = new VisitorGroup();
 		visitorGroup1.setSpec(visitorGroup1Spec);
 
 		V1VisitorGroupSpec visitorGroup2Spec = V1VisitorGroupSpec.builder()
-				.sources(List.of(V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup2Ip1).build(),
-						V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup2Ip2).build()))
-				.build();
+			.sources(List.of(V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup2Ip1).build(),
+					V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup2Ip2).build()))
+			.build();
 		visitorGroup2 = new VisitorGroup();
 		visitorGroup2.setSpec(visitorGroup2Spec);
 
 		V1VisitorGroupSpec visitorGroup1bisSpec = V1VisitorGroupSpec.builder()
-				.sources(List.of(V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1bisIp1).build(),
-						V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1bisIp2).build()))
-				.build();
+			.sources(List.of(V1VisitorGroupSpecSources.builder().name("ip1").cidr(visitorGroup1bisIp1).build(),
+					V1VisitorGroupSpecSources.builder().name("ip2").cidr(visitorGroup1bisIp2).build()))
+			.build();
 		visitorGroup1bis = new VisitorGroup();
 		visitorGroup1bis.setSpec(visitorGroup1bisSpec);
 	}
@@ -94,7 +94,7 @@ public class VisitorGroupServiceExposerReconcilerTest {
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg2")).thenReturn(visitorGroup2);
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vg1bis")).thenReturn(visitorGroup1bis);
 		lenient().when(visitorGroupRepository.getVisitorGroupByName("vgUndefined"))
-				.thenThrow(new VisitorGroupNotFoundException("vgUndefined"));
+			.thenThrow(new VisitorGroupNotFoundException("vgUndefined"));
 
 		AdditionalWatchersConfig additionalWatchersConfig = new AdditionalWatchersConfig();
 		DefaultFilteringConfig defaultFilteringConfig = new DefaultFilteringConfig();
@@ -108,9 +108,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldWellComputeWhitelistForOneGroup() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1")).endMetadata()
-				.build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1"))
+			.endMetadata()
+			.build();
 
 		// when
 		String cidrListAsString = visitorGroupIngressReconciler.getCidrListAsString(ingress);
@@ -122,9 +124,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldWellComputeWhitelistForTwoGroup() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1,vg2")).endMetadata()
-				.build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1,vg2"))
+			.endMetadata()
+			.build();
 
 		// when
 		String cidrListAsString = visitorGroupIngressReconciler.getCidrListAsString(ingress);
@@ -136,9 +140,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldWellComputeWhitelistForTwoGroupWithWhitespaceInAnnotation() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1 , vg2"))
-				.endMetadata().build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1 , vg2"))
+			.endMetadata()
+			.build();
 
 		// when
 		String cidrListAsString = visitorGroupIngressReconciler.getCidrListAsString(ingress);
@@ -150,9 +156,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldWellComputeWhitelistForTwoGroupWithCommaTypo() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1,,vg2,"))
-				.endMetadata().build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1,,vg2,"))
+			.endMetadata()
+			.build();
 
 		// when
 		String cidrListAsString = visitorGroupIngressReconciler.getCidrListAsString(ingress);
@@ -164,9 +172,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldWellComputeWhitelistForTwoGroupWithCommonRange() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1,vg1bis"))
-				.endMetadata().build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vg1,vg1bis"))
+			.endMetadata()
+			.build();
 
 		// when
 		String cidrListAsString = visitorGroupIngressReconciler.getCidrListAsString(ingress);
@@ -178,9 +188,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldUseDefaultConfigurationIfThereIsNoGroups() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "")).endMetadata()
-				.build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, ""))
+			.endMetadata()
+			.build();
 
 		// when
 		String cidrListAsString = visitorGroupIngressReconciler.getCidrListAsString(ingress);
@@ -204,20 +216,25 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldPanicOnUnknownVisitorGroup() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vgUndefined"))
-				.endMetadata().build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "vgUndefined"))
+			.endMetadata()
+			.build();
 
 		// when / then
 		assertThatThrownBy(() -> visitorGroupIngressReconciler.getCidrListAsString(ingress))
-				.isInstanceOf(VisitorGroupNotFoundException.class);
+			.isInstanceOf(VisitorGroupNotFoundException.class);
 	}
 
 	@Test
 	public void shouldDetectAlbIngressOnMetadata() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test")
-				.withAnnotations(Map.of("kubernetes.io/ingress.class", "alb")).endMetadata().build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.withAnnotations(Map.of("kubernetes.io/ingress.class", "alb"))
+			.endMetadata()
+			.build();
 
 		// when
 		String whitelistAnnotation = visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress);
@@ -229,8 +246,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldDetectAlbIngressOnClassName() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test").endMetadata()
-				.withSpec(new IngressSpecBuilder().withIngressClassName("alb").build()).build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.endMetadata()
+			.withSpec(new IngressSpecBuilder().withIngressClassName("alb").build())
+			.build();
 
 		// when
 		String whitelistAnnotation = visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress);
@@ -242,8 +262,11 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldDetectNginxIngressOnClassName() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test").endMetadata()
-				.withSpec(new IngressSpecBuilder().withIngressClassName("my-nginx").build()).build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.endMetadata()
+			.withSpec(new IngressSpecBuilder().withIngressClassName("my-nginx").build())
+			.build();
 
 		// when
 		String whitelistAnnotation = visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress);
@@ -255,12 +278,15 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Test
 	public void shouldPanicOnUnknownIngressClassName() {
 		// given
-		Ingress ingress = new IngressBuilder().withNewMetadata().withName("test").endMetadata()
-				.withSpec(new IngressSpecBuilder().withIngressClassName("noop").build()).build();
+		Ingress ingress = new IngressBuilder().withNewMetadata()
+			.withName("test")
+			.endMetadata()
+			.withSpec(new IngressSpecBuilder().withIngressClassName("noop").build())
+			.build();
 
 		// when / then
 		assertThatThrownBy(() -> visitorGroupIngressReconciler.getIngressWhitelistAnnotation(ingress))
-				.isInstanceOf(NotHandledIngressClass.class);
+			.isInstanceOf(NotHandledIngressClass.class);
 	}
 
 }

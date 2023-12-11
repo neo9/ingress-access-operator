@@ -25,8 +25,7 @@ public class VisitorGroupRepository {
 	}
 
 	public VisitorGroup getVisitorGroupByName(String visitorGroupName) {
-		VisitorGroup visitorGroup = visitorGroupClient.withName(visitorGroupName)
-				.get();
+		VisitorGroup visitorGroup = visitorGroupClient.withName(visitorGroupName).get();
 		if (visitorGroup == null) {
 			throw new VisitorGroupNotFoundException(visitorGroupName);
 		}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SidecarRepository {
+
 	private final MixedOperation<Sidecar, SidecarList, Resource<Sidecar>> sidecarClient;
 
 	public SidecarRepository(KubernetesClient kubernetesClient) {
@@ -18,7 +19,8 @@ public class SidecarRepository {
 
 	public Sidecar createOrReplace(Sidecar sidecar) {
 		return sidecarClient.inNamespace(sidecar.getMetadata().getNamespace())
-				.withName(sidecar.getMetadata().getName()).createOrReplace(sidecar);
+			.withName(sidecar.getMetadata().getName())
+			.createOrReplace(sidecar);
 	}
 
 	public Sidecar getSidecar(String namespace, String name) {

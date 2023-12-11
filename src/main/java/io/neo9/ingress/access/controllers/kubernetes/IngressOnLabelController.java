@@ -18,36 +18,40 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class IngressOnLabelController extends ReconnectableSingleWatcher<Ingress, IngressList, Resource<Ingress>> {
 
-  public IngressOnLabelController(KubernetesClient kubernetesClient,
-                                  VisitorGroupIngressReconciler visitorGroupIngressReconciler,
-                                  AdditionalWatchersConfig additionalWatchersConfig) {
-    super(
-        /* activation condition */
-        // avoid double reconciliation
-        !additionalWatchersConfig.defaultFiltering().isEnabled(),
-        /* watch what */
-        kubernetesClient.network().v1().ingresses().inAnyNamespace().withLabel(MUTABLE_LABEL_KEY,
-            MUTABLE_LABEL_VALUE),
-        /* on event */
-        (action, ingress) -> {
-          String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
-          switch (action) {
-            case ADDED:
-            case MODIFIED:
-              log.info("update event detected for ingress : {}", ingressNamespaceAndName);
-              try {
-                visitorGroupIngressReconciler.reconcile(ingress);
-              } catch (VisitorGroupNotFoundException e) {
-                log.error("panic: could not resolve visitorGroup {} for ingress {}",
-                    e.getVisitorGroupName(), ingressNamespaceAndName, e);
-              }
-              break;
-            default:
-              // do nothing on ingress deletion
-              break;
-          }
-          return null;
-        });
-  }
+	public IngressOnLabelController(KubernetesClient kubernetesClient,
+			VisitorGroupIngressReconciler visitorGroupIngressReconciler,
+			AdditionalWatchersConfig additionalWatchersConfig) {
+		super(
+				/* activation condition */
+				// avoid double reconciliation
+				!additionalWatchersConfig.defaultFiltering().isEnabled(),
+				/* watch what */
+				kubernetesClient.network()
+					.v1()
+					.ingresses()
+					.inAnyNamespace()
+					.withLabel(MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE),
+				/* on event */
+				(action, ingress) -> {
+					String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
+					switch (action) {
+						case ADDED:
+						case MODIFIED:
+							log.info("update event detected for ingress : {}", ingressNamespaceAndName);
+							try {
+								visitorGroupIngressReconciler.reconcile(ingress);
+							}
+							catch (VisitorGroupNotFoundException e) {
+								log.error("panic: could not resolve visitorGroup {} for ingress {}",
+										e.getVisitorGroupName(), ingressNamespaceAndName, e);
+							}
+							break;
+						default:
+							// do nothing on ingress deletion
+							break;
+					}
+					return null;
+				});
+	}
 
 }

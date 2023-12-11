@@ -46,17 +46,19 @@ public class IstioSidecarReconciler {
 
 	public void reconcile() {
 		Sidecar oldSidecar = sidecarRepository
-				.getSidecar(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace(), SIDECAR_NAME);
+			.getSidecar(additionalWatchersConfig.updateIstioIngressSidecar().getIngressNamespace(), SIDECAR_NAME);
 		if (nonNull(oldSidecar) && !isManagedByOperator(oldSidecar)) {
 			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(oldSidecar));
 		}
 
 		List<Namespace> namespacesWatchedByIstio = namespaceRepository
-				.listNamespacesWithLabel(ISTIO_WATCH_NAMESPACE_LABEL_KEY, ISTIO_WATCH_NAMESPACE_LABEL_VALUE);
+			.listNamespacesWithLabel(ISTIO_WATCH_NAMESPACE_LABEL_KEY, ISTIO_WATCH_NAMESPACE_LABEL_VALUE);
 		List<String> namespaceForSidecar = Stream
-				.concat(additionalWatchersConfig.updateIstioIngressSidecar().getAdditionalEgressRulesEntries().stream(),
-						namespacesWatchedByIstio.stream().map(namespace -> namespace.getMetadata().getName()))
-				.map(s -> String.format("%s/*", s)).distinct().collect(Collectors.toList());
+			.concat(additionalWatchersConfig.updateIstioIngressSidecar().getAdditionalEgressRulesEntries().stream(),
+					namespacesWatchedByIstio.stream().map(namespace -> namespace.getMetadata().getName()))
+			.map(s -> String.format("%s/*", s))
+			.distinct()
+			.collect(Collectors.toList());
 
 		log.trace("computed namespace list : {}", namespaceForSidecar);
 
