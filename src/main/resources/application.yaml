@@ -14,7 +14,7 @@ management:
 logging:
   level:
     io.neo9.ingress.access: DEBUG
-    #io.javaoperatorsdk.operator: WARN
+    io.javaoperatorsdk.operator: DEBUG
 
 javaoperatorsdk:
   controllers:

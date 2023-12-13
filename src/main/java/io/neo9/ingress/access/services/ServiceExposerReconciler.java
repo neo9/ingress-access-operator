@@ -1,6 +1,6 @@
 package io.neo9.ingress.access.services;
 
-import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent.SpecNested;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +72,8 @@ public class ServiceExposerReconciler {
 		String ingressClassName = ingressAnnotations.get(INGRESS_CLASS_ANNOTATION);
 		ingressAnnotations.remove(INGRESS_CLASS_ANNOTATION);
 
-		SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder().withNewMetadata()
+		IngressFluent<IngressBuilder>.SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder()
+			.withNewMetadata()
 			.withNamespace(service.getMetadata().getNamespace())
 			.withName(service.getMetadata().getName())
 			.addToAnnotations(ingressAnnotations)

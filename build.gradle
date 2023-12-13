@@ -11,6 +11,13 @@ plugins {
 apply plugin: 'io.spring.javaformat'
 tasks.named("compileJava").configure { dependsOn("formatMain") }
 tasks.named("compileTestJava").configure { dependsOn("formatTest") }
+tasks.named("checkFormatMain").configure { dependsOn("formatMain") }
+tasks.named("checkFormatTest").configure { dependsOn("formatTest") }
+tasks.withType(io.spring.javaformat.gradle.tasks.CheckFormat) {
+    if (it.name in [ 'checkFormatAot', 'checkFormatAotTest' ]) {
+        exclude '*'
+    }
+}
 
 group = 'io.neo9'
 version = scmVersion.version
@@ -27,8 +34,8 @@ repositories {
 }
 
 ext {
-    javaOperatorVersion = '4.3.1'
-    javaOperatorStarterVersion = '5.0.0'
+    javaOperatorVersion = '4.6.0'
+    javaOperatorStarterVersion = '5.4.0'
     bouncycastleVersion = '1.70'
     awsSdkVersion = '2.21.35'
 
