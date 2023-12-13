@@ -1,5 +1,6 @@
 [
   {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
+  {"name": "java.util.TreeMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
   {"name": "java.util.concurrent.ThreadPoolExecutor", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.javaoperatorsdk.operator.processing.LoggingUtils", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.javaoperatorsdk.operator.processing.Controller$1", "allDeclaredMethods": true, "allPublicConstructors": true},

@@ -26,6 +26,7 @@ cd -
 cat <<EOF > $targetFile
 [
   {"name": "java.util.LinkedHashMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
+  {"name": "java.util.TreeMap", "methods": [{ "name": "<init>", "parameterTypes": [] }]},
   {"name": "java.util.concurrent.ThreadPoolExecutor", "allDeclaredMethods": true, "allPublicConstructors": true},
 EOF
 
