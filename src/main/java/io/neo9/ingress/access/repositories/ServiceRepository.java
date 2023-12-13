@@ -22,9 +22,10 @@ public class ServiceRepository {
 	}
 
 	public Service patchLoadBalancerSourceRanges(Service service, List<String> sources) {
-		return kubernetesClient.services().inNamespace(service.getMetadata().getNamespace())
-				.withName(service.getMetadata().getName())
-				.edit(svc -> new ServiceBuilder(svc).editSpec().withLoadBalancerSourceRanges(sources).and().build());
+		return kubernetesClient.services()
+			.inNamespace(service.getMetadata().getNamespace())
+			.withName(service.getMetadata().getName())
+			.edit(svc -> new ServiceBuilder(svc).editSpec().withLoadBalancerSourceRanges(sources).and().build());
 	}
 
 }

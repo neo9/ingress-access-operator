@@ -30,10 +30,13 @@ public class StringUtils {
 		if (isEmpty(raw)) {
 			return Map.of();
 		}
-		return Arrays.asList(raw.split(NEW_LINE)).stream().filter(org.apache.commons.lang3.StringUtils::isNotBlank)
-				.filter(s -> !startsWith(s.trim(), SHARP)).map(str -> str.split(COLON, 2))
-				.collect(toMap(strSplit -> strSplit[0].trim(),
-						strSplit -> (strSplit.length < 2 ? EMPTY : unquote(strSplit[1].trim()))));
+		return Arrays.asList(raw.split(NEW_LINE))
+			.stream()
+			.filter(org.apache.commons.lang3.StringUtils::isNotBlank)
+			.filter(s -> !startsWith(s.trim(), SHARP))
+			.map(str -> str.split(COLON, 2))
+			.collect(toMap(strSplit -> strSplit[0].trim(),
+					strSplit -> (strSplit.length < 2 ? EMPTY : unquote(strSplit[1].trim()))));
 	}
 
 	public static String unquote(String s) {

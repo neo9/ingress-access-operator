@@ -19,8 +19,8 @@ public class StringUtilsTest {
 
 		// then
 		assertThat(stringStringMap).hasSize(2);
-		assertThat(stringStringMap).extractingByKeys("kubernetes.io/ingress.class", "test").contains("nginx",
-				"http://$host/test");
+		assertThat(stringStringMap).extractingByKeys("kubernetes.io/ingress.class", "test")
+			.contains("nginx", "http://$host/test");
 	}
 
 }

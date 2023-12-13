@@ -29,20 +29,20 @@ public class IngressAllController extends ReconnectableSingleWatcher<Ingress, In
 				(action, ingress) -> {
 					String ingressNamespaceAndName = getResourceNamespaceAndName(ingress);
 					switch (action) {
-					case ADDED:
-					case MODIFIED:
-						log.info("update event detected for ingress : {}", ingressNamespaceAndName);
-						try {
-							visitorGroupIngressReconciler.reconcile(ingress);
-						}
-						catch (VisitorGroupNotFoundException e) {
-							log.error("panic: could not resolve visitorGroup {} for ingress {}",
-									e.getVisitorGroupName(), ingressNamespaceAndName, e);
-						}
-						break;
-					default:
-						// do nothing on ingress deletion
-						break;
+						case ADDED:
+						case MODIFIED:
+							log.info("update event detected for ingress : {}", ingressNamespaceAndName);
+							try {
+								visitorGroupIngressReconciler.reconcile(ingress);
+							}
+							catch (VisitorGroupNotFoundException e) {
+								log.error("panic: could not resolve visitorGroup {} for ingress {}",
+										e.getVisitorGroupName(), ingressNamespaceAndName, e);
+							}
+							break;
+						default:
+							// do nothing on ingress deletion
+							break;
 					}
 					return null;
 				});

@@ -225,6 +225,11 @@ cd ./scripts
 make full-local-integration-tests-run
 ```
 
+*Code formating*
+```
+./gradlew format
+```
+
 *How can I make a release ?*
 ```
 ./gradlew release -Prelease.versionIncrementer=incrementMinor

@@ -1,6 +1,6 @@
 package io.neo9.ingress.access.services;
 
-import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent.SpecNested;
+import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,25 +72,40 @@ public class ServiceExposerReconciler {
 		String ingressClassName = ingressAnnotations.get(INGRESS_CLASS_ANNOTATION);
 		ingressAnnotations.remove(INGRESS_CLASS_ANNOTATION);
 
-		SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder().withNewMetadata()
-				.withNamespace(service.getMetadata().getNamespace()).withName(service.getMetadata().getName())
-				.addToAnnotations(ingressAnnotations).addToLabels(ingressLabels)
-				.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE).endMetadata().withNewSpec()
-				.withIngressClassName(ingressClassName)
-				.withRules(new IngressRuleBuilder().withHost(hostname)
-						.withHttp(new HTTPIngressRuleValueBuilder().withPaths(new HTTPIngressPathBuilder().withPath("/")
-								.withPathType("Prefix")
-								.withBackend(new IngressBackendBuilder().withService(new IngressServiceBackendBuilder()
-										.withName(service.getMetadata().getName())
-										.withPort(new ServiceBackendPortBuilder()
-												.withNumber(service.getSpec().getPorts().get(0).getPort()).build())
-										.build()).build())
-								.build()).build())
+		IngressFluent<IngressBuilder>.SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder()
+			.withNewMetadata()
+			.withNamespace(service.getMetadata().getNamespace())
+			.withName(service.getMetadata().getName())
+			.addToAnnotations(ingressAnnotations)
+			.addToLabels(ingressLabels)
+			.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)
+			.endMetadata()
+			.withNewSpec()
+			.withIngressClassName(ingressClassName)
+			.withRules(
+					new IngressRuleBuilder().withHost(hostname)
+						.withHttp(
+								new HTTPIngressRuleValueBuilder()
+									.withPaths(
+											new HTTPIngressPathBuilder().withPath("/")
+												.withPathType("Prefix")
+												.withBackend(
+														new IngressBackendBuilder()
+															.withService(new IngressServiceBackendBuilder()
+																.withName(service.getMetadata().getName())
+																.withPort(new ServiceBackendPortBuilder().withNumber(
+																		service.getSpec().getPorts().get(0).getPort())
+																	.build())
+																.build())
+															.build())
+												.build())
+									.build())
 						.build());
 
 		if (shouldEnableTls(ingressAnnotations)) {
 			ingressBuilderSpecNested = ingressBuilderSpecNested.withTls(new IngressTLSBuilder().addToHosts(hostname)
-					.withSecretName(String.format("%s-tls", service.getMetadata().getName())).build());
+				.withSecretName(String.format("%s-tls", service.getMetadata().getName()))
+				.build());
 		}
 
 		Ingress ingress = ingressBuilderSpecNested.endSpec().build();
@@ -119,9 +134,9 @@ public class ServiceExposerReconciler {
 		List<UnaryOperator<String>> hostnameReplacements = new ArrayList<>();
 		hostnameReplacements.add(s -> s.replaceAll(Pattern.quote("{{name}}"), service.getMetadata().getName()));
 		hostnameReplacements
-				.add(s -> s.replaceAll(Pattern.quote("{{namespace}}"), service.getMetadata().getNamespace()));
+			.add(s -> s.replaceAll(Pattern.quote("{{namespace}}"), service.getMetadata().getNamespace()));
 		hostnameReplacements
-				.add(s -> s.replaceAll(Pattern.quote("{{domain}}"), additionalWatchersConfig.exposer().getDomain()));
+			.add(s -> s.replaceAll(Pattern.quote("{{domain}}"), additionalWatchersConfig.exposer().getDomain()));
 
 		String hostnameTemplate = getAnnotationValue(service, EXPOSE_INGRESS_HOSTNAME,
 				additionalWatchersConfig.exposer().getHostnameTemplate());

@@ -1,11 +1,22 @@
 plugins {
-	id 'java'
-	id 'checkstyle'
-	id 'org.springframework.boot' version '3.2.0'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'org.graalvm.buildtools.native' version '0.9.28' apply false
-	id "org.sonarqube" version "4.4.1.3373"
-	id 'pl.allegro.tech.build.axion-release' version '1.16.1'
+    id 'java'
+    id 'checkstyle'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.graalvm.buildtools.native' version '0.9.28' apply false
+    id "org.sonarqube" version "4.4.1.3373"
+    id 'pl.allegro.tech.build.axion-release' version '1.16.1'
+}
+
+apply plugin: 'io.spring.javaformat'
+tasks.named("compileJava").configure { dependsOn("formatMain") }
+tasks.named("compileTestJava").configure { dependsOn("formatTest") }
+tasks.named("checkFormatMain").configure { dependsOn("formatMain") }
+tasks.named("checkFormatTest").configure { dependsOn("formatTest") }
+tasks.withType(io.spring.javaformat.gradle.tasks.CheckFormat) {
+    if (it.name in [ 'checkFormatAot', 'checkFormatAotTest' ]) {
+        exclude '*'
+    }
 }
 
 group = 'io.neo9'
@@ -13,68 +24,68 @@ version = scmVersion.version
 sourceCompatibility = '17'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	javaOperatorVersion = '4.3.1'
-	javaOperatorStarterVersion = '5.0.0'
-	bouncycastleVersion = '1.70'
-	awsSdkVersion = '2.21.35'
+    javaOperatorVersion = '4.6.0'
+    javaOperatorStarterVersion = '5.4.0'
+    bouncycastleVersion = '1.70'
+    awsSdkVersion = '2.21.35'
 
-	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
+    buildNativeImage = !"false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
 }
 
 if (buildNativeImage) {
-	println "[plugins] Applying AOT plugin"
-	apply plugin: "org.graalvm.buildtools.native"
+    println "[plugins] Applying AOT plugin"
+    apply plugin: "org.graalvm.buildtools.native"
 } else {
-	println "[plugins] NOT applying AOT plugin"
+    println "[plugins] NOT applying AOT plugin"
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
 
-	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorStarterVersion}"
-	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
-	implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
+    implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorStarterVersion}"
+    implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
+    implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
 
-	implementation "software.amazon.awssdk:acm:${awsSdkVersion}"
+    implementation "software.amazon.awssdk:acm:${awsSdkVersion}"
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
-	annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
+    annotationProcessor 'org.projectlombok:lombok'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation "io.javaoperatorsdk:operator-framework-spring-boot-starter-test:${javaOperatorStarterVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "io.javaoperatorsdk:operator-framework-spring-boot-starter-test:${javaOperatorStarterVersion}"
 }
 
 configurations {
-	all {
-		exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-		exclude group:"commons-logging", module: "commons-logging"
-   }
+    all {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        exclude group: "commons-logging", module: "commons-logging"
+    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 bootBuildImage {
-	imageName   = "neo9sas/${project.name}:latest"
-	builder		= buildNativeImage ? 'paketobuildpacks/builder:tiny' : 'paketobuildpacks/builder:base'
-	environment = [
-			'BP_NATIVE_IMAGE'                : buildNativeImage.toString(),
-			'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
-	]
+    imageName = "neo9sas/${project.name}:latest"
+    builder = buildNativeImage ? 'paketobuildpacks/builder:tiny' : 'paketobuildpacks/builder:base'
+    environment = [
+            'BP_NATIVE_IMAGE'                : buildNativeImage.toString(),
+            'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
+    ]
 }
 
 subprojects {

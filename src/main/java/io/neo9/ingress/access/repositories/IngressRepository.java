@@ -23,19 +23,31 @@ public class IngressRepository {
 	}
 
 	public List<Ingress> listIngressWithLabel(String labelKey, String labelValue) {
-		return kubernetesClient.network().v1().ingresses().inAnyNamespace().withLabel(labelKey, labelValue).list()
-				.getItems();
+		return kubernetesClient.network()
+			.v1()
+			.ingresses()
+			.inAnyNamespace()
+			.withLabel(labelKey, labelValue)
+			.list()
+			.getItems();
 	}
 
 	public Ingress patchWithAnnotations(Ingress ingress, Map<String, String> annotations) {
-		return kubernetesClient.network().v1().ingresses().inNamespace(ingress.getMetadata().getNamespace())
-				.withName(ingress.getMetadata().getName())
-				.edit(ing -> new IngressBuilder(ing).editMetadata().addToAnnotations(annotations).and().build());
+		return kubernetesClient.network()
+			.v1()
+			.ingresses()
+			.inNamespace(ingress.getMetadata().getNamespace())
+			.withName(ingress.getMetadata().getName())
+			.edit(ing -> new IngressBuilder(ing).editMetadata().addToAnnotations(annotations).and().build());
 	}
 
 	public Ingress createOrReplace(Ingress ingress) {
-		return kubernetesClient.network().v1().ingresses().inNamespace(ingress.getMetadata().getNamespace())
-				.withName(ingress.getMetadata().getName()).createOrReplace(ingress);
+		return kubernetesClient.network()
+			.v1()
+			.ingresses()
+			.inNamespace(ingress.getMetadata().getNamespace())
+			.withName(ingress.getMetadata().getName())
+			.createOrReplace(ingress);
 	}
 
 	public Ingress get(String namespace, String name) {
@@ -43,7 +55,7 @@ public class IngressRepository {
 	}
 
 	public Boolean delete(String namespace, String name) {
-		return ! kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).delete().isEmpty();
+		return !kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).delete().isEmpty();
 	}
 
 }
