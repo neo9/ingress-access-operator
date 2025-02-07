@@ -58,6 +58,7 @@ dependencies {
     implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
     implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
 
+    implementation "software.amazon.awssdk:sts:${awsSdkVersion}"
     implementation "software.amazon.awssdk:acm:${awsSdkVersion}"
 
     compileOnly 'org.projectlombok:lombok'
