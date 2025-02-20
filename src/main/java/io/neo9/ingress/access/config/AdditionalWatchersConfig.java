@@ -18,6 +18,9 @@ public class AdditionalWatchersConfig {
 	@Setter
 	private DefaultFilteringConfig defaultFiltering;
 
+	@Setter
+	private AwsIngressConfig awsIngress;
+
 	public UpdateIstioIngressSidecarConfig updateIstioIngressSidecar() {
 		return updateIstioIngressSidecar;
 	}
@@ -28,6 +31,10 @@ public class AdditionalWatchersConfig {
 
 	public DefaultFilteringConfig defaultFiltering() {
 		return defaultFiltering;
+	}
+
+	public AwsIngressConfig awsIngress() {
+		return awsIngress;
 	}
 
 }

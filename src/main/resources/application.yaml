@@ -42,3 +42,7 @@ extension:
     enabled: false
     categories:
       - default
+
+  awsConfig:
+    enabled: false
+    #wafArn: ""

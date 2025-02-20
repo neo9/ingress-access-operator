@@ -25,6 +25,10 @@ public class MutationAnnotations {
 
 	public static final String OPERATOR_AWS_ACM_CERT_DOMAIN = "ingress.neo9.io/acm-certificate-domain";
 
+	public static final String OPERATOR_AWS_ALB_WAF_ARN = "alb.ingress.kubernetes.io/wafv2-acl-arn";
+
+	public static final String OPERATOR_AWS_WAF_ENABLED = "ingress.neo9.io/aws-waf-enabled";
+
 	public static final String OPERATOR_AWS_ALB_CERT_ARN = "alb.ingress.kubernetes.io/certificate-arn";
 
 }

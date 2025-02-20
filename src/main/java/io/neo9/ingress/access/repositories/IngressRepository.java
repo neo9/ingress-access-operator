@@ -41,6 +41,15 @@ public class IngressRepository {
 			.edit(ing -> new IngressBuilder(ing).editMetadata().addToAnnotations(annotations).and().build());
 	}
 
+	public Ingress removeAnnotation(Ingress ingress, String annotationKey) {
+		return kubernetesClient.network()
+			.v1()
+			.ingresses()
+			.inNamespace(ingress.getMetadata().getNamespace())
+			.withName(ingress.getMetadata().getName())
+			.edit(ing -> new IngressBuilder(ing).editMetadata().removeFromAnnotations(annotationKey).and().build());
+	}
+
 	public Ingress createOrReplace(Ingress ingress) {
 		return kubernetesClient.network()
 			.v1()

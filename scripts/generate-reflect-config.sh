@@ -77,6 +77,7 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.config.UpdateIstioIngressSidecarConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.ExposerConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.DefaultFilteringConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.config.AwsIngressConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.VisitorGroup", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.VisitorGroupList", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},

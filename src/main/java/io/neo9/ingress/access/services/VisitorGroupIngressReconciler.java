@@ -1,13 +1,6 @@
 package io.neo9.ingress.access.services;
 
-import static io.neo9.ingress.access.config.MutationAnnotations.ALB_INGRESS_WHITELIST_ANNOTATION_KEY;
-import static io.neo9.ingress.access.config.MutationAnnotations.FILTERING_MANAGED_BY_OPERATOR_KEY;
-import static io.neo9.ingress.access.config.MutationAnnotations.FORECASTLE_EXPOSE;
-import static io.neo9.ingress.access.config.MutationAnnotations.FORECASTLE_NETWORK_RESTRICTED;
-import static io.neo9.ingress.access.config.MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY;
-import static io.neo9.ingress.access.config.MutationAnnotations.NGINX_INGRESS_WHITELIST_ANNOTATION_KEY;
-import static io.neo9.ingress.access.config.MutationAnnotations.OPERATOR_AWS_ACM_CERT_DOMAIN;
-import static io.neo9.ingress.access.config.MutationAnnotations.OPERATOR_AWS_ALB_CERT_ARN;
+import static io.neo9.ingress.access.config.MutationAnnotations.*;
 import static io.neo9.ingress.access.config.MutationLabels.MANAGED_BY_OPERATOR_VALUE;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_KEY;
 import static io.neo9.ingress.access.config.MutationLabels.MUTABLE_LABEL_VALUE;
@@ -140,7 +133,27 @@ public class VisitorGroupIngressReconciler {
 			}
 		}
 
-		// 2. reconcile whitelist
+		// 2. Reconcile WAF
+
+		if (additionalWatchersConfig.awsIngress().isEnabled()
+				&& !isEmpty(additionalWatchersConfig.awsIngress().getWafArn())) {
+			if (hasAnnotation(ingress, OPERATOR_AWS_WAF_ENABLED)) {
+				String annotationValue = getAnnotationValue(ingress, OPERATOR_AWS_ALB_WAF_ARN);
+				if (!annotationValue.equals("true")) {
+					ingressRepository.removeAnnotation(ingress, OPERATOR_AWS_ALB_WAF_ARN);
+				}
+				else {
+					boolean valueChanged = !getAnnotationValue(ingress, OPERATOR_AWS_ALB_WAF_ARN)
+						.equals(additionalWatchersConfig.awsIngress().getWafArn());
+					if (valueChanged) {
+						ingressRepository.patchWithAnnotations(ingress,
+								Map.of(OPERATOR_AWS_ALB_WAF_ARN, additionalWatchersConfig.awsIngress().getWafArn()));
+					}
+				}
+			}
+		}
+
+		// 3. reconcile whitelist
 		if (!whitelistCanBeUpdated(ingress)) {
 			return;
 		}
