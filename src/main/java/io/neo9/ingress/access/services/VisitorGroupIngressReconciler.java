@@ -135,17 +135,24 @@ public class VisitorGroupIngressReconciler {
 
 		// 2. Reconcile WAF
 
-		if (additionalWatchersConfig.awsIngress().isEnabled()
-				&& !isEmpty(additionalWatchersConfig.awsIngress().getWafArn())) {
-			if (hasAnnotation(ingress, OPERATOR_AWS_WAF_ENABLED)) {
-				String annotationValue = getAnnotationValue(ingress, OPERATOR_AWS_ALB_WAF_ARN);
-				if (!annotationValue.equals("true")) {
+		if (additionalWatchersConfig.awsIngress().isEnabled() && hasAnnotation(ingress, OPERATOR_AWS_WAF_ENABLED)) {
+			if (isEmpty(additionalWatchersConfig.awsIngress().getWafArn())) {
+				log.warn("wants to enable waf on ingress {}, but no waf ARN were configured. Cannot continue",
+						resourceNamespaceAndName);
+			}
+			else {
+				String annotationValue = getAnnotationValue(ingress, OPERATOR_AWS_WAF_ENABLED);
+				if (!(annotationValue.equals("true"))) {
+					log.warn("disabling waf on ingress {}", resourceNamespaceAndName);
 					ingressRepository.removeAnnotation(ingress, OPERATOR_AWS_ALB_WAF_ARN);
 				}
 				else {
-					boolean valueChanged = !getAnnotationValue(ingress, OPERATOR_AWS_ALB_WAF_ARN)
-						.equals(additionalWatchersConfig.awsIngress().getWafArn());
+					boolean valueChanged = !additionalWatchersConfig.awsIngress()
+						.getWafArn()
+						.equals(getAnnotationValue(ingress, OPERATOR_AWS_ALB_WAF_ARN));
 					if (valueChanged) {
+						log.info("updating ingress {} with waf ({}) because value changed", resourceNamespaceAndName,
+								additionalWatchersConfig.awsIngress().getWafArn());
 						ingressRepository.patchWithAnnotations(ingress,
 								Map.of(OPERATOR_AWS_ALB_WAF_ARN, additionalWatchersConfig.awsIngress().getWafArn()));
 					}
