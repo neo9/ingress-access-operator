@@ -64,10 +64,7 @@ test {
 
 bootBuildImage {
 	imageName   = "neo9sas/${project.name}:latest"
-	if (! buildNativeImage) {
-		builder     = 'paketobuildpacks/builder:base'
-	} else {
-		//builder		= 'paketobuildpacks/builder:tiny'
+	if (buildNativeImage) {
 		environment = [
 				'BP_NATIVE_IMAGE'                : 'true',
 				'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
