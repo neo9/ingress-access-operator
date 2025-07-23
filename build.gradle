@@ -12,11 +12,7 @@ group = 'io.neo9'
 version = scmVersion.version
 sourceCompatibility = '17'
 
-tasks.whenTaskAdded { task ->
-	if (task.name.startsWith("checkFormatAotMain")) {
-		task.enabled = false
-	}
-}
+tasks.matching { it.name.startsWith('checkFormatAot') || it.name.startsWith('formatAot') }.all { it.enabled = false }
 
 configurations {
 	compileOnly {
