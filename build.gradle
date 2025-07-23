@@ -1,8 +1,8 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.6.6'
+	id 'org.graalvm.buildtools.native' version '0.10.6'
+	id 'org.springframework.boot' version '3.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'org.springframework.experimental.aot' version '0.11.4' apply false
 	id "org.sonarqube" version "3.3"
 	id 'pl.allegro.tech.build.axion-release' version '1.13.6'
 	id 'io.spring.javaformat'
@@ -10,7 +10,7 @@ plugins {
 
 group = 'io.neo9'
 version = scmVersion.version
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 tasks.whenTaskAdded { task ->
 	if (task.name.startsWith("checkFormatAotMain")) {
@@ -39,7 +39,6 @@ ext {
 
 if (buildNativeImage) {
 	println "[plugins] Applying AOT plugin"
-	apply plugin: "org.springframework.experimental.aot"
 } else {
 	println "[plugins] NOT applying AOT plugin"
 }
@@ -52,6 +51,7 @@ dependencies {
 	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorStarterVersion}"
 	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
 	implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
+	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
@@ -71,7 +71,7 @@ bootBuildImage {
 	if (! buildNativeImage) {
 		builder     = 'paketobuildpacks/builder:base'
 	} else {
-		builder		= 'paketobuildpacks/builder:tiny'
+		//builder		= 'paketobuildpacks/builder:tiny'
 		environment = [
 				'BP_NATIVE_IMAGE'                : 'true',
 				'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
