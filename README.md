@@ -19,7 +19,7 @@ Compatibility
 -------------
 
 Tested with kubernetes from version 1.19 to 1.22.
-The istio sidecar generation was tested with istio 1.10 and 1.11.
+The istio sidecar generation was tested with istio 1.10 and 1.11.docke
 
 Concepts and usage
 ------------------
