@@ -22,11 +22,13 @@ jobs:
       run: ./gradlew test
     - name: Build container image
       run: NATIVE_IMAGE=false ./gradlew bootBuildImage
-    - name: Upload test image
-      uses: ishworkh/docker-image-artifact-upload@v1
+    - name: Save Docker image to tarball
+      run: docker save docker.io/neo9sas/ingress-access-operator:latest -o ingress-access-operator-latest.tar
+    - name: Upload Docker image tarball
+      uses: actions/upload-artifact@v4
       with:
-        image: "docker.io/neo9sas/ingress-access-operator:latest"
-        artifact_name: ingress-access-operator-latest
+        name: ingress-access-operator-latest
+        path: ingress-access-operator-latest.tar
 
   integration-tests:
     needs: [build]
@@ -36,11 +38,12 @@ jobs:
         k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
     steps:
       - uses: actions/checkout@v3
-      - name: Download test image
-        uses: ishworkh/docker-image-artifact-download@v1
+      - name: Download Docker image tarball
+        uses: actions/download-artifact@v4
         with:
-          image: "docker.io/neo9sas/ingress-access-operator:latest"
-          artifact_name: ingress-access-operator-latest
+          name: ingress-access-operator-latest
+      - name: Load Docker image
+        run: docker load -i ingress-access-operator-latest.tar
       - uses: xaviermichel/actions-k3s@master
         id: k3s
         with:
@@ -88,12 +91,15 @@ jobs:
         run: ./gradlew build -x test
       - name: Run tests
         run: ./gradlew test
-      - name: Build container image
+      - name: Build native container image
         run: NATIVE_IMAGE=true ./gradlew bootBuildImage
-      - name: Upload test image
-        uses: ishworkh/docker-image-artifact-upload@v1
+      - name: Save native Docker image to tarball
+        run: docker save docker.io/neo9sas/ingress-access-operator:latest -o ingress-access-operator-native-latest.tar
+      - name: Upload native Docker image tarball
+        uses: actions/upload-artifact@v4
         with:
-          image: "docker.io/neo9sas/ingress-access-operator:latest"
+          name: ingress-access-operator-native-latest
+          path: ingress-access-operator-native-latest.tar
 
   native-integration-tests:
     needs: [native-build]
@@ -103,10 +109,12 @@ jobs:
         k8s_version: [v1.19.12-k3s1, v1.20.8-k3s1, v1.21.2-k3s1, v1.22.1-rc1-k3s1]
     steps:
       - uses: actions/checkout@v3
-      - name: Download test image
-        uses: ishworkh/docker-image-artifact-download@v1
+      - name: Download native Docker image tarball
+        uses: actions/download-artifact@v4
         with:
-          image: "docker.io/neo9sas/ingress-access-operator:latest"
+          name: ingress-access-operator-native-latest
+      - name: Load native Docker image
+        run: docker load -i ingress-access-operator-native-latest.tar
       - uses: xaviermichel/actions-k3s@master
         id: k3s
         with:
@@ -143,10 +151,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Download test image
-        uses: ishworkh/docker-image-artifact-download@v1
+      - name: Download native Docker image tarball
+        uses: actions/download-artifact@v4
         with:
-          image: "docker.io/neo9sas/ingress-access-operator:latest"
+          name: ingress-access-operator-native-latest
+      - name: Load native Docker image
+        run: docker load -i ingress-access-operator-native-latest.tar
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:

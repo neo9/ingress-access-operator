@@ -22,21 +22,24 @@ jobs:
       run: ./gradlew test
     - name: Build container image
       run: ./gradlew bootBuildImage
-    - name: Upload image
-      uses: ishworkh/docker-image-artifact-upload@v1
+    - name: Save Docker image to tarball
+      run: docker save docker.io/neo9sas/ingress-access-operator:latest -o ingress-access-operator-latest.tar
+    - name: Upload Docker image tarball
+      uses: actions/upload-artifact@v4
       with:
-        image: "docker.io/neo9sas/ingress-access-operator:latest"
-        artifact_name: ingress-access-operator-latest
+        name: ingress-access-operator-latest
+        path: ingress-access-operator-latest.tar
 
   publish:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-    - name: Download image
-      uses: ishworkh/docker-image-artifact-download@v1
+    - name: Download Docker image tarball
+      uses: actions/download-artifact@v4
       with:
-        image: "docker.io/neo9sas/ingress-access-operator:latest"
-        artifact_name: ingress-access-operator-latest
+        name: ingress-access-operator-latest
+    - name: Load Docker image
+      run: docker load -i ingress-access-operator-latest.tar
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
