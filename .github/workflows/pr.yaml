@@ -26,6 +26,7 @@ jobs:
       uses: ishworkh/docker-image-artifact-upload@v1
       with:
         image: "docker.io/neo9sas/ingress-access-operator:latest"
+        artifact_name: ingress-access-operator-latest
 
   integration-tests:
     needs: [build]
@@ -39,6 +40,7 @@ jobs:
         uses: ishworkh/docker-image-artifact-download@v1
         with:
           image: "docker.io/neo9sas/ingress-access-operator:latest"
+          artifact_name: ingress-access-operator-latest
       - uses: xaviermichel/actions-k3s@master
         id: k3s
         with:
