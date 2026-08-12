@@ -20,7 +20,8 @@ public class NginxPolicyRepository {
 	}
 
 	public NginxPolicy get(String namespace, String name) {
-		return kubernetesClient.customResources(NginxPolicy.class).inNamespace(namespace).withName(name).fromServer().get();
+		return kubernetesClient.customResources(NginxPolicy.class).inNamespace(namespace).withName(name).fromServer()
+				.get();
 	}
 
 	public Boolean delete(String namespace, String name) {
