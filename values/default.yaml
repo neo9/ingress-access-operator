@@ -12,6 +12,8 @@ pod:
       value: false
     - name: EXTENSION_DEFAULT_FILTERING_ENABLED
       value: false
+    - name: EXTENSION_NGINX_WHITELIST_BACKEND
+      value: dual-write
 
 serviceAccount:
   create: true
@@ -48,3 +50,6 @@ clusterrole:
     - apiGroups: ["networking.istio.io"]
       resources: ["sidecars"]
       verbs: ["get", "list", "watch", "update", "patch", "create"]
+    - apiGroups: ["k8s.nginx.org"]
+      resources: ["policies"]
+      verbs: ["get", "list", "watch", "update", "patch", "create", "delete"]

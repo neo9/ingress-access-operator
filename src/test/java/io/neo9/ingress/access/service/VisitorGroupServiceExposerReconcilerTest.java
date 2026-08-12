@@ -13,6 +13,7 @@ import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.repositories.IngressRepository;
+import io.neo9.ingress.access.repositories.NginxPolicyRepository;
 import io.neo9.ingress.access.repositories.ServiceRepository;
 import io.neo9.ingress.access.repositories.VisitorGroupRepository;
 import io.neo9.ingress.access.services.VisitorGroupIngressReconciler;
@@ -85,6 +86,9 @@ public class VisitorGroupServiceExposerReconcilerTest {
 	@Mock
 	private ServiceRepository serviceRepository;
 
+	@Mock
+	private NginxPolicyRepository nginxPolicyRepository;
+
 	private VisitorGroupIngressReconciler visitorGroupIngressReconciler;
 
 	@BeforeEach
@@ -101,7 +105,7 @@ public class VisitorGroupServiceExposerReconcilerTest {
 		additionalWatchersConfig.setDefaultFiltering(defaultFilteringConfig);
 
 		visitorGroupIngressReconciler = new VisitorGroupIngressReconciler(visitorGroupRepository, ingressRepository,
-				serviceRepository, additionalWatchersConfig);
+				serviceRepository, nginxPolicyRepository, additionalWatchersConfig);
 	}
 
 	@Test

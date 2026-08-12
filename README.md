@@ -8,7 +8,11 @@ The goal of this operator is to easily manage resources relative to
 kubernetes ingress. It has three main features :
 
 * easily whitelist IPs which can enter by a kubernetes ingress, and think it globally (note by ingress). More
-than a cluster view, you can share the `VisitorGroup` definition across cluster.  More concretely, it manages the nginx `nginx.ingress.kubernetes.io/whitelist-source-range` annotation by allowing a list of CIDR, which are store in a CRD (`VisitorGroup`).
+than a cluster view, you can share the `VisitorGroup` definition across cluster. More concretely, for
+[F5 NGINX Ingress Controller OSS](https://docs.nginx.com/nginx-ingress-controller/configuration/access-control/)
+it creates a `Policy` (`k8s.nginx.org/v1`) with `accessControl.allow` CIDRs from a CRD (`VisitorGroup`)
+and sets the Ingress annotation `nginx.org/policies`. During migration it can dual-write the
+legacy community annotation `nginx.ingress.kubernetes.io/whitelist-source-range` as well.
 
 * Keep up to date Istio ingress Sidecar with namespaces watched by istiod (configure the ingress sidecar to route traffic 
 to services in the mesh).
@@ -61,7 +65,21 @@ spec:
   ...
 ```
 
-The operator will autofill nginx whitelist annotation.
+The operator will autofill nginx access control. Choose a backend with
+`EXTENSION_NGINX_WHITELIST_BACKEND`:
+
+| Backend | Use when |
+|---------|----------|
+| `community-annotation` | Still on kubernetes/ingress-nginx only |
+| `dual-write` | Migrating: writes both mechanisms so old and new controllers work |
+| `f5-policy` | Steady state on F5 NGINX Ingress Controller OSS only |
+
+**Migration path:** `community-annotation` → `dual-write` → cut over IngressClasses → `f5-policy`.
+
+In `dual-write` / `f5-policy` mode, the operator creates a namespaced `Policy`
+(`ingress-access-<ingress-name>`) and sets `nginx.org/policies`.
+In `dual-write` / `community-annotation` mode, it also sets
+`nginx.ingress.kubernetes.io/whitelist-source-range`.
 
 By default :
 1. `ingress.neo9.io/allowed-visitors` is prioritized

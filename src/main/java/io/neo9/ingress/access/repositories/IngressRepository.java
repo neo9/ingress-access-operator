@@ -33,6 +33,23 @@ public class IngressRepository {
 				.edit(ing -> new IngressBuilder(ing).editMetadata().addToAnnotations(annotations).and().build());
 	}
 
+	public Ingress patchAnnotations(Ingress ingress, Map<String, String> annotationsToAdd,
+			String... annotationsToRemove) {
+		return kubernetesClient.network().v1().ingresses().inNamespace(ingress.getMetadata().getNamespace())
+				.withName(ingress.getMetadata().getName()).edit(ing -> {
+					var metadata = new IngressBuilder(ing).editMetadata();
+					if (annotationsToRemove != null) {
+						for (String key : annotationsToRemove) {
+							metadata.removeFromAnnotations(key);
+						}
+					}
+					if (annotationsToAdd != null && !annotationsToAdd.isEmpty()) {
+						metadata.addToAnnotations(annotationsToAdd);
+					}
+					return metadata.and().build();
+				});
+	}
+
 	public Ingress createOrReplace(Ingress ingress) {
 		return kubernetesClient.network().v1().ingresses().inNamespace(ingress.getMetadata().getNamespace())
 				.withName(ingress.getMetadata().getName()).createOrReplace(ingress);

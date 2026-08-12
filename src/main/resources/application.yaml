@@ -48,3 +48,10 @@ extension:
     enabled: false
     categories:
       - default
+
+  # Ingress whitelist backend:
+  # - community-annotation: legacy ingress-nginx only
+  # - dual-write: both (migration from community -> F5)
+  # - f5-policy: F5 NGINX Ingress Controller OSS only (steady state)
+  nginxWhitelist:
+    backend: dual-write

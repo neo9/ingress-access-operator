@@ -18,6 +18,9 @@ public class AdditionalWatchersConfig {
 	@Setter
 	private DefaultFilteringConfig defaultFiltering;
 
+	@Setter
+	private NginxWhitelistConfig nginxWhitelist = new NginxWhitelistConfig();
+
 	public UpdateIstioIngressSidecarConfig updateIstioIngressSidecar() {
 		return updateIstioIngressSidecar;
 	}
@@ -28,6 +31,10 @@ public class AdditionalWatchersConfig {
 
 	public DefaultFilteringConfig defaultFiltering() {
 		return defaultFiltering;
+	}
+
+	public NginxWhitelistConfig nginxWhitelist() {
+		return nginxWhitelist;
 	}
 
 }

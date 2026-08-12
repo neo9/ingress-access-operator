@@ -6,11 +6,17 @@ import java.util.stream.Collectors;
 import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.neo9.ingress.access.config.AdditionalWatchersConfig;
+import io.neo9.ingress.access.config.NginxWhitelistConfig;
 import io.neo9.ingress.access.customresources.VisitorGroup;
+import io.neo9.ingress.access.customresources.external.nginx.NginxPolicy;
+import io.neo9.ingress.access.customresources.external.nginx.spec.AccessControlSpec;
+import io.neo9.ingress.access.customresources.external.nginx.spec.NginxPolicySpec;
 import io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources;
 import io.neo9.ingress.access.exceptions.NotHandledWorkloadException;
+import io.neo9.ingress.access.exceptions.ResourceNotManagedByOperatorException;
 import io.neo9.ingress.access.exceptions.VisitorGroupNotFoundException;
 import io.neo9.ingress.access.repositories.IngressRepository;
+import io.neo9.ingress.access.repositories.NginxPolicyRepository;
 import io.neo9.ingress.access.repositories.ServiceRepository;
 import io.neo9.ingress.access.repositories.VisitorGroupRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +31,6 @@ import static io.neo9.ingress.access.utils.common.StringUtils.COMMA;
 import static io.neo9.ingress.access.utils.common.StringUtils.EMPTY;
 import static java.util.Arrays.stream;
 import static java.util.Objects.nonNull;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Service
@@ -34,20 +39,25 @@ public class VisitorGroupIngressReconciler {
 
 	private final static String ALL_CIDR = "0.0.0.0/0";
 
+	private final static String F5_POLICY_NAME_PREFIX = "ingress-access-";
+
 	private final VisitorGroupRepository visitorGroupRepository;
 
 	private final IngressRepository ingressRepository;
 
 	private final ServiceRepository serviceRepository;
 
+	private final NginxPolicyRepository nginxPolicyRepository;
+
 	private final AdditionalWatchersConfig additionalWatchersConfig;
 
 	public VisitorGroupIngressReconciler(VisitorGroupRepository visitorGroupRepository,
 			IngressRepository ingressRepository, ServiceRepository serviceRepository,
-			AdditionalWatchersConfig additionalWatchersConfig) {
+			NginxPolicyRepository nginxPolicyRepository, AdditionalWatchersConfig additionalWatchersConfig) {
 		this.visitorGroupRepository = visitorGroupRepository;
 		this.ingressRepository = ingressRepository;
 		this.serviceRepository = serviceRepository;
+		this.nginxPolicyRepository = nginxPolicyRepository;
 		this.additionalWatchersConfig = additionalWatchersConfig;
 	}
 
@@ -112,7 +122,26 @@ public class VisitorGroupIngressReconciler {
 			return;
 		}
 
-		String cidrListAsString = getCidrListAsString(ingress);
+		List<String> cidrList = getCidrList(ingress);
+		if (cidrList.isEmpty()) {
+			cidrList = List.of(ALL_CIDR);
+		}
+
+		NginxWhitelistConfig nginxWhitelist = additionalWatchersConfig.nginxWhitelist();
+		boolean dualWrite = nginxWhitelist.isDualWrite();
+		if (nginxWhitelist.isF5Policy()) {
+			reconcileF5Policy(ingress, cidrList, dualWrite);
+		}
+		if (nginxWhitelist.isCommunityAnnotation()) {
+			reconcileCommunityAnnotation(ingress, cidrList, dualWrite);
+		}
+
+		log.trace("end of patching of {}", resourceNamespaceAndName);
+	}
+
+	private void reconcileCommunityAnnotation(Ingress ingress, List<String> cidrList, boolean dualWrite) {
+		String resourceNamespaceAndName = getResourceNamespaceAndName(ingress);
+		String cidrListAsString = String.join(COMMA, cidrList);
 		if (!cidrListAsString.equals(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY))) {
 			log.info("updating ingress {} because the targeted value changed", resourceNamespaceAndName);
 			Map<String, String> annotationsToApply = new HashMap<>();
@@ -125,10 +154,72 @@ public class VisitorGroupIngressReconciler {
 				annotationsToApply.put(FORECASTLE_NETWORK_RESTRICTED,
 						Boolean.toString(!ALL_CIDR.equals(cidrListAsString)));
 			}
-			ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
+			if (dualWrite) {
+				ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
+			}
+			else {
+				ingressRepository.patchAnnotations(ingress, annotationsToApply, NGINX_ORG_POLICIES_ANNOTATION_KEY);
+			}
+		}
+	}
+
+	private void reconcileF5Policy(Ingress ingress, List<String> cidrList, boolean dualWrite) {
+		String namespace = ingress.getMetadata().getNamespace();
+		String policyName = f5PolicyName(ingress);
+		String resourceNamespaceAndName = getResourceNamespaceAndName(ingress);
+
+		NginxPolicy existingPolicy = nginxPolicyRepository.get(namespace, policyName);
+		if (nonNull(existingPolicy) && !isManagedByOperator(existingPolicy)) {
+			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(existingPolicy));
 		}
 
-		log.trace("end of patching of {}", resourceNamespaceAndName);
+		boolean policyNeedsUpdate = existingPolicy == null || !cidrList.equals(extractAllowCidrs(existingPolicy));
+		if (policyNeedsUpdate) {
+			log.info("updating nginx policy {}/{} because the targeted value changed", namespace, policyName);
+			NginxPolicy policy = new NginxPolicy();
+			policy.getMetadata().setNamespace(namespace);
+			policy.getMetadata().setName(policyName);
+			policy.getMetadata().setLabels(Map.of(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));
+			AccessControlSpec accessControl = new AccessControlSpec();
+			accessControl.setAllow(cidrList);
+			policy.setSpec(new NginxPolicySpec(accessControl));
+			nginxPolicyRepository.createOrReplace(policy);
+		}
+
+		String currentPoliciesAnnotation = getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY);
+		boolean annotationNeedsUpdate = !policyName.equals(currentPoliciesAnnotation)
+				|| (!dualWrite && hasAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY));
+		if (annotationNeedsUpdate) {
+			log.info("updating ingress {} nginx.org/policies annotation", resourceNamespaceAndName);
+			Map<String, String> annotationsToApply = new HashMap<>();
+			annotationsToApply.put(NGINX_ORG_POLICIES_ANNOTATION_KEY, policyName);
+			if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+					&& !hasLabel(ingress, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+				annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
+			}
+			if (hasAnnotation(ingress, FORECASTLE_EXPOSE)) {
+				annotationsToApply.put(FORECASTLE_NETWORK_RESTRICTED,
+						Boolean.toString(!(cidrList.size() == 1 && ALL_CIDR.equals(cidrList.get(0)))));
+			}
+			if (dualWrite) {
+				ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
+			}
+			else {
+				ingressRepository.patchAnnotations(ingress, annotationsToApply, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY);
+			}
+		}
+	}
+
+	private static String f5PolicyName(Ingress ingress) {
+		return F5_POLICY_NAME_PREFIX + ingress.getMetadata().getName();
+	}
+
+	private static List<String> extractAllowCidrs(NginxPolicy policy) {
+		if (policy.getSpec() == null || policy.getSpec().getAccessControl() == null
+				|| policy.getSpec().getAccessControl().getAllow() == null) {
+			return List.of();
+		}
+		return policy.getSpec().getAccessControl().getAllow();
 	}
 
 	private boolean whitelistCanBeUpdated(Ingress ingress) {
@@ -139,7 +230,16 @@ public class VisitorGroupIngressReconciler {
 		if (hasAnnotation(ingress, FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE)) {
 			return true;
 		}
-		return isEmpty(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, EMPTY));
+		NginxWhitelistConfig nginxWhitelist = additionalWatchersConfig.nginxWhitelist();
+		boolean f5Empty = isEmpty(getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY));
+		boolean communityEmpty = isEmpty(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, EMPTY));
+		if (nginxWhitelist.isDualWrite()) {
+			return f5Empty && communityEmpty;
+		}
+		if (nginxWhitelist.isF5Policy()) {
+			return f5Empty;
+		}
+		return communityEmpty;
 	}
 
 	public void reconcile(io.fabric8.kubernetes.api.model.Service service) {
