@@ -30,7 +30,10 @@ ext {
 	javaOperatorStarterVersion = '2.3.0'
 	bouncycastleVersion = '1.70'
 
-	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
+	// Default to JVM image. Native/AOT has been failing at startup on Boot 3.5
+	// (missing KubernetesClient, then reconciliationExecutorService destroyMethod=close).
+	// Opt in with NATIVE_IMAGE=true when native is fixed.
+	buildNativeImage = "true".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
 }
 
 if (buildNativeImage) {
