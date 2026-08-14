@@ -17,7 +17,7 @@ logging:
     #io.javaoperatorsdk.operator: WARN
 
 javaoperatorsdk:
-  controllers:
+  reconcilers:
     visitorgroupcontroller:
       retry:
         maxAttempts: 3

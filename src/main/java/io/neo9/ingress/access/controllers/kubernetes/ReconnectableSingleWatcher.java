@@ -22,7 +22,7 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 
 	private final BiFunction<Action, Kind, Void> onEventReceived;
 
-	private final FilterWatchListDeletable<Kind, KindList> filterWatch;
+	private final FilterWatchListDeletable<Kind, KindList, ?> filterWatch;
 
 	private final Predicate<Kind> eventFilter;
 
@@ -30,17 +30,17 @@ public abstract class ReconnectableSingleWatcher<Kind extends HasMetadata, KindL
 
 	private Watch watch;
 
-	protected ReconnectableSingleWatcher(FilterWatchListDeletable<Kind, KindList> filterWatch,
+	protected ReconnectableSingleWatcher(FilterWatchListDeletable<Kind, KindList, ?> filterWatch,
 			BiFunction<Action, Kind, Void> onEventReceived) {
 		this(true, filterWatch, kind -> true, onEventReceived);
 	}
 
-	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList> filterWatch,
+	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList, ?> filterWatch,
 			BiFunction<Action, Kind, Void> onEventReceived) {
 		this(active, filterWatch, kind -> true, onEventReceived);
 	}
 
-	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList> filterWatch,
+	protected ReconnectableSingleWatcher(boolean active, FilterWatchListDeletable<Kind, KindList, ?> filterWatch,
 			Predicate<Kind> eventFilter, BiFunction<Action, Kind, Void> onEventReceived) {
 		this.active = active;
 		this.uniqueWatcherIdentifier = this.getClass().getCanonicalName();

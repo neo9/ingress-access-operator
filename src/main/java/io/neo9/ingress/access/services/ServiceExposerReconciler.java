@@ -13,7 +13,6 @@ import io.fabric8.kubernetes.api.model.networking.v1.HTTPIngressRuleValueBuilder
 import io.fabric8.kubernetes.api.model.networking.v1.Ingress;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressBackendBuilder;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressBuilder;
-import io.fabric8.kubernetes.api.model.networking.v1.IngressFluent.SpecNested;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressRuleBuilder;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressServiceBackendBuilder;
 import io.fabric8.kubernetes.api.model.networking.v1.IngressTLSBuilder;
@@ -72,7 +71,7 @@ public class ServiceExposerReconciler {
 		String ingressClassName = ingressAnnotations.get(INGRESS_CLASS_ANNOTATION);
 		ingressAnnotations.remove(INGRESS_CLASS_ANNOTATION);
 
-		SpecNested<IngressBuilder> ingressBuilderSpecNested = new IngressBuilder().withNewMetadata()
+		var ingressBuilderSpecNested = new IngressBuilder().withNewMetadata()
 				.withNamespace(service.getMetadata().getNamespace()).withName(service.getMetadata().getName())
 				.addToAnnotations(ingressAnnotations).addToLabels(ingressLabels)
 				.addToLabels(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE).endMetadata().withNewSpec()

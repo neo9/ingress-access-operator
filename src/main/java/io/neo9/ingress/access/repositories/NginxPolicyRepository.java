@@ -15,17 +15,15 @@ public class NginxPolicyRepository {
 	}
 
 	public NginxPolicy createOrReplace(NginxPolicy policy) {
-		return kubernetesClient.customResources(NginxPolicy.class).inNamespace(policy.getMetadata().getNamespace())
-				.withName(policy.getMetadata().getName()).createOrReplace(policy);
+		return kubernetesClient.resource(policy).createOrReplace();
 	}
 
 	public NginxPolicy get(String namespace, String name) {
-		return kubernetesClient.customResources(NginxPolicy.class).inNamespace(namespace).withName(name).fromServer()
-				.get();
+		return kubernetesClient.resources(NginxPolicy.class).inNamespace(namespace).withName(name).get();
 	}
 
 	public Boolean delete(String namespace, String name) {
-		return kubernetesClient.customResources(NginxPolicy.class).inNamespace(namespace).withName(name).delete();
+		return !kubernetesClient.resources(NginxPolicy.class).inNamespace(namespace).withName(name).delete().isEmpty();
 	}
 
 }

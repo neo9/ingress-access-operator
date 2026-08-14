@@ -51,16 +51,15 @@ public class IngressRepository {
 	}
 
 	public Ingress createOrReplace(Ingress ingress) {
-		return kubernetesClient.network().v1().ingresses().inNamespace(ingress.getMetadata().getNamespace())
-				.withName(ingress.getMetadata().getName()).createOrReplace(ingress);
+		return kubernetesClient.resource(ingress).createOrReplace();
 	}
 
 	public Ingress get(String namespace, String name) {
-		return kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).fromServer().get();
+		return kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).get();
 	}
 
 	public Boolean delete(String namespace, String name) {
-		return kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).delete();
+		return !kubernetesClient.network().v1().ingresses().inNamespace(namespace).withName(name).delete().isEmpty();
 	}
 
 }

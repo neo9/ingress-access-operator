@@ -20,8 +20,7 @@ public class VisitorGroupRepository {
 	}
 
 	public VisitorGroup getVisitorGroupByName(String visitorGroupName) {
-		VisitorGroup visitorGroup = kubernetesClient.customResources(VisitorGroup.class).withName(visitorGroupName)
-				.get();
+		VisitorGroup visitorGroup = kubernetesClient.resources(VisitorGroup.class).withName(visitorGroupName).get();
 		if (visitorGroup == null) {
 			throw new VisitorGroupNotFoundException(visitorGroupName);
 		}
@@ -29,7 +28,7 @@ public class VisitorGroupRepository {
 	}
 
 	public List<VisitorGroup> getByLabel(String key, String value) {
-		return kubernetesClient.customResources(VisitorGroup.class).withLabel(key, value).list().getItems();
+		return kubernetesClient.resources(VisitorGroup.class).withLabel(key, value).list().getItems();
 	}
 
 }

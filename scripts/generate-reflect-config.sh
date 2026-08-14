@@ -15,8 +15,8 @@ exclusionFilterFabric8="io.fabric8.kubernetes.api.model.networking.v1beta1|io.fa
 exclusionFilter="${exclusionFilterFabric8}"
 
 cd ..
-javaoperatorsdkVersion=$(./gradlew dependencyInsight --configuration annotationProcessor --dependency io.javaoperatorsdk:operator-framework | grep -A1 ':dependencyInsight' | tail -1 | awk -F: '{print $NF}' | awk '{print $1}')
-fabric8Version=$(./gradlew dependencyInsight --configuration annotationProcessor --dependency io.fabric8:kubernetes-client | grep -A1 ':dependencyInsight' | tail -1 | awk -F: '{print $NF}' | awk '{print $1}')
+javaoperatorsdkVersion=$(./gradlew dependencyInsight --configuration compileClasspath --dependency io.javaoperatorsdk:operator-framework | grep -A1 ':dependencyInsight' | tail -1 | awk -F: '{print $NF}' | awk '{print $1}')
+fabric8Version=$(./gradlew dependencyInsight --configuration compileClasspath --dependency io.fabric8:kubernetes-client | grep -A1 ':dependencyInsight' | tail -1 | awk -F: '{print $NF}' | awk '{print $1}')
 echo "detected javaoperatorsdkVersion=${javaoperatorsdkVersion}"
 echo "detected fabric8Version=${fabric8Version}"
 cd -
