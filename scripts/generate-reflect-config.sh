@@ -77,7 +77,10 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.customresources.status.V1VisitorGroupStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allPublicConstructors": true}
+  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.nginx.NginxPolicy", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.NginxPolicySpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.AccessControlSpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true}
 ]
 EOF
 
