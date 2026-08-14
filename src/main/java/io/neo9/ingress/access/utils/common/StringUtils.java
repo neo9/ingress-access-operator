@@ -40,4 +40,32 @@ public class StringUtils {
 		return s.replaceAll("^\"|\"$", "");
 	}
 
+	/**
+	 * Whether {@code value} appears as an entry in a comma-separated list (trimmed).
+	 */
+	public static boolean commaSeparatedListContains(String list, String value) {
+		if (isEmpty(value) || isEmpty(list)) {
+			return false;
+		}
+		return Arrays.stream(list.split(COMMA)).map(String::trim)
+				.filter(org.apache.commons.lang3.StringUtils::isNotBlank).anyMatch(value::equals);
+	}
+
+	/**
+	 * Ensure {@code value} is present in a comma-separated list without removing other
+	 * entries. Returns the original list when already present (no reordering).
+	 */
+	public static String ensureInCommaSeparatedList(String list, String value) {
+		if (isEmpty(value)) {
+			return isEmpty(list) ? EMPTY : list;
+		}
+		if (commaSeparatedListContains(list, value)) {
+			return list;
+		}
+		if (isEmpty(list)) {
+			return value;
+		}
+		return list.trim() + COMMA + value;
+	}
+
 }

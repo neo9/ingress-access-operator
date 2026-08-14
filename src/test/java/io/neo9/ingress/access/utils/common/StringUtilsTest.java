@@ -23,4 +23,23 @@ public class StringUtilsTest {
 				"http://$host/test");
 	}
 
+	@Test
+	void ensureInCommaSeparatedListKeepsExistingPolicies() {
+		assertThat(StringUtils.ensureInCommaSeparatedList("cors", "ingress-access-foo"))
+				.isEqualTo("cors,ingress-access-foo");
+		assertThat(StringUtils.ensureInCommaSeparatedList("cors,ingress-access-foo", "ingress-access-foo"))
+				.isEqualTo("cors,ingress-access-foo");
+		assertThat(StringUtils.ensureInCommaSeparatedList("cors, ingress-access-foo", "ingress-access-foo"))
+				.isEqualTo("cors, ingress-access-foo");
+		assertThat(StringUtils.ensureInCommaSeparatedList("", "ingress-access-foo")).isEqualTo("ingress-access-foo");
+		assertThat(StringUtils.ensureInCommaSeparatedList(null, "ingress-access-foo")).isEqualTo("ingress-access-foo");
+	}
+
+	@Test
+	void commaSeparatedListContainsTrimsEntries() {
+		assertThat(StringUtils.commaSeparatedListContains("cors, ingress-access-foo", "ingress-access-foo")).isTrue();
+		assertThat(StringUtils.commaSeparatedListContains("cors", "ingress-access-foo")).isFalse();
+		assertThat(StringUtils.commaSeparatedListContains("", "ingress-access-foo")).isFalse();
+	}
+
 }

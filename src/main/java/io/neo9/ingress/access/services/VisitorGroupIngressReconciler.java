@@ -29,6 +29,8 @@ import static io.neo9.ingress.access.config.MutationLabels.*;
 import static io.neo9.ingress.access.utils.common.KubernetesUtils.*;
 import static io.neo9.ingress.access.utils.common.StringUtils.COMMA;
 import static io.neo9.ingress.access.utils.common.StringUtils.EMPTY;
+import static io.neo9.ingress.access.utils.common.StringUtils.commaSeparatedListContains;
+import static io.neo9.ingress.access.utils.common.StringUtils.ensureInCommaSeparatedList;
 import static java.util.Arrays.stream;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -187,12 +189,15 @@ public class VisitorGroupIngressReconciler {
 		}
 
 		String currentPoliciesAnnotation = getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY);
-		boolean annotationNeedsUpdate = !policyName.equals(currentPoliciesAnnotation)
+		// Keep existing policies (e.g. CORS); only ensure our access Policy is listed.
+		String mergedPoliciesAnnotation = ensureInCommaSeparatedList(currentPoliciesAnnotation, policyName);
+		boolean annotationNeedsUpdate = !mergedPoliciesAnnotation.equals(currentPoliciesAnnotation)
 				|| (!dualWrite && hasAnnotation(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY));
 		if (annotationNeedsUpdate) {
-			log.info("updating ingress {} nginx.org/policies annotation", resourceNamespaceAndName);
+			log.info("updating ingress {} nginx.org/policies annotation (merge access policy {})",
+					resourceNamespaceAndName, policyName);
 			Map<String, String> annotationsToApply = new HashMap<>();
-			annotationsToApply.put(NGINX_ORG_POLICIES_ANNOTATION_KEY, policyName);
+			annotationsToApply.put(NGINX_ORG_POLICIES_ANNOTATION_KEY, mergedPoliciesAnnotation);
 			if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
 					&& !hasLabel(ingress, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
 				annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
@@ -231,15 +236,18 @@ public class VisitorGroupIngressReconciler {
 			return true;
 		}
 		NginxWhitelistConfig nginxWhitelist = additionalWatchersConfig.nginxWhitelist();
-		boolean f5Empty = isEmpty(getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY));
+		String policiesAnnotation = getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY);
+		// Other policies (CORS, …) may already be set; only care that our access Policy
+		// is listed.
+		boolean f5AccessPolicyMissing = !commaSeparatedListContains(policiesAnnotation, f5PolicyName(ingress));
 		boolean communityEmpty = isEmpty(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, EMPTY));
 		if (nginxWhitelist.isDualWrite()) {
 			// Keep reconciling until both backends are populated (not only on a pristine
 			// ingress).
-			return f5Empty || communityEmpty;
+			return f5AccessPolicyMissing || communityEmpty;
 		}
 		if (nginxWhitelist.isF5Policy()) {
-			return f5Empty;
+			return f5AccessPolicyMissing;
 		}
 		return communityEmpty;
 	}
