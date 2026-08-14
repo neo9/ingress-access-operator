@@ -30,10 +30,10 @@ ext {
 	javaOperatorStarterVersion = '2.3.0'
 	bouncycastleVersion = '1.70'
 
-	// Default to JVM image. Native/AOT has been failing at startup on Boot 3.5
-	// (missing KubernetesClient, then reconciliationExecutorService destroyMethod=close).
-	// Opt in with NATIVE_IMAGE=true when native is fixed.
-	buildNativeImage = "true".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
+	// Native by default (matches historical releases). Set NATIVE_IMAGE=false for JVM.
+	// Requires: AutoConfiguration.imports, OperatorRuntimeConfig destroyMethod=shutdown,
+	// and -H:+AddAllCharsets (OkHttp UTF-32BE).
+	buildNativeImage = ! "false".equalsIgnoreCase(System.getenv('NATIVE_IMAGE'))
 }
 
 if (buildNativeImage) {
@@ -73,7 +73,8 @@ bootBuildImage {
 				'BP_NATIVE_IMAGE_BUILD_ARGUMENTS': '-H:+AddAllCharsets --enable-https'
 		]
 	} else {
-		// Native Build Tools plugin is applied → Boot defaults to native unless forced off
+		// Native Build Tools plugin defaults bootBuildImage to native; force JVM off
+		builder = 'paketobuildpacks/builder-jammy-base:latest'
 		environment = [
 				'BP_NATIVE_IMAGE': 'false'
 		]

@@ -21,8 +21,6 @@ jobs:
     - name: Run tests
       run: ./gradlew test
     - name: Build container image
-      env:
-        NATIVE_IMAGE: "false"
       run: ./gradlew bootBuildImage
     - name: Save Docker image to tarball
       run: docker save docker.io/neo9sas/ingress-access-operator:latest -o ingress-access-operator-latest.tar
