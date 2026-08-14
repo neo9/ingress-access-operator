@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
 	id 'org.graalvm.buildtools.native' version '0.10.6'
-	id 'org.springframework.boot' version '3.5.3'
+	id 'org.springframework.boot' version '3.5.16'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id "org.sonarqube" version "3.3"
 	id 'pl.allegro.tech.build.axion-release' version '1.13.6'
