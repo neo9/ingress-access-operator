@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.javaoperatorsdk.operator.api.ObservedGenerationAwareStatus;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY,
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY,
+		getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY,
 		isGetterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 public class V1VisitorGroupStatus extends ObservedGenerationAwareStatus {
 
