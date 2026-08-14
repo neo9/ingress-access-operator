@@ -234,7 +234,9 @@ public class VisitorGroupIngressReconciler {
 		boolean f5Empty = isEmpty(getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY));
 		boolean communityEmpty = isEmpty(getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, EMPTY));
 		if (nginxWhitelist.isDualWrite()) {
-			return f5Empty && communityEmpty;
+			// Keep reconciling until both backends are populated (not only on a pristine
+			// ingress).
+			return f5Empty || communityEmpty;
 		}
 		if (nginxWhitelist.isF5Policy()) {
 			return f5Empty;
