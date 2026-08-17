@@ -14,8 +14,8 @@ class AdditionalWatchersConfigBindingTest {
 		MapConfigurationPropertySource source = new MapConfigurationPropertySource();
 		source.put("extension.nginx-whitelist.backend", "dual-write");
 
-		AdditionalWatchersConfig config = new Binder(source).bind("extension",
-				Bindable.of(AdditionalWatchersConfig.class)).get();
+		AdditionalWatchersConfig config = new Binder(source)
+				.bind("extension", Bindable.of(AdditionalWatchersConfig.class)).get();
 
 		assertThat(config.nginxWhitelist().getBackend()).isEqualTo(NginxWhitelistConfig.BACKEND_DUAL_WRITE);
 		assertThat(config.nginxWhitelist().isDualWrite()).isTrue();
@@ -27,8 +27,8 @@ class AdditionalWatchersConfigBindingTest {
 		MapConfigurationPropertySource source = new MapConfigurationPropertySource();
 		source.put("EXTENSION_NGINX_WHITELIST_BACKEND", "dual-write");
 
-		AdditionalWatchersConfig config = new Binder(source).bind("extension",
-				Bindable.of(AdditionalWatchersConfig.class)).get();
+		AdditionalWatchersConfig config = new Binder(source)
+				.bind("extension", Bindable.of(AdditionalWatchersConfig.class)).get();
 
 		assertThat(config.nginxWhitelist().isDualWrite()).isTrue();
 		assertThat(config.nginxWhitelist().isCommunityAnnotation()).isTrue();

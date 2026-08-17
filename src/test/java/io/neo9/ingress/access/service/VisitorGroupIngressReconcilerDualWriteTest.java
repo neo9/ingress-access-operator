@@ -67,8 +67,7 @@ class VisitorGroupIngressReconcilerDualWriteTest {
 
 		Ingress ingress = new IngressBuilder().withNewMetadata().withName("demo").withNamespace("default")
 				.addToLabels(MutationLabels.MUTABLE_LABEL_KEY, MutationLabels.MUTABLE_LABEL_VALUE)
-				.addToAnnotations(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "neo9").endMetadata()
-				.build();
+				.addToAnnotations(MutationAnnotations.MUTABLE_INGRESS_VISITOR_GROUP_KEY, "neo9").endMetadata().build();
 
 		reconciler.reconcile(ingress);
 
