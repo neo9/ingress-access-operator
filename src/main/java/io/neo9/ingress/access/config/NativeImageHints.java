@@ -37,14 +37,16 @@ public class NativeImageHints implements RuntimeHintsRegistrar {
 	}
 
 	private static void registerFabric8Networking(RuntimeHints hints) {
-		// Watch events deserialize Ingress.status.loadBalancer; missing from generated reflect-config.
+		// Watch events deserialize Ingress.status.loadBalancer; missing from generated
+		// reflect-config.
 		registerType(hints, "io.fabric8.kubernetes.api.model.networking.v1.IngressLoadBalancerStatus");
 		registerType(hints, "io.fabric8.kubernetes.api.model.LoadBalancerIngress");
 		registerType(hints, "io.fabric8.kubernetes.api.model.networking.v1.IngressStatus");
 	}
 
 	private static void registerJosdk(RuntimeHints hints) {
-		// JOSDK instantiates Retry / RateLimiter from @ControllerConfiguration via reflection.
+		// JOSDK instantiates Retry / RateLimiter from @ControllerConfiguration via
+		// reflection.
 		registerType(hints, "io.javaoperatorsdk.operator.processing.retry.GenericRetry");
 		registerType(hints, "io.javaoperatorsdk.operator.processing.retry.GenericRetryExecution");
 		registerType(hints, "io.javaoperatorsdk.operator.processing.event.rate.LinearRateLimiter");
