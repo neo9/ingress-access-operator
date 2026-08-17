@@ -40,6 +40,7 @@ public class NativeImageHints implements RuntimeHintsRegistrar {
 		// Watch events deserialize Ingress.status.loadBalancer; missing from generated
 		// reflect-config.
 		registerType(hints, "io.fabric8.kubernetes.api.model.networking.v1.IngressLoadBalancerStatus");
+		registerType(hints, "io.fabric8.kubernetes.api.model.networking.v1.IngressLoadBalancerIngress");
 		registerType(hints, "io.fabric8.kubernetes.api.model.LoadBalancerIngress");
 		registerType(hints, "io.fabric8.kubernetes.api.model.networking.v1.IngressStatus");
 	}

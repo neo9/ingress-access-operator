@@ -360,6 +360,7 @@
   {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.NginxPolicySpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.AccessControlSpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressLoadBalancerStatus", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
+  {"name": "io.fabric8.kubernetes.api.model.networking.v1.IngressLoadBalancerIngress", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
   {"name": "io.javaoperatorsdk.operator.processing.retry.GenericRetry", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
   {"name": "io.javaoperatorsdk.operator.processing.retry.GenericRetryExecution", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
   {"name": "io.javaoperatorsdk.operator.processing.event.rate.LinearRateLimiter", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true}
