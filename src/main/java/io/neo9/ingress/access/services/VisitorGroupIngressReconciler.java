@@ -83,6 +83,13 @@ public class VisitorGroupIngressReconciler {
 				log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName,
 						resourceNamespaceAndName);
 			}
+			catch (ResourceNotManagedByOperatorException e) {
+				log.error("skipping {}: {}", resourceNamespaceAndName, e.getMessage());
+			}
+			catch (RuntimeException e) {
+				log.error("failed to reconcile {} for visitor group {}", resourceNamespaceAndName, visitorGroupName, e);
+				throw e;
+			}
 		}
 	}
 
@@ -101,6 +108,9 @@ public class VisitorGroupIngressReconciler {
 				catch (VisitorGroupNotFoundException e) {
 					log.error("panic: could not resolve visitorGroup {} for ingress {}", visitorGroupName,
 							ingressNamespaceAndName);
+				}
+				catch (ResourceNotManagedByOperatorException e) {
+					log.error("skipping {}: {}", ingressNamespaceAndName, e.getMessage());
 				}
 			});
 		}

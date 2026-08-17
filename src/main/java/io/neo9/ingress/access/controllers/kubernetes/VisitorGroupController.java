@@ -25,17 +25,32 @@ public class VisitorGroupController implements Reconciler<VisitorGroup>, Cleaner
 
 	@Override
 	public UpdateControl<VisitorGroup> reconcile(VisitorGroup visitorGroup, Context<VisitorGroup> context) {
-		log.info("update event detected for visitor group : {}", visitorGroup.getMetadata().getName());
-		visitorGroupIngressReconciler.reconcile(visitorGroup);
+		String visitorGroupName = visitorGroup.getMetadata().getName();
+		log.info("update event detected for visitor group : {}", visitorGroupName);
+		try {
+			visitorGroupIngressReconciler.reconcile(visitorGroup);
+		}
+		catch (RuntimeException e) {
+			log.error("reconcile failed for visitor group {}", visitorGroupName, e);
+			throw e;
+		}
 		// CRD has no status subresource; a statusUpdate 404s and exhausts retries.
 		return UpdateControl.noUpdate();
 	}
 
 	@Override
 	public DeleteControl cleanup(VisitorGroup visitorGroup, Context<VisitorGroup> context) {
-		log.info("delete event detected for visitor group : {}", visitorGroup.getMetadata().getName());
-		visitorGroupIngressReconciler.reconcile(visitorGroup); // will display panic
-																// message if there still
+		String visitorGroupName = visitorGroup.getMetadata().getName();
+		log.info("delete event detected for visitor group : {}", visitorGroupName);
+		try {
+			visitorGroupIngressReconciler.reconcile(visitorGroup); // will display panic
+																	// message if there
+																	// still
+		}
+		catch (RuntimeException e) {
+			log.error("cleanup reconcile failed for visitor group {}", visitorGroupName, e);
+			throw e;
+		}
 		return DeleteControl.defaultDelete();
 	}
 

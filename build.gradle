@@ -62,6 +62,7 @@ dependencies {
 	// Fabric8 7 defaults to Vert.x HTTP; keep OkHttp for native (AddAllCharsets / historical path).
 	implementation('io.fabric8:kubernetes-client') {
 		exclude group: 'io.fabric8', module: 'kubernetes-httpclient-vertx'
+		exclude group: 'io.fabric8', module: 'kubernetes-httpclient-jdk'
 	}
 	implementation 'io.fabric8:kubernetes-httpclient-okhttp'
 	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
