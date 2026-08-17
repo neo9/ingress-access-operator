@@ -140,15 +140,74 @@ public class VisitorGroupIngressReconciler {
 		}
 
 		NginxWhitelistConfig nginxWhitelist = additionalWatchersConfig.nginxWhitelist();
-		boolean dualWrite = nginxWhitelist.isDualWrite();
-		if (nginxWhitelist.isF5Policy()) {
-			reconcileF5Policy(ingress, cidrList, dualWrite);
+		if (nginxWhitelist.isDualWrite()) {
+			reconcileDualWrite(ingress, cidrList);
 		}
-		if (nginxWhitelist.isCommunityAnnotation()) {
-			reconcileCommunityAnnotation(ingress, cidrList, dualWrite);
+		else {
+			if (nginxWhitelist.isF5Policy()) {
+				reconcileF5Policy(ingress, cidrList, false);
+			}
+			if (nginxWhitelist.isCommunityAnnotation()) {
+				reconcileCommunityAnnotation(ingress, cidrList, false);
+			}
 		}
 
 		log.trace("end of patching of {}", resourceNamespaceAndName);
+	}
+
+	private void reconcileDualWrite(Ingress ingress, List<String> cidrList) {
+		String namespace = ingress.getMetadata().getNamespace();
+		String policyName = f5PolicyName(ingress);
+		String resourceNamespaceAndName = getResourceNamespaceAndName(ingress);
+		String cidrListAsString = String.join(COMMA, cidrList);
+
+		NginxPolicy existingPolicy = nginxPolicyRepository.get(namespace, policyName);
+		if (nonNull(existingPolicy) && !isManagedByOperator(existingPolicy)) {
+			throw new ResourceNotManagedByOperatorException(getResourceNamespaceAndName(existingPolicy));
+		}
+
+		boolean policyNeedsUpdate = existingPolicy == null || !cidrList.equals(extractAllowCidrs(existingPolicy));
+		if (policyNeedsUpdate) {
+			log.info("updating nginx policy {}/{} because the targeted value changed", namespace, policyName);
+			NginxPolicy policy = new NginxPolicy();
+			policy.getMetadata().setNamespace(namespace);
+			policy.getMetadata().setName(policyName);
+			policy.getMetadata().setLabels(Map.of(MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE));
+			AccessControlSpec accessControl = new AccessControlSpec();
+			accessControl.setAllow(cidrList);
+			policy.setSpec(new NginxPolicySpec(accessControl));
+			nginxPolicyRepository.createOrReplace(policy);
+		}
+
+		String currentPoliciesAnnotation = getAnnotationValue(ingress, NGINX_ORG_POLICIES_ANNOTATION_KEY, EMPTY);
+		String mergedPoliciesAnnotation = ensureInCommaSeparatedList(currentPoliciesAnnotation, policyName);
+		String currentWhitelistAnnotation = getAnnotationValue(ingress, NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, EMPTY);
+
+		boolean policiesAnnotationNeedsUpdate = !mergedPoliciesAnnotation.equals(currentPoliciesAnnotation);
+		boolean whitelistAnnotationNeedsUpdate = !cidrListAsString.equals(currentWhitelistAnnotation);
+		if (!policiesAnnotationNeedsUpdate && !whitelistAnnotationNeedsUpdate) {
+			return;
+		}
+
+		log.info("updating ingress {} dual-write annotations (nginx.org/policies={}, whitelist-source-range={})",
+				resourceNamespaceAndName, mergedPoliciesAnnotation, cidrListAsString);
+
+		Map<String, String> annotationsToApply = new HashMap<>();
+		if (policiesAnnotationNeedsUpdate) {
+			annotationsToApply.put(NGINX_ORG_POLICIES_ANNOTATION_KEY, mergedPoliciesAnnotation);
+		}
+		if (whitelistAnnotationNeedsUpdate) {
+			annotationsToApply.put(NGINX_INGRESS_WHITELIST_ANNOTATION_KEY, cidrListAsString);
+		}
+		if (!hasLabel(ingress, MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)
+				&& !hasLabel(ingress, LEGACY_MUTABLE_LABEL_KEY, MUTABLE_LABEL_VALUE)) {
+			annotationsToApply.put(FILTERING_MANAGED_BY_OPERATOR_KEY, MANAGED_BY_OPERATOR_VALUE);
+		}
+		if (hasAnnotation(ingress, FORECASTLE_EXPOSE)) {
+			annotationsToApply.put(FORECASTLE_NETWORK_RESTRICTED,
+					Boolean.toString(!(cidrList.size() == 1 && ALL_CIDR.equals(cidrList.get(0)))));
+		}
+		ingressRepository.patchWithAnnotations(ingress, annotationsToApply);
 	}
 
 	private void reconcileCommunityAnnotation(Ingress ingress, List<String> cidrList, boolean dualWrite) {

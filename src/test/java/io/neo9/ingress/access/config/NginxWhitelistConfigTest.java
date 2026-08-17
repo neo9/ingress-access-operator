@@ -7,11 +7,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NginxWhitelistConfigTest {
 
 	@Test
-	void defaultsToF5Policy() {
+	void defaultsToDualWrite() {
 		NginxWhitelistConfig config = new NginxWhitelistConfig();
+		assertThat(config.isDualWrite()).isTrue();
 		assertThat(config.isF5Policy()).isTrue();
-		assertThat(config.isCommunityAnnotation()).isFalse();
-		assertThat(config.isDualWrite()).isFalse();
+		assertThat(config.isCommunityAnnotation()).isTrue();
+		assertThat(config.getBackend()).isEqualTo(NginxWhitelistConfig.BACKEND_DUAL_WRITE);
 	}
 
 	@Test

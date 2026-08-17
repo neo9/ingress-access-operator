@@ -346,6 +346,7 @@
   {"name": "io.fabric8.kubernetes.client.okhttp.OkHttpClientImpl", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.fabric8.kubernetes.client.okhttp.OkHttpClientBuilderImpl", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.AdditionalWatchersConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.config.NginxWhitelistConfig", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.UpdateIstioIngressSidecarConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.ExposerConfig", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.config.DefaultFilteringConfig", "allDeclaredMethods": true, "allPublicConstructors": true},

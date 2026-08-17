@@ -3,6 +3,7 @@ package io.neo9.ingress.access.config;
 import lombok.Setter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,6 +20,7 @@ public class AdditionalWatchersConfig {
 	private DefaultFilteringConfig defaultFiltering;
 
 	@Setter
+	@NestedConfigurationProperty
 	private NginxWhitelistConfig nginxWhitelist = new NginxWhitelistConfig();
 
 	public UpdateIstioIngressSidecarConfig updateIstioIngressSidecar() {

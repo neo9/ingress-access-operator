@@ -19,7 +19,7 @@ public class NginxWhitelistConfig {
 	 * <li>{@code dual-write}: both — use during migration between controllers</li>
 	 * </ul>
 	 */
-	private String backend = BACKEND_F5_POLICY;
+	private String backend = BACKEND_DUAL_WRITE;
 
 	public boolean isF5Policy() {
 		return BACKEND_F5_POLICY.equalsIgnoreCase(backend) || isDualWrite();
