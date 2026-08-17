@@ -31,13 +31,13 @@ class AdditionalWatchersConfigBindingTest {
 		SystemEnvironmentPropertySource source = new SystemEnvironmentPropertySource("testEnv",
 				Map.of("EXTENSION_NGINX_WHITELIST_BACKEND", "f5-policy"));
 
-		AdditionalWatchersConfig config = new Binder(ConfigurationPropertySources.from(source))
-				.bind("extension", Bindable.of(AdditionalWatchersConfig.class)).get();
+		NginxWhitelistConfig config = new Binder(ConfigurationPropertySources.from(source))
+				.bind("extension.nginx-whitelist", Bindable.of(NginxWhitelistConfig.class)).get();
 
-		assertThat(config.nginxWhitelist().getBackend()).isEqualTo(NginxWhitelistConfig.BACKEND_F5_POLICY);
-		assertThat(config.nginxWhitelist().isDualWrite()).isFalse();
-		assertThat(config.nginxWhitelist().isCommunityAnnotation()).isFalse();
-		assertThat(config.nginxWhitelist().isF5Policy()).isTrue();
+		assertThat(config.getBackend()).isEqualTo(NginxWhitelistConfig.BACKEND_F5_POLICY);
+		assertThat(config.isDualWrite()).isFalse();
+		assertThat(config.isCommunityAnnotation()).isFalse();
+		assertThat(config.isF5Policy()).isTrue();
 	}
 
 }
