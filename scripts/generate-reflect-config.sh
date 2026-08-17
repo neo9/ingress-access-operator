@@ -75,12 +75,17 @@ cat <<EOF >> $targetFile
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.spec.V1VisitorGroupSpecSources", "allDeclaredMethods": true, "allPublicConstructors": true},
   {"name": "io.neo9.ingress.access.customresources.status.V1VisitorGroupStatus", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.istio.Sidecar", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.nginx.NginxPolicy", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.NginxPolicySpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
-  {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.AccessControlSpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true}
+  {"name": "io.fabric8.kubernetes.client.impl.KubernetesClientImpl", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.fabric8.kubernetes.client.impl.BaseClient", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.fabric8.kubernetes.client.Config", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.fabric8.kubernetes.client.ConfigBuilder", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.fabric8.kubernetes.client.okhttp.OkHttpClientFactory", "allDeclaredFields": true, "allDeclaredMethods": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.istio.Sidecar", "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.SidecarSpec", "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.istio.spec.EgressSpec", "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.nginx.NginxPolicy", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.NginxPolicySpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true},
+  {"name": "io.neo9.ingress.access.customresources.external.nginx.spec.AccessControlSpec", "allDeclaredFields": true, "allDeclaredMethods": true, "allDeclaredConstructors": true, "allPublicConstructors": true}
 ]
 EOF
 

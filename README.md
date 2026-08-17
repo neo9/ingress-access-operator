@@ -236,3 +236,19 @@ To generate the reflection configuration file, use the appropriate script :
 cd scripts && ./generate-reflect-config.sh && cd ..
 ```
 
+Native image iteration in kind
+------------------------------
+
+Use this loop to build the native Docker image and verify it runs **inside** kind
+(not just as a host-network container):
+
+```
+./scripts/kind-native-iterate.sh              # build + deploy pod + health check
+./scripts/kind-native-iterate.sh --loop       # repeat until healthy (fix hints between runs)
+./scripts/kind-native-iterate.sh --skip-build # redeploy an existing local image
+./scripts/kind-native-iterate.sh --clean      # delete kind cluster when finished
+```
+
+On failure, inspect `/tmp/ingress-access-operator-kind-failures.log` and add missing
+types to `NativeImageHints.java` or `META-INF/native-image/reflect-config.json`.
+

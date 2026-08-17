@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportRuntimeHints;
 
 /**
  * Override JOSDK executor bean so Spring does not infer destroyMethod=close.
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * BeanDefinitionValidationException.
  */
 @Configuration
+@ImportRuntimeHints(NativeImageHints.class)
 public class OperatorRuntimeConfig {
 
 	@Bean(name = "reconciliationExecutorService", destroyMethod = "shutdown")

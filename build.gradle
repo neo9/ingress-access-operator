@@ -59,7 +59,11 @@ dependencies {
 
 	implementation "io.javaoperatorsdk:operator-framework-spring-boot-starter:${javaOperatorStarterVersion}"
 	implementation "io.javaoperatorsdk:operator-framework:${javaOperatorVersion}"
-	implementation 'io.fabric8:kubernetes-client'
+	// Fabric8 7 defaults to Vert.x HTTP; keep OkHttp for native (AddAllCharsets / historical path).
+	implementation('io.fabric8:kubernetes-client') {
+		exclude group: 'io.fabric8', module: 'kubernetes-httpclient-vertx'
+	}
+	implementation 'io.fabric8:kubernetes-httpclient-okhttp'
 	implementation "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
 	implementation "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
 	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
@@ -78,6 +82,13 @@ test {
 
 bootBuildImage {
 	imageName   = "neo9sas/${project.name}:latest"
+	def dockerHost = System.getenv('DOCKER_HOST')
+	if (dockerHost != null && !dockerHost.isBlank()) {
+		docker {
+			host = dockerHost
+			bindHostToBuilder = true
+		}
+	}
 	if (buildNativeImage) {
 		environment = [
 				'BP_NATIVE_IMAGE'                : 'true',

@@ -3,6 +3,12 @@
     "includes": [
       {
         "pattern": "^version\\.properties$"
+      },
+      {
+        "pattern": "META-INF/services/io\\.fabric8\\.kubernetes\\.client\\.http\\.HttpClient\\$Factory"
+      },
+      {
+        "pattern": "META-INF/services/io\\.fabric8\\.kubernetes\\.client\\.extension\\.ExtensionAdapter"
       }
     ]
   }

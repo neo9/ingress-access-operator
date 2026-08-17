@@ -1,0 +1,2 @@
+org.springframework.aot.hint.RuntimeHintsRegistrar=\
+io.neo9.ingress.access.config.NativeImageHints
